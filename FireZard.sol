@@ -1,7 +1,7 @@
 /*
 
-https://t.me/firezardtcg
 firezard.com
+https://t.me/firezardtcg
 
 FireZard is an instant reward NFT card collecting game for the BSC
     
