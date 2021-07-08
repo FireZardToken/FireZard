@@ -7,7 +7,7 @@ FireZard is an instant reward NFT card collecting game for the BSC
     
 Features of this contract
     
-1) 6% "The Dragon" is used to buy back and burn tokens
+1) 6% "The Dragon" is used to add liquidity by buying back and burning tokens
 2) 2% tax is collected and distributed to holders for HODLing
 3) 3% is used for development of the project
     
