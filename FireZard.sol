@@ -5,9 +5,9 @@ FireZard is an instant reward NFT card collecting game for the BSC
     
 Features of this contract
     
-1) 6% "The Dragon" is used to add liquidity by buying back and burning tokens
+1) 5% "The Dragon" is used to add liquidity by buying back and burning tokens
 2) 2% tax is collected and distributed to holders for HODLing
-3) 3% is used for development of the project
+3) 4% is used for development of the project
     
 ███████╗██╗██████╗░███████╗███████╗░█████╗░██████╗░██████╗░
 ██╔════╝██║██╔══██╗██╔════╝╚════██║██╔══██╗██╔══██╗██╔══██╗
@@ -18,88 +18,20 @@ Features of this contract
 */
 
 // SPDX-License-Identifier: Unlicensed
-//Notes for Owners:
-//Including only required @OpenZeppelin contracts for TimelockController
 
-pragma solidity >=0.8.0;
+pragma solidity ^0.8.4;
 
-/**
- * @dev Interface of the ERC20 standard as defined in the EIP.
- */
-interface IERC20Upgradeable {
-    /**
-     * @dev Returns the amount of tokens in existence.
-     */
-    function totalSupply() external view returns (uint256);
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address payable) {
+        return payable(msg.sender);
+    }
 
-    /**
-     * @dev Returns the amount of tokens owned by `account`.
-     */
-    function balanceOf(address account) external view returns (uint256);
-
-    /**
-     * @dev Moves `amount` tokens from the caller's account to `recipient`.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transfer(address recipient, uint256 amount) external returns (bool);
-
-    /**
-     * @dev Returns the remaining number of tokens that `spender` will be
-     * allowed to spend on behalf of `owner` through {transferFrom}. This is
-     * zero by default.
-     *
-     * This value changes when {approve} or {transferFrom} are called.
-     */
-    function allowance(address owner, address spender) external view returns (uint256);
-
-    /**
-     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * IMPORTANT: Beware that changing an allowance with this method brings the risk
-     * that someone may use both the old and the new allowance by unfortunate
-     * transaction ordering. One possible solution to mitigate this race
-     * condition is to first reduce the spender's allowance to 0 and set the
-     * desired value afterwards:
-     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-     *
-     * Emits an {Approval} event.
-     */
-    function approve(address spender, uint256 amount) external returns (bool);
-
-    /**
-     * @dev Moves `amount` tokens from `sender` to `recipient` using the
-     * allowance mechanism. `amount` is then deducted from the caller's
-     * allowance.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
-
-    /**
-     * @dev Emitted when `value` tokens are moved from one account (`from`) to
-     * another (`to`).
-     *
-     * Note that `value` may be zero.
-     */
-    event Transfer(address indexed from, address indexed to, uint256 value);
-
-    /**
-     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
-     * a call to {approve}. `value` is the new allowance.
-     */
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    function _msgData() internal view virtual returns (bytes memory) {
+        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        return msg.data;
+    }
 }
+
 
 interface IERC20 {
 
@@ -228,115 +160,36 @@ library Address {
     }
 }
 
-//import "../utils/ContextUpgradeable.sol";
-//import "../proxy/utils/Initializable.sol";
-
-/*
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- *
- 
-abstract contract OwnableUpgradeable2 is Initializable, ContextUpgradeable {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-
-     * @dev Initializes the contract setting the deployer as the initial owner.
-     *
-    function __Ownable_init() internal initializer {
-        __Context_init_unchained();
-        __Ownable_init_unchained();
-    }
-
-    function __Ownable_init_unchained() internal initializer {
-        _setOwner(_msgSender());
-    }
-
-
-     * @dev Returns the address of the current owner.
-     *
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-
-     * @dev Throws if called by any account other than the owner.
-     *
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    
-    * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     *
-    function renounceOwnership() public virtual onlyOwner {
-        _setOwner(address(0));
-    }
-
-    
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     *
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        _setOwner(newOwner);
-    }
-
-    function _setOwner(address newOwner) private {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-    uint256[49] private __gap;
-}
-*/
-
-
-
-contract Ownable is ContextUpgradeable {
+contract Ownable is Context {
     address private _owner;
     address private _previousOwner;
     uint256 private _lockTime;
 
-    event _OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     constructor () {
         address msgSender = _msgSender();
         _owner = msgSender;
-        emit _OwnershipTransferred(address(0), msgSender);
+        emit OwnershipTransferred(address(0), msgSender);
     }
 
-    function getOwner() public view returns (address) {
+    function owner() public view returns (address) {
         return _owner;
     }   
     
-    modifier _onlyOwner() {
+    modifier onlyOwner() {
         require(_owner == _msgSender(), "Ownable: caller is not the owner");
         _;
     }
     
-    function _renounceOwnership() public virtual _onlyOwner {
-        emit _OwnershipTransferred(_owner, address(0));
+    function renounceOwnership() public virtual onlyOwner {
+        emit OwnershipTransferred(_owner, address(0));
         _owner = address(0);
     }
 
-    function _transferOwnership(address newOwner) public virtual _onlyOwner {
+    function transferOwnership(address newOwner) public virtual onlyOwner {
         require(newOwner != address(0), "Ownable: new owner is the zero address");
-        emit _OwnershipTransferred(_owner, newOwner);
+        emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;
     }
 
@@ -348,21 +201,20 @@ contract Ownable is ContextUpgradeable {
         return block.timestamp;
     }
 
-    function lock(uint256 time) public virtual _onlyOwner {
+    function lock(uint256 time) public virtual onlyOwner {
         _previousOwner = _owner;
         _owner = address(0);
         _lockTime = block.timestamp + time;
-        emit _OwnershipTransferred(_owner, address(0));
+        emit OwnershipTransferred(_owner, address(0));
     }
     
     function unlock() public virtual {
         require(_previousOwner == msg.sender, "You don't have permission to unlock");
         require(block.timestamp > _lockTime , "Contract is locked until 7 days");
-        emit _OwnershipTransferred(_owner, _previousOwner);
+        emit OwnershipTransferred(_owner, _previousOwner);
         _owner = _previousOwner;
     }
 }
-
 
 // pragma solidity >=0.5.0;
 
@@ -575,9 +427,7 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
     ) external;
 }
 
-import "./FZ_Dragon.sol";
-
-contract FireZard is Initializable, ContextUpgradeable, IERC20Upgradeable, Ownable, OwnableUpgradeable, AccessControlUpgradeable, TimelockControllerUpgradeable, FZ_Dragon{
+contract FireZard is Context, IERC20, Ownable {
     using SafeMath for uint256;
     using Address for address;
     
@@ -613,10 +463,9 @@ contract FireZard is Initializable, ContextUpgradeable, IERC20Upgradeable, Ownab
     uint256 public _maxTxAmount = 3000000 * 10**6 * 10**9;
     uint256 private minimumTokensBeforeSwap = 200000 * 10**6 * 10**9; 
     uint256 private buyBackUpperLimit = 1 * 10**18;
-    uint256 private numTransactions = 4;
 
-    IUniswapV2Router02 public  uniswapV2Router;
-    address public  uniswapV2Pair;
+    IUniswapV2Router02 public immutable uniswapV2Router;
+    address public immutable uniswapV2Pair;
     
     bool inSwapAndLiquify;
     bool public swapAndLiquifyEnabled = false;
@@ -631,16 +480,6 @@ contract FireZard is Initializable, ContextUpgradeable, IERC20Upgradeable, Ownab
         uint256 ethReceived,
         uint256 tokensIntoLiqudity
     );
-    
-    constructor () {
-        __AccessControl_init_unchained(msg.sender);
-        //_setOwner(_msgSender());
-        address msgSender = _msgSender();
-        
-        _rOwned[_msgSender()] = _rTotal;
-        emit _OwnershipTransferred(address(0), msgSender);
-        emit Transfer(address(0), _msgSender(), _tTotal); //original
-    }
     
     event SwapETHForTokens(
         uint256 amountIn,
@@ -658,44 +497,20 @@ contract FireZard is Initializable, ContextUpgradeable, IERC20Upgradeable, Ownab
         inSwapAndLiquify = false;
     }
     
-    
-        
-        
-    //bool private initialized;
-    
-    function FZinitialize () public initializer {
-        
-        __Ownable_init();
-        __Context_init_unchained();
-        __Ownable_init_unchained(0x0a212841ebbe532ED38ECC611391383263be8953);
-        FZ_initialize();
-        
-        __AccessControl_init();
-        __ERC165_init_unchained();
-        __AccessControl_init_unchained(msg.sender);
-    
-    __TimelockController_init_unchained(0, mainAdmin, mainAdmin);
-    
-   // constructor () {
+    constructor () {
         _rOwned[_msgSender()] = _rTotal;
-        numTransactions = numOfTransactions;
         
-IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
-         uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+        uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
             .createPair(address(this), _uniswapV2Router.WETH());
-         uniswapV2Router = _uniswapV2Router;
-       
 
-       
+        uniswapV2Router = _uniswapV2Router;
 
         
         _isExcludedFromFee[owner()] = true;
         _isExcludedFromFee[address(this)] = true;
         
-        
-
-        
-       // emit Transfer(address(0), _msgSender(), _tTotal); //original
+        emit Transfer(address(0), _msgSender(), _tTotal);
     }
 
     function name() public view returns (string memory) {
@@ -765,8 +580,6 @@ IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739d
         return buyBackUpperLimit;
     }
     
-    
-    
     function deliver(uint256 tAmount) public {
         address sender = _msgSender();
         require(!_isExcluded[sender], "Excluded addresses cannot call this function");
@@ -794,7 +607,7 @@ IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739d
         return rAmount.div(currentRate);
     }
 
-    function excludeFromReward(address account) public _onlyOwner() {
+    function excludeFromReward(address account) public onlyOwner() {
 
         require(!_isExcluded[account], "Account is already excluded");
         if(_rOwned[account] > 0) {
@@ -804,7 +617,7 @@ IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739d
         _excluded.push(account);
     }
 
-    function includeInReward(address account) external _onlyOwner() {
+    function includeInReward(address account) external onlyOwner() {
         require(_isExcluded[account], "Account is already excluded");
         for (uint256 i = 0; i < _excluded.length; i++) {
             if (_excluded[i] == account) {
@@ -878,27 +691,9 @@ IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739d
     
 
     function buyBackTokens(uint256 amount) private lockTheSwap {
-        
     	if (amount > 0) {
     	    swapETHForTokens(amount);
 	    }
-    }
-    
-    function buyBackTokensOC (uint256 amount) external _onlyOwner() {
-        if (amount > 0) {
-    	    swapETHForTokens(amount);
-	    }
-    }
-    
-    
-    function buyBackSpecificAmount (uint amount) external _onlyOwner() {
-        require(amount>0);
-        uint _amount = amount/numTransactions;
-        uint amountLeft = amount; 
-        while (amountLeft > 0) {
-            swapETHForTokens(_amount);
-            amountLeft - _amount;    
-        }
     }
     
     function swapTokensForEth(uint256 tokenAmount) private {
@@ -1093,64 +888,60 @@ IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739d
         return _isExcludedFromFee[account];
     }
     
-    function excludeFromFee(address account) public _onlyOwner {
+    function excludeFromFee(address account) public onlyOwner {
         _isExcludedFromFee[account] = true;
     }
     
-    function includeInFee(address account) public _onlyOwner {
+    function includeInFee(address account) public onlyOwner {
         _isExcludedFromFee[account] = false;
     }
     
-    function setTaxFeePercent(uint256 taxFee) external _onlyOwner() {
+    function setTaxFeePercent(uint256 taxFee) external onlyOwner() {
         _taxFee = taxFee;
     }
     
-    function setLiquidityFeePercent(uint256 liquidityFee) external _onlyOwner() {
+    function setLiquidityFeePercent(uint256 liquidityFee) external onlyOwner() {
         _liquidityFee = liquidityFee;
     }
     
-    function setMaxTxAmount(uint256 maxTxAmount) external _onlyOwner() {
+    function setMaxTxAmount(uint256 maxTxAmount) external onlyOwner() {
         _maxTxAmount = maxTxAmount;
     }
     
-    function setRewardDivisor(uint256 divisor) external _onlyOwner() {
+    function setRewardDivisor(uint256 divisor) external onlyOwner() {
         rewardDivisor = divisor;
     }
-    
-    function setNumTransactions(uint256 _numTransactions) external _onlyOwner() {
-        numTransactions = _numTransactions;
-    }
 
-    function setNumTokensSellToAddToLiquidity(uint256 _minimumTokensBeforeSwap) external _onlyOwner() {
+    function setNumTokensSellToAddToLiquidity(uint256 _minimumTokensBeforeSwap) external onlyOwner() {
         minimumTokensBeforeSwap = _minimumTokensBeforeSwap;
     }
     
-     function setBuybackUpperLimit(uint256 buyBackLimit) external _onlyOwner() {
+     function setBuybackUpperLimit(uint256 buyBackLimit) external onlyOwner() {
         buyBackUpperLimit = buyBackLimit * 10**18;
     }
 
-    function setRewaAddress(address _rewardAddress) external _onlyOwner() {
+    function setRewardAddress(address _rewardAddress) external onlyOwner() {
         rewardAddress = payable(_rewardAddress);
     }
 
-    function setSwapAndLiquifyEnabled(bool _enabled) public _onlyOwner {
+    function setSwapAndLiquifyEnabled(bool _enabled) public onlyOwner {
         swapAndLiquifyEnabled = _enabled;
         emit SwapAndLiquifyEnabledUpdated(_enabled);
     }
     
-    function setBuyBackEnabled(bool _enabled) public _onlyOwner {
+    function setBuyBackEnabled(bool _enabled) public onlyOwner {
         buyBackEnabled = _enabled;
         emit BuyBackEnabledUpdated(_enabled);
     }
     
-    function prepareForPreSale() external _onlyOwner {
+    function prepareForPreSale() external onlyOwner {
         setSwapAndLiquifyEnabled(false);
         _taxFee = 0;
         _liquidityFee = 0;
         _maxTxAmount = 1000000000 * 10**6 * 10**9;
     }
     
-    function afterPreSale() external _onlyOwner {
+    function afterPreSale() external onlyOwner {
         setSwapAndLiquifyEnabled(true);
         _taxFee = 2;
         _liquidityFee = 9;
@@ -1162,5 +953,5 @@ IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739d
     }
     
      //to recieve ETH from uniswapV2Router when swaping
-    receive() override external payable {}
+    receive() external payable {}
 }
