@@ -463,6 +463,7 @@ contract FireZard is Context, IERC20, Ownable {
     uint256 public _maxTxAmount = 3000000 * 10**6 * 10**9;
     uint256 private minimumTokensBeforeSwap = 200000 * 10**6 * 10**9; 
     uint256 private buyBackUpperLimit = 1 * 10**18;
+    uint256 public buyBackAmountLimit = 30 * 10**18;
 
     IUniswapV2Router02 public immutable uniswapV2Router;
     address public immutable uniswapV2Pair;
@@ -500,7 +501,7 @@ contract FireZard is Context, IERC20, Ownable {
     constructor () {
         _rOwned[_msgSender()] = _rTotal;
         
-        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x1Ed675D5e63314B760162A3D1Cae1803DCFC87C7); //0x10ED43C718714eb63d5aA57B78B54704E256024E //0xD99D1c33F9fC3444f8101754aBC46c52416550D1
         uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
             .createPair(address(this), _uniswapV2Router.WETH());
 
@@ -659,12 +660,8 @@ contract FireZard is Context, IERC20, Ownable {
                 swapTokens(contractTokenBalance);    
             }
 	        uint256 balance = address(this).balance;
-            if (buyBackEnabled && balance > uint256(1 * 10**18)) {
-                
-                if (balance > buyBackUpperLimit)
-                    balance = buyBackUpperLimit;
-                
-                buyBackTokens(balance.div(100));
+            if (buyBackEnabled && balance >= buyBackAmountLimit) {
+                buyBackTokens(balance);
             }
         }
         
@@ -918,6 +915,10 @@ contract FireZard is Context, IERC20, Ownable {
     
      function setBuybackUpperLimit(uint256 buyBackLimit) external onlyOwner() {
         buyBackUpperLimit = buyBackLimit * 10**18;
+    }
+    
+    function setBuybackAmountLimit(uint256 amountLimit) external onlyOwner() {
+        buyBackAmountLimit = amountLimit;
     }
 
     function setRewardAddress(address _rewardAddress) external onlyOwner() {
