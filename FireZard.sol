@@ -463,7 +463,7 @@ contract FireZard is Context, IERC20, Ownable {
     uint256 public rewardDivisor = 4;
     uint256 public developmentDivisor = 2;
     
-    uint256 public _maxTxAmount = 1000000 * 10**2;
+    uint256 public _maxTxAmount = 3000000 * 10**2;
     uint256 private minimumTokensBeforeSwap = 250000 * 10**2; 
     uint256 private buyBackUpperLimit = 1 * 10**7;
 
@@ -950,23 +950,18 @@ contract FireZard is Context, IERC20, Ownable {
         setSwapAndLiquifyEnabled(false);
         _taxFee = 0;
         _liquidityFee = 0;
-        _maxTxAmount = 1000000000 * 10**6 * 10**9;
+        _maxTxAmount = 1000000000 * 10**2;
     }
     
     function afterPreSale() external onlyOwner {
         setSwapAndLiquifyEnabled(true);
         _taxFee = 2;
         _liquidityFee = 10;
-        _maxTxAmount = 3000000 * 10**6 * 10**9;
+        _maxTxAmount = 3000000 * 10**2;
     }
     
     function transferToAddressETH(address payable recipient, uint256 amount) private {
         recipient.transfer(amount);
-    }
-    
-    function rescueStuckBNB() external onlyOwner {
-        uint256 balance = address(this).balance;
-        payable(owner()).transfer(balance);
     }
     
      //to recieve ETH from uniswapV2Router when swaping
