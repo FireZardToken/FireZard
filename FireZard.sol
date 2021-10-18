@@ -475,7 +475,7 @@ contract FireZard is Context, IERC20, Ownable {
     uint256 public rewardDivisor = 6;
     uint256 public developmentDivisor = 2;
     
-    uint256 public _maxTxAmount = 3000000 * 10**2;
+    uint256 public _maxTxAmount = 10;
     uint256 private minimumTokensBeforeSwap = 250000 * 10**2; 
     uint256 private buyBackUpperLimit = 1 * 10**7;
 
