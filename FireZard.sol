@@ -1004,14 +1004,14 @@ contract FireZard is Context, IERC20, Ownable {
         setSwapAndLiquifyEnabled(false);
         _taxFee = 0;
         _liquidityFee = 0;
-        _maxTxAmount = 1000000000 * 10**2;
+        _maxTxAmount = 1000;
     }
     
     function afterPreSale() external onlyOwner {
         setSwapAndLiquifyEnabled(true);
         _taxFee = 2;
         _liquidityFee = 10;
-        _maxTxAmount = 3000000 * 10**2;
+        _maxTxAmount = 10;
     }
     
     function transferToAddressETH(address payable recipient, uint256 amount) private {
