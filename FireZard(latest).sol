@@ -489,7 +489,7 @@ contract FireZard is Context, IERC20, Ownable {
     
     uint256 public _maxTxAmount = 101**decimals();
     uint256 private minimumTokensBeforeSwap = 250000 * 10**18; 
-    uint256 private buyBackUpperLimit = 1 * 10**7;
+    uint256 private buyBackUpperLimit = 1 * 10**18;
 
     IUniswapV2Router02 public immutable uniswapV2Router;
     address public immutable uniswapV2Pair;
