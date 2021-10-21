@@ -441,7 +441,7 @@ contract FireZard is Context, IERC20, Ownable {
     address[] private _excluded;
    
     uint256 private constant MAX = ~uint256(0);
-    uint256 private _tTotal = 1000000000 * 10**2;
+    uint256 private _tTotal = 1000000000 * 10**18;
     uint256 private _rTotal = (MAX - (MAX % _tTotal));
     uint256 private _tFeeTotal;
 
@@ -488,7 +488,7 @@ contract FireZard is Context, IERC20, Ownable {
     uint256 public developmentDivisor = 2;
     
     uint256 public _maxTxAmount = 101**decimals();
-    uint256 private minimumTokensBeforeSwap = 250000 * 10**2; 
+    uint256 private minimumTokensBeforeSwap = 250000 * 10**18; 
     uint256 private buyBackUpperLimit = 1 * 10**7;
 
     IUniswapV2Router02 public immutable uniswapV2Router;
@@ -920,13 +920,13 @@ contract FireZard is Context, IERC20, Ownable {
     
     function calculateTaxFee(uint256 _amount) private view returns (uint256) {
         return _amount.mul(_taxFee).div(
-            10**2
+            10**18
         );
     }
     
     function calculateLiquidityFee(uint256 _amount) private view returns (uint256) {
         return _amount.mul(_liquidityFee).div(
-            10**2
+            10**18
         );
     }
     
