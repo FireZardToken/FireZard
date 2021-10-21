@@ -1047,7 +1047,7 @@ contract FireZard is Context, IERC20, Ownable {
         recipient.transfer(amount);
     }
     
-     //to recieve ETH from uniswapV2Router when swaping
+     //to receive ETH from uniswapV2Router when swapping
     receive() external payable {
         require(msg.sender == address(uniswapV2Router),"Can't send directly to contract");
     }
