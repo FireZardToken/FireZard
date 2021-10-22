@@ -1,0 +1,2 @@
+# firezard_nft
+
