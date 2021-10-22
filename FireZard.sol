@@ -412,6 +412,10 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
     ) external;
 }
 
+abstract contract BPContract{
+    function protect( address sender, address receiver, uint256 amount ) external virtual;
+}
+
 contract FireZard is Context, IERC20, Ownable {
     using SafeMath for uint256;
     using Address for address;
@@ -422,6 +426,10 @@ contract FireZard is Context, IERC20, Ownable {
     mapping (address => uint256) private _rOwned;
     mapping (address => uint256) private _tOwned;
     mapping (address => mapping (address => uint256)) private _allowances;
+    
+    BPContract public BP;
+    bool public bpEnabled;
+    bool public BPDisabledForever = false;
 
     mapping (address => bool) private _isExcludedFromFee;
 
@@ -429,13 +437,13 @@ contract FireZard is Context, IERC20, Ownable {
     address[] private _excluded;
    
     uint256 private constant MAX = ~uint256(0);
-    uint256 private _tTotal = 1000000000 * 10**2;
+    uint256 private _tTotal = 1000000000 * 10**18;
     uint256 private _rTotal = (MAX - (MAX % _tTotal));
     uint256 private _tFeeTotal;
 
     string private _name = "FireZard";
     string private _symbol = "ZARD";
-    uint8 private _decimals = 2;
+    uint8 private _decimals = 18;
 
 
     uint256 public _taxFee = 2;
@@ -476,8 +484,8 @@ contract FireZard is Context, IERC20, Ownable {
     uint256 public developmentDivisor = 2;
     
     uint256 public _maxTxAmount = 101**decimals();
-    uint256 private minimumTokensBeforeSwap = 250000 * 10**2; 
-    uint256 private buyBackUpperLimit = 1 * 10**7;
+    uint256 private minimumTokensBeforeSwap = 250000 * 10**18; 
+    uint256 private buyBackUpperLimit = 1 * 10**18;
 
     IUniswapV2Router02 public immutable uniswapV2Router;
     address public immutable uniswapV2Pair;
@@ -517,7 +525,7 @@ contract FireZard is Context, IERC20, Ownable {
     constructor () {
         _rOwned[_msgSender()] = _rTotal;
         
-        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
         uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
             .createPair(address(this), _uniswapV2Router.WETH());
 
@@ -603,6 +611,20 @@ contract FireZard is Context, IERC20, Ownable {
         return buyBackUpperLimit;
     }
     
+    function setBPAddrss(address _bp) external onlyOwner {
+        require(address(BP)== address(0), "Can only be initialized once");
+        BP = BPContract(_bp);
+    }
+    
+    function setBpEnabled(bool _enabled) external onlyOwner {
+        bpEnabled = _enabled;
+    }
+    
+    function setBotProtectionDisableForever() external onlyOwner{
+        require(BPDisabledForever == false);
+        BPDisabledForever = true;
+    }
+    
     function deliver(uint256 tAmount) public {
         address sender = _msgSender();
         require(!_isExcluded[sender], "Excluded addresses cannot call this function");
@@ -673,7 +695,11 @@ contract FireZard is Context, IERC20, Ownable {
         if(from != owner() && to != owner()) {
             require(amount <= _maxTxAmount, "Transfer amount exceeds the maxTxAmount.");
         }
-
+        
+        if (bpEnabled && !BPDisabledForever){
+            BP.protect(from, to, amount);
+        }
+        
         uint256 contractTokenBalance = balanceOf(address(this));
         bool overMinimumTokenBalance = contractTokenBalance >= minimumTokensBeforeSwap;
         
@@ -1017,7 +1043,7 @@ contract FireZard is Context, IERC20, Ownable {
         recipient.transfer(amount);
     }
     
-     //to recieve ETH from uniswapV2Router when swaping
+     //to receive ETH from uniswapV2Router when swapping
     receive() external payable {
         require(msg.sender == address(uniswapV2Router),"Can't send directly to contract");
     }
