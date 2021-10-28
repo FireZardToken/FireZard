@@ -56,6 +56,14 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
 	tagValue = value;
     }
 
+    setTag(uint8 groupID, bytes32 key, bytes32 value) public virtual onlyOwner isGroupMember(groupID) {
+	if(tagGroup[key])
+	    require(tagGroup[key] == groupID, "Tag's group cannot be modified");
+	else
+	    tagGroup[key] = groupID;
+	tagValue = value;
+    }
+
     getTagValue(bytes32 key) public view returns bytes32 {
 	return tagValue[key];
     }
