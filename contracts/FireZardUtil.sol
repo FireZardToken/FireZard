@@ -15,6 +15,6 @@ library FireZardUtil {
     }
 
     function saveStat(address storage, Stat stat, name) public virtual {
-
+	
     }
 }
