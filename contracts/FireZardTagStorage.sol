@@ -11,9 +11,10 @@
 
 pragma solidity ^0.8.0;
 
-import "../../../access/AccessControlEnumerable.sol";
-import "../../../utils/Context.sol";
-import "FireZardUtil.sol";
+import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "./FireZardUtil.sol";
 
 contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     bytes32 public constant ADDER_ROLE = keccak256('ADDER_ROLE');
@@ -22,9 +23,9 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     mapping (bytes32 => bytes32) tagByte32Value;
     mapping (bytes32 => string) tagStringValue;
     mapping (bytes32 => uint256) tagIntValue;
-    mapping (bytes32 => boolean) tagBooleanValue;
+    mapping (bytes32 => bool) tagBooleanValue;
     mapping (bytes32 => StatType) tagType;
-    mapping (bytes32 => boolean) groupMember;
+    mapping (bytes32 => bool) groupMember;
 
     modifier isAdder() {
 	require(hasRole(ADDER_ROLE, msg.sender),"The caller must have adder's priviledges");
@@ -32,9 +33,10 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     }
 
     modifier authorizeEdit(uint8 groupID, bytes32 key) {
-	if(tagGroup[key]>0)
+	if(tagGroup[key]>0){
 	    groupMemberKey = abi.encodePacked(msg.sender,tagGroup[key]);
 	    require(groupMember[groupMemberKey],"Need to be tag's group member");
+	}
 	else
 	    tagGroup[key] = groupID;
 	_;
@@ -70,7 +72,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param entity  Editor's address. It can be contract or user
      * @param groupID The id of the group where to add the entity
     **/
-    addEditor2Group(address entity,uint8 groupID) public virtual onlyOwner {
+    function addEditor2Group(address entity,uint8 groupID) public virtual onlyOwner {
 	groupMemberKey = abi.encodePacked(entity,groupID);
 	groupMember[groupMemberKey] = true;
     }
@@ -81,7 +83,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param entity  Editor's address. It can be contract or user
      * @param groupID The id of the group from where to remove the entity
     **/
-    removeEditorFromGroup(address entity,uint8 groupID) public virtual onlyOwner {
+    function removeEditorFromGroup(address entity,uint8 groupID) public virtual onlyOwner {
 	groupMemberKey = abi.encodePacked(entity,groupID);
 	groupMember[groupMemberKey] = false;
     }
@@ -95,7 +97,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key     The key of the tag
      * @param value   The value (type byte32) of the tag
     **/
-    setTag(uint8 groupID, bytes32 key, bytes32 value) public virtual isAdder() authorizeEdit(groupID, key) {
+    function setTag(uint8 groupID, bytes32 key, bytes32 value) public virtual isAdder() authorizeEdit(groupID, key) {
 	tagType = StatType.ByteArray;
 	tagByte32Value[key] = value;
     }
@@ -109,7 +111,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key     The key of the tag
      * @param value   The value (type string) of the tag
     **/
-    setTag(uint8 groupID, bytes32 key, string value) public virtual isAdder() authorizeEdit(groupID, key) {
+    function setTag(uint8 groupID, bytes32 key, string value) public virtual isAdder() authorizeEdit(groupID, key) {
 	tagType = StatType.String;
 	tagStringValue[key] = value;
     }
@@ -123,7 +125,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key     The key of the tag
      * @param value   The value (type uint256) of the tag
     **/
-    setTag(uint8 groupID, bytes32 key, uint256 value) public virtual isAdder() authorizeEdit(groupID, key) {
+    function setTag(uint8 groupID, bytes32 key, uint256 value) public virtual isAdder() authorizeEdit(groupID, key) {
 	tagType = StatType.Integer;
 	tagIntValue[key] = value;
     }
@@ -137,7 +139,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key     The key of the tag
      * @param value   The value (type boolean) of the tag
     **/
-    setTag(uint8 groupID, bytes32 key, boolean value) public virtual isAdder() authorizeEdit(groupID, key) {
+    function setTag(uint8 groupID, bytes32 key, boolean value) public virtual isAdder() authorizeEdit(groupID, key) {
 	tagType = StatType.Boolean;
 	tagBooleanValue[key] = value;
     }
@@ -145,10 +147,10 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     /**
      * @notice Gets data type of the tag.
      *
-     * @param  The tag's key
+     * @param  key The tag's key
      * @return The tag's value data type
     **/
-    getTagType(bytes32 key) public view returns StatType {
+    function getTagType(bytes32 key) public view returns (StatType) {
 	return tagType[key];
     }
 
@@ -158,7 +160,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return The tag's value of type bytes32
     **/
-    getByte32Value(bytes32 key) public view isByte32Tag(key) returns bytes32 {
+    function getByte32Value(bytes32 key) public view isByte32Tag(key) returns (bytes32) {
 	return tagByte32Value[key];
     }
 
@@ -168,7 +170,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return The tag's value of type string
     **/
-    getStringValue(bytes32 key) public view isStringTag(key) returns string {
+    function getStringValue(bytes32 key) public view isStringTag(key) returns (string) {
 	return tagStringValue[key];
     }
 
@@ -178,7 +180,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return The tag's value of type uint256
     **/
-    getIntValue(bytes32 key) public view isIntTag(key) returns uint256 {
+    function getIntValue(bytes32 key) public view isIntTag(key) returns (uint256) {
 	return tagIntValue[key];
     }
 
@@ -188,7 +190,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return The tag's value of type boolean
     **/
-    getBooleanValue(bytes32 key) public view isBooleanTag(key) returns boolean {
+    function getBooleanValue(bytes32 key) public view isBooleanTag(key) returns (boolean) {
 	return tagBooleanValue[key];
     }
 
@@ -198,7 +200,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return Id of the groupt to which the tag is currently associated
     **/
-    getTagGroup(bytes32 key) public view returns uint8 {
+    function getTagGroup(bytes32 key) public view returns (uint8) {
 	return tagGroup[key];
     }
 

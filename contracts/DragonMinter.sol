@@ -14,12 +14,19 @@
 
 pragma solidity ^0.8.0;
 
-import "IRNG.sol";
+import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "./IRNG.sol";
 
 contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
 
     address public          RNG_addr;
+
+    modifier isMinter() {
+	_;
+    }
 
     /**
      * @notice Initializes the Dragon Cards minter.
@@ -39,7 +46,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      * 
      * @param entity An address of a contract or external
     **/
-    addMinter(address entity) public virtual onlyOwner {
+    function addMinter(address entity) public virtual onlyOwner {
 	_setupRole(MINTER_ROLE, entity);
     }
 
@@ -48,8 +55,8 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      * 
      * @param entity An address of a contract or external
     **/
-    removeMinter(address entity) public virtual onlyOwner {
-	_revokeRole(MINTER_ROLE, entity);
+    function removeMinter(address entity) public virtual onlyOwner {
+	revokeRole(MINTER_ROLE, entity);
     }
 
     /**
@@ -62,8 +69,8 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      *
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
-    initPackage(byte32[] calldata commitment) external virtual {
-	for(i=0;i<commitment.length;i++)
+    function initPackage(bytes32[] calldata commitment) external virtual {
+	for(uint i=0;i<commitment.length;i++)
 	    IRNG(RNG_addr).init(commitment[i]);
     }
 
@@ -74,10 +81,10 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      *
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
-    mintPackage(byte32[] calldata commitment) external virtual isMinter {
-	for(i=0;i<commitment.length;i++){
+    function mintPackage(bytes32[] calldata commitment) external virtual isMinter {
+	for(uint i=0;i<commitment.length;i++){
 	    IRNG(RNG_addr).open(commitment[i]);
-	    rvalue=IRNG(RNG_addr).getRandomValue(commitment[i]);
+	    uint256 rvalue=IRNG(RNG_addr).getRandomValue(commitment[i]);
 	    
 	}
     }

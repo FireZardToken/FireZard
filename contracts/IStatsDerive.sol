@@ -7,9 +7,9 @@
 
 pragma solidity ^0.8.0;
 
-import "FireZardUtil.sol";
+import "./FireZardUtil.sol";
 
-interface IStatsDerive.sol {
+interface IStatsDerive {
 
     /**
      * @notice Derive the rarity from the card's ID
