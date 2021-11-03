@@ -1,0 +1,1638 @@
+{
+  "contractName": "IStatsDerive",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "rarity",
+      "outputs": [
+        {
+          "internalType": "enum FireZardUtil.CardRarity",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "getStatInt",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "getStatString",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "getStatByte32",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "getStatBool",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "stats",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "enum FireZardUtil.StatType",
+              "name": "statType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "is_mutable",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct FireZardUtil.Stat[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatBool\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatByte32\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatInt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatString\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"rarity\",\"outputs\":[{\"internalType\":\"enum FireZardUtil.CardRarity\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"stats\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"enum FireZardUtil.StatType\",\"name\":\"statType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"is_mutable\",\"type\":\"bool\"}],\"internalType\":\"struct FireZardUtil.Stat[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getStatBool(uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"getStatByte32(uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"getStatInt(uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"getStatString(uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"rarity(uint256)\":{\"params\":{\"id\":\"An id generated by an RNG\"},\"returns\":{\"_0\":\"The card rarity*\"}},\"stats()\":{\"returns\":{\"_0\":\"An enumerable set (actually, an array) of stats that can be derived by the interface implementation*\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getStatBool(uint256,string)\":{\"notice\":\"Derive a boolean stat from the card's ID by the stats' name\"},\"getStatByte32(uint256,string)\":{\"notice\":\"Derive a 32 byte array stat from the card's ID by the stats' name\"},\"getStatInt(uint256,string)\":{\"notice\":\"Derive an integer stat from the card's ID by the stats' name\"},\"getStatString(uint256,string)\":{\"notice\":\"Derive a string stat from the card's ID by the stats' name\"},\"rarity(uint256)\":{\"notice\":\"Derive the rarity from the card's ID\"},\"stats()\":{\"notice\":\"Defines a set of stats that can be derived\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/IStatsDerive.sol\":\"IStatsDerive\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/FireZardUtil.sol\":{\"keccak256\":\"0xdf38aca7ef422b397d66e05c2075134d4ce48d3fcf8cbaebd4f8b6fb0d95182e\",\"urls\":[\"bzz-raw://f81f7c28c46cf0cf2a482c83300c17f9cccccf647a97efe1accc2e2b2a88b1be\",\"dweb:/ipfs/QmaNmW4dCu2263Gr5QXayPoD4z6bWVfgBZxNRrtCtgLTWQ\"]},\"project:/contracts/IStatsDerive.sol\":{\"keccak256\":\"0x973617423dc0a997d52736162d95676ff4b69d3708d65e4d55ab118073866c4e\",\"urls\":[\"bzz-raw://0409a25e949ae31c9e021309c0051496d2d105493573b505f5d02ed7149ed6ea\",\"dweb:/ipfs/QmeBQRb6pqjXUsjJE3w35PiSLha22x6S9aCgFbr3kbWrch\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/**\n * Derives stats from card ID\n * @title  Interface for deriving dragon card stats from its ID\n * @author CryptoHog\n * @notice Defines an interface for a contract deriving the stats from a randomly generated ID\n */\n\npragma solidity ^0.8.0;\n\nimport \"./FireZardUtil.sol\";\n\ninterface IStatsDerive {\n\n    /**\n     * @notice Derive the rarity from the card's ID\n     *\n     * @param id An id generated by an RNG\n     * @return The card rarity\n    **/\n    function rarity(uint256 id) external view returns (FireZardUtil.CardRarity);\n\n    /**\n     * @notice Derive an integer stat from the card's ID by the stats' name\n     *\n     * @param id An id generated by an RNG\n     * @param name The stats' name\n     * @return The stats' value\n    **/\n    function getStatInt(uint256 id, string calldata name) external view returns (uint256);\n\n    /**\n     * @notice Derive a string stat from the card's ID by the stats' name\n     *\n     * @param id An id generated by an RNG\n     * @param name The stats' name\n     * @return The stats' value\n    **/\n    function getStatString(uint256 id, string calldata name) external view returns (string calldata);\n\n    /**\n     * @notice Derive a 32 byte array stat from the card's ID by the stats' name\n     *\n     * @param id An id generated by an RNG\n     * @param name The stats' name\n     * @return The stats' value\n    **/\n    function getStatByte32(uint256 id, string calldata name) external view returns (bytes32);\n\n    /**\n     * @notice Derive a boolean stat from the card's ID by the stats' name\n     *\n     * @param id An id generated by an RNG\n     * @param name The stats' name\n     * @return The stats' value\n    **/\n    function getStatBool(uint256 id, string calldata name) external view returns (bool);\n\n    /**\n     * @notice Defines a set of stats that can be derived\n     *\n     * @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation\n    **/\n    function stats() external view returns (FireZardUtil.Stat[] calldata);\n}\n",
+  "sourcePath": "/home/vrogojin/Projects/firezard_nft/contracts/IStatsDerive.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/IStatsDerive.sol",
+    "exportedSymbols": {
+      "FireZardUtil": [
+        4140
+      ],
+      "IStatsDerive": [
+        4221
+      ]
+    },
+    "id": 4222,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4162,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "219:23:24"
+      },
+      {
+        "absolutePath": "project:/contracts/FireZardUtil.sol",
+        "file": "./FireZardUtil.sol",
+        "id": 4163,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4222,
+        "sourceUnit": 4141,
+        "src": "244:28:24",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IStatsDerive",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 4221,
+        "linearizedBaseContracts": [
+          4221
+        ],
+        "name": "IStatsDerive",
+        "nameLocation": "284:12:24",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 4164,
+              "nodeType": "StructuredDocumentation",
+              "src": "304:144:24",
+              "text": " @notice Derive the rarity from the card's ID\n @param id An id generated by an RNG\n @return The card rarity*"
+            },
+            "functionSelector": "8b58c569",
+            "id": 4172,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rarity",
+            "nameLocation": "462:6:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4167,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4166,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "477:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4172,
+                  "src": "469:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4165,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "469:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "468:12:24"
+            },
+            "returnParameters": {
+              "id": 4171,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4170,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4172,
+                  "src": "504:23:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_CardRarity_$4115",
+                    "typeString": "enum FireZardUtil.CardRarity"
+                  },
+                  "typeName": {
+                    "id": 4169,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 4168,
+                      "name": "FireZardUtil.CardRarity",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4115,
+                      "src": "504:23:24"
+                    },
+                    "referencedDeclaration": 4115,
+                    "src": "504:23:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_CardRarity_$4115",
+                      "typeString": "enum FireZardUtil.CardRarity"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "503:25:24"
+            },
+            "scope": 4221,
+            "src": "453:76:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4173,
+              "nodeType": "StructuredDocumentation",
+              "src": "535:204:24",
+              "text": " @notice Derive an integer stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "83bf58fa",
+            "id": 4182,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatInt",
+            "nameLocation": "753:10:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4178,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4175,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "772:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4182,
+                  "src": "764:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4174,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "764:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4177,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "792:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4182,
+                  "src": "776:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4176,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "776:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "763:34:24"
+            },
+            "returnParameters": {
+              "id": 4181,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4180,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4182,
+                  "src": "821:7:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4179,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "821:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "820:9:24"
+            },
+            "scope": 4221,
+            "src": "744:86:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4183,
+              "nodeType": "StructuredDocumentation",
+              "src": "836:202:24",
+              "text": " @notice Derive a string stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "7dff62dc",
+            "id": 4192,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatString",
+            "nameLocation": "1052:13:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4188,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4185,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "1074:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4192,
+                  "src": "1066:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4184,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1066:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4187,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1094:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4192,
+                  "src": "1078:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4186,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1078:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1065:34:24"
+            },
+            "returnParameters": {
+              "id": 4191,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4190,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4192,
+                  "src": "1123:15:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4189,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1123:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1122:17:24"
+            },
+            "scope": 4221,
+            "src": "1043:97:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4193,
+              "nodeType": "StructuredDocumentation",
+              "src": "1146:209:24",
+              "text": " @notice Derive a 32 byte array stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "da3a003c",
+            "id": 4202,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatByte32",
+            "nameLocation": "1369:13:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4198,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4195,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "1391:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4202,
+                  "src": "1383:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4194,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1383:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4197,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1411:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4202,
+                  "src": "1395:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4196,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1395:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1382:34:24"
+            },
+            "returnParameters": {
+              "id": 4201,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4200,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4202,
+                  "src": "1440:7:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 4199,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1440:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1439:9:24"
+            },
+            "scope": 4221,
+            "src": "1360:89:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4203,
+              "nodeType": "StructuredDocumentation",
+              "src": "1455:203:24",
+              "text": " @notice Derive a boolean stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "8826e100",
+            "id": 4212,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatBool",
+            "nameLocation": "1672:11:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4205,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "1692:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4212,
+                  "src": "1684:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4204,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1684:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4207,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1712:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4212,
+                  "src": "1696:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4206,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1696:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1683:34:24"
+            },
+            "returnParameters": {
+              "id": 4211,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4210,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4212,
+                  "src": "1741:4:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 4209,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1741:4:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1740:6:24"
+            },
+            "scope": 4221,
+            "src": "1663:84:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4213,
+              "nodeType": "StructuredDocumentation",
+              "src": "1753:191:24",
+              "text": " @notice Defines a set of stats that can be derived\n @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation*"
+            },
+            "functionSelector": "d80528ae",
+            "id": 4220,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stats",
+            "nameLocation": "1958:5:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4214,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1963:2:24"
+            },
+            "returnParameters": {
+              "id": 4219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4218,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4220,
+                  "src": "1989:28:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Stat_$4128_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "struct FireZardUtil.Stat[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 4216,
+                      "nodeType": "UserDefinedTypeName",
+                      "pathNode": {
+                        "id": 4215,
+                        "name": "FireZardUtil.Stat",
+                        "nodeType": "IdentifierPath",
+                        "referencedDeclaration": 4128,
+                        "src": "1989:17:24"
+                      },
+                      "referencedDeclaration": 4128,
+                      "src": "1989:17:24",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Stat_$4128_storage_ptr",
+                        "typeString": "struct FireZardUtil.Stat"
+                      }
+                    },
+                    "id": 4217,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1989:19:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Stat_$4128_storage_$dyn_storage_ptr",
+                      "typeString": "struct FireZardUtil.Stat[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1988:30:24"
+            },
+            "scope": 4221,
+            "src": "1949:70:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 4222,
+        "src": "274:1747:24",
+        "usedErrors": []
+      }
+    ],
+    "src": "219:1803:24"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/IStatsDerive.sol",
+    "exportedSymbols": {
+      "FireZardUtil": [
+        4140
+      ],
+      "IStatsDerive": [
+        4221
+      ]
+    },
+    "id": 4222,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4162,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "219:23:24"
+      },
+      {
+        "absolutePath": "project:/contracts/FireZardUtil.sol",
+        "file": "./FireZardUtil.sol",
+        "id": 4163,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4222,
+        "sourceUnit": 4141,
+        "src": "244:28:24",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IStatsDerive",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 4221,
+        "linearizedBaseContracts": [
+          4221
+        ],
+        "name": "IStatsDerive",
+        "nameLocation": "284:12:24",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 4164,
+              "nodeType": "StructuredDocumentation",
+              "src": "304:144:24",
+              "text": " @notice Derive the rarity from the card's ID\n @param id An id generated by an RNG\n @return The card rarity*"
+            },
+            "functionSelector": "8b58c569",
+            "id": 4172,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rarity",
+            "nameLocation": "462:6:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4167,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4166,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "477:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4172,
+                  "src": "469:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4165,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "469:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "468:12:24"
+            },
+            "returnParameters": {
+              "id": 4171,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4170,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4172,
+                  "src": "504:23:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_CardRarity_$4115",
+                    "typeString": "enum FireZardUtil.CardRarity"
+                  },
+                  "typeName": {
+                    "id": 4169,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 4168,
+                      "name": "FireZardUtil.CardRarity",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 4115,
+                      "src": "504:23:24"
+                    },
+                    "referencedDeclaration": 4115,
+                    "src": "504:23:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_CardRarity_$4115",
+                      "typeString": "enum FireZardUtil.CardRarity"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "503:25:24"
+            },
+            "scope": 4221,
+            "src": "453:76:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4173,
+              "nodeType": "StructuredDocumentation",
+              "src": "535:204:24",
+              "text": " @notice Derive an integer stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "83bf58fa",
+            "id": 4182,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatInt",
+            "nameLocation": "753:10:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4178,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4175,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "772:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4182,
+                  "src": "764:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4174,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "764:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4177,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "792:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4182,
+                  "src": "776:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4176,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "776:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "763:34:24"
+            },
+            "returnParameters": {
+              "id": 4181,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4180,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4182,
+                  "src": "821:7:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4179,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "821:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "820:9:24"
+            },
+            "scope": 4221,
+            "src": "744:86:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4183,
+              "nodeType": "StructuredDocumentation",
+              "src": "836:202:24",
+              "text": " @notice Derive a string stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "7dff62dc",
+            "id": 4192,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatString",
+            "nameLocation": "1052:13:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4188,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4185,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "1074:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4192,
+                  "src": "1066:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4184,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1066:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4187,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1094:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4192,
+                  "src": "1078:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4186,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1078:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1065:34:24"
+            },
+            "returnParameters": {
+              "id": 4191,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4190,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4192,
+                  "src": "1123:15:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4189,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1123:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1122:17:24"
+            },
+            "scope": 4221,
+            "src": "1043:97:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4193,
+              "nodeType": "StructuredDocumentation",
+              "src": "1146:209:24",
+              "text": " @notice Derive a 32 byte array stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "da3a003c",
+            "id": 4202,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatByte32",
+            "nameLocation": "1369:13:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4198,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4195,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "1391:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4202,
+                  "src": "1383:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4194,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1383:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4197,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1411:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4202,
+                  "src": "1395:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4196,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1395:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1382:34:24"
+            },
+            "returnParameters": {
+              "id": 4201,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4200,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4202,
+                  "src": "1440:7:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 4199,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1440:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1439:9:24"
+            },
+            "scope": 4221,
+            "src": "1360:89:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4203,
+              "nodeType": "StructuredDocumentation",
+              "src": "1455:203:24",
+              "text": " @notice Derive a boolean stat from the card's ID by the stats' name\n @param id An id generated by an RNG\n @param name The stats' name\n @return The stats' value*"
+            },
+            "functionSelector": "8826e100",
+            "id": 4212,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStatBool",
+            "nameLocation": "1672:11:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4205,
+                  "mutability": "mutable",
+                  "name": "id",
+                  "nameLocation": "1692:2:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4212,
+                  "src": "1684:10:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 4204,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1684:7:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 4207,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "1712:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4212,
+                  "src": "1696:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 4206,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1696:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1683:34:24"
+            },
+            "returnParameters": {
+              "id": 4211,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4210,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4212,
+                  "src": "1741:4:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 4209,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1741:4:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1740:6:24"
+            },
+            "scope": 4221,
+            "src": "1663:84:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 4213,
+              "nodeType": "StructuredDocumentation",
+              "src": "1753:191:24",
+              "text": " @notice Defines a set of stats that can be derived\n @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation*"
+            },
+            "functionSelector": "d80528ae",
+            "id": 4220,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stats",
+            "nameLocation": "1958:5:24",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4214,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1963:2:24"
+            },
+            "returnParameters": {
+              "id": 4219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4218,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4220,
+                  "src": "1989:28:24",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Stat_$4128_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "struct FireZardUtil.Stat[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 4216,
+                      "nodeType": "UserDefinedTypeName",
+                      "pathNode": {
+                        "id": 4215,
+                        "name": "FireZardUtil.Stat",
+                        "nodeType": "IdentifierPath",
+                        "referencedDeclaration": 4128,
+                        "src": "1989:17:24"
+                      },
+                      "referencedDeclaration": 4128,
+                      "src": "1989:17:24",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Stat_$4128_storage_ptr",
+                        "typeString": "struct FireZardUtil.Stat"
+                      }
+                    },
+                    "id": 4217,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1989:19:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Stat_$4128_storage_$dyn_storage_ptr",
+                      "typeString": "struct FireZardUtil.Stat[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1988:30:24"
+            },
+            "scope": 4221,
+            "src": "1949:70:24",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 4222,
+        "src": "274:1747:24",
+        "usedErrors": []
+      }
+    ],
+    "src": "219:1803:24"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-11-03T14:12:11.433Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getStatBool(uint256,string)": {
+        "params": {
+          "id": "An id generated by an RNG",
+          "name": "The stats' name"
+        },
+        "returns": {
+          "_0": "The stats' value*"
+        }
+      },
+      "getStatByte32(uint256,string)": {
+        "params": {
+          "id": "An id generated by an RNG",
+          "name": "The stats' name"
+        },
+        "returns": {
+          "_0": "The stats' value*"
+        }
+      },
+      "getStatInt(uint256,string)": {
+        "params": {
+          "id": "An id generated by an RNG",
+          "name": "The stats' name"
+        },
+        "returns": {
+          "_0": "The stats' value*"
+        }
+      },
+      "getStatString(uint256,string)": {
+        "params": {
+          "id": "An id generated by an RNG",
+          "name": "The stats' name"
+        },
+        "returns": {
+          "_0": "The stats' value*"
+        }
+      },
+      "rarity(uint256)": {
+        "params": {
+          "id": "An id generated by an RNG"
+        },
+        "returns": {
+          "_0": "The card rarity*"
+        }
+      },
+      "stats()": {
+        "returns": {
+          "_0": "An enumerable set (actually, an array) of stats that can be derived by the interface implementation*"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "getStatBool(uint256,string)": {
+        "notice": "Derive a boolean stat from the card's ID by the stats' name"
+      },
+      "getStatByte32(uint256,string)": {
+        "notice": "Derive a 32 byte array stat from the card's ID by the stats' name"
+      },
+      "getStatInt(uint256,string)": {
+        "notice": "Derive an integer stat from the card's ID by the stats' name"
+      },
+      "getStatString(uint256,string)": {
+        "notice": "Derive a string stat from the card's ID by the stats' name"
+      },
+      "rarity(uint256)": {
+        "notice": "Derive the rarity from the card's ID"
+      },
+      "stats()": {
+        "notice": "Defines a set of stats that can be derived"
+      }
+    },
+    "version": 1
+  }
+}

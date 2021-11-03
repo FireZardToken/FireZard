@@ -14,7 +14,8 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./FireZardUtil.sol";
+import {FireZardUtil} from "./FireZardUtil.sol";
+
 
 contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     bytes32 public constant ADDER_ROLE = keccak256('ADDER_ROLE');
@@ -24,7 +25,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     mapping (bytes32 => string) tagStringValue;
     mapping (bytes32 => uint256) tagIntValue;
     mapping (bytes32 => bool) tagBooleanValue;
-    mapping (bytes32 => StatType) tagType;
+    mapping (bytes32 => FireZardUtil.StatType) tagType;
     mapping (bytes32 => bool) groupMember;
 
     modifier isAdder() {
@@ -34,7 +35,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
 
     modifier authorizeEdit(uint8 groupID, bytes32 key) {
 	if(tagGroup[key]>0){
-	    groupMemberKey = abi.encodePacked(msg.sender,tagGroup[key]);
+	    bytes32 groupMemberKey = keccak256(abi.encode(msg.sender,tagGroup[key]));
 	    require(groupMember[groupMemberKey],"Need to be tag's group member");
 	}
 	else
@@ -43,22 +44,22 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     }
 
     modifier isByte32Tag(bytes32 key) {
-	require((tagType[key] == StatType.ByteArray), "The tag must be a byte array");
+	require((tagType[key] == FireZardUtil.StatType.ByteArray), "The tag must be a byte array");
 	_;
     }
 
     modifier isStringTag(bytes32 key) {
-	require((tagType[key] == StatType.String), "The tag must be a string");
+	require((tagType[key] == FireZardUtil.StatType.String), "The tag must be a string");
 	_;
     }
 
     modifier isIntTag(bytes32 key) {
-	require((tagType[key] == StatType.Integer), "The tag must be an integer");
+	require((tagType[key] == FireZardUtil.StatType.Integer), "The tag must be an integer");
 	_;
     }
 
     modifier isBooleanTag(bytes32 key) {
-	require((tagType[key] == StatType.Boolean), "The tag must be a boolean");
+	require((tagType[key] == FireZardUtil.StatType.Boolean), "The tag must be a boolean");
 	_;
     }
 
@@ -73,7 +74,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param groupID The id of the group where to add the entity
     **/
     function addEditor2Group(address entity,uint8 groupID) public virtual onlyOwner {
-	groupMemberKey = abi.encodePacked(entity,groupID);
+	bytes32 groupMemberKey = keccak256(abi.encode(entity,groupID));
 	groupMember[groupMemberKey] = true;
     }
 
@@ -84,7 +85,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param groupID The id of the group from where to remove the entity
     **/
     function removeEditorFromGroup(address entity,uint8 groupID) public virtual onlyOwner {
-	groupMemberKey = abi.encodePacked(entity,groupID);
+	bytes32 groupMemberKey = keccak256(abi.encode(entity,groupID));
 	groupMember[groupMemberKey] = false;
     }
 
@@ -98,7 +99,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param value   The value (type byte32) of the tag
     **/
     function setTag(uint8 groupID, bytes32 key, bytes32 value) public virtual isAdder() authorizeEdit(groupID, key) {
-	tagType = StatType.ByteArray;
+	tagType[key] = FireZardUtil.StatType.ByteArray;
 	tagByte32Value[key] = value;
     }
 
@@ -111,8 +112,8 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key     The key of the tag
      * @param value   The value (type string) of the tag
     **/
-    function setTag(uint8 groupID, bytes32 key, string value) public virtual isAdder() authorizeEdit(groupID, key) {
-	tagType = StatType.String;
+    function setTag(uint8 groupID, bytes32 key, string calldata value) public virtual isAdder() authorizeEdit(groupID, key) {
+	tagType[key] = FireZardUtil.StatType.String;
 	tagStringValue[key] = value;
     }
 
@@ -126,7 +127,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param value   The value (type uint256) of the tag
     **/
     function setTag(uint8 groupID, bytes32 key, uint256 value) public virtual isAdder() authorizeEdit(groupID, key) {
-	tagType = StatType.Integer;
+	tagType[key] = FireZardUtil.StatType.Integer;
 	tagIntValue[key] = value;
     }
 
@@ -139,8 +140,8 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key     The key of the tag
      * @param value   The value (type boolean) of the tag
     **/
-    function setTag(uint8 groupID, bytes32 key, boolean value) public virtual isAdder() authorizeEdit(groupID, key) {
-	tagType = StatType.Boolean;
+    function setTag(uint8 groupID, bytes32 key, bool value) public virtual isAdder() authorizeEdit(groupID, key) {
+	tagType[key] = FireZardUtil.StatType.Boolean;
 	tagBooleanValue[key] = value;
     }
 
@@ -150,7 +151,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param  key The tag's key
      * @return The tag's value data type
     **/
-    function getTagType(bytes32 key) public view returns (StatType) {
+    function getTagType(bytes32 key) public view returns (FireZardUtil.StatType) {
 	return tagType[key];
     }
 
@@ -170,7 +171,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return The tag's value of type string
     **/
-    function getStringValue(bytes32 key) public view isStringTag(key) returns (string) {
+    function getStringValue(bytes32 key) public view isStringTag(key) returns (string memory) {
 	return tagStringValue[key];
     }
 
@@ -190,7 +191,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param key The tag's key
      * @return The tag's value of type boolean
     **/
-    function getBooleanValue(bytes32 key) public view isBooleanTag(key) returns (boolean) {
+    function getBooleanValue(bytes32 key) public view isBooleanTag(key) returns (bool) {
 	return tagBooleanValue[key];
     }
 

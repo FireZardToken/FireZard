@@ -14,7 +14,7 @@ library FireZardUtil {
 	bool is_mutable;
     }
 
-    function saveStat(address storage, Stat stat, string name) public virtual {
+    function saveStat(address tagStorage, Stat calldata stat, string calldata name) external {
 	
     }
 }

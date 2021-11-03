@@ -37,7 +37,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      * @param rng_contract The address of the RNG contract implementing IRNG interface.
     **/
     constructor(address rng_contract) {
-	this.RNG_addr = rng_contract;
+	RNG_addr = rng_contract;
 //	_setupRole(MINTER_ROLE, _msgSender());
     }
 
