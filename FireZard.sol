@@ -5,9 +5,9 @@ FireZard is an instant reward NFT trading card game on the BSC!
     
 Features of this contract
     
-1) 2% "The Dragon" is used to add liquidity by buying back and burning tokens
+1) 1% "The Dragon" is used to add liquidity by buying back and burning tokens
 2) 2% tax is collected and distributed to holders of ZARD
-3) 6% is used for the NFT reward system 
+3) 7% is used for the NFT reward system 
 4) 2% development
     
 ███████╗██╗██████╗░███████╗███████╗░█████╗░██████╗░██████╗░
@@ -480,7 +480,7 @@ contract FireZard is Context, IERC20, Ownable {
     
     
     
-    uint256 public rewardDivisor = 6;
+    uint256 public rewardDivisor = 7;
     uint256 public developmentDivisor = 2;
     
     uint256 public _maxTxAmount = 101**decimals();
