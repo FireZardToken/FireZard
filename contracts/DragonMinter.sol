@@ -17,12 +17,22 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./FireZardNFT.sol";
 import "./IRNG.sol";
+import "./IStatsDerive.sol";
+import {FireZardUtil} from "./FireZardUtil.sol";
 
 contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
 
-    address public          RNG_addr;
+    address public      RNG_addr;
+    address public	TAG_addr;
+    address public	NFT_addr;
+    address public	stats_lib_addr;
+
+    uint8 public 	group_id;
+    FireZardUtil.Stat[] public stats;
+    uint256 public	stats_length;
 
     modifier isMinter() {
 	_;
@@ -36,9 +46,48 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      *
      * @param rng_contract The address of the RNG contract implementing IRNG interface.
     **/
-    constructor(address rng_contract) {
+    constructor(address rng_contract, address tag_storage, address nft_container, address stats_lib) {
 	RNG_addr = rng_contract;
+	TAG_addr = tag_storage;
+	NFT_addr = nft_container;
+	stats_lib_addr = stats_lib;
+	FireZardUtil.Stat[] memory _stats = IStatsDerive(stats_lib_addr).stats(FireZardUtil.DRAGON_CARD_TYPE_CODE);
+	saveStats(_stats);
 //	_setupRole(MINTER_ROLE, _msgSender());
+    }
+
+    function saveStats(FireZardUtil.Stat[] memory _stats) internal {
+	for(uint256 i=0;i<_stats.length;i++){
+	    stats[i] = _stats[i];
+	}
+	stats_length = _stats.length;
+    }
+
+    function changeRNG(address rng_contract) public virtual onlyOwner {
+	RNG_addr = rng_contract;
+	emit RNGChange(rng_contract);
+    }
+
+    function changeTAG(address tag_storage) public virtual onlyOwner {
+	TAG_addr = tag_storage;
+	emit TAGChange(tag_storage);
+    }
+
+    function changeNFT(address nft_container) public virtual onlyOwner {
+	NFT_addr = nft_container;
+	emit NFTChange(nft_container);
+    }
+
+    function changeStatsLib(address stats_lib) public virtual onlyOwner {
+	stats_lib_addr = stats_lib;
+	FireZardUtil.Stat[] memory _stats = IStatsDerive(stats_lib_addr).stats(FireZardUtil.DRAGON_CARD_TYPE_CODE);
+	saveStats(_stats);
+	emit StatsLibChange(stats_lib);
+    }
+
+    function setTagGroupId(uint8 _group_id) public virtual onlyOwner {
+	group_id = _group_id;
+	emit TAGGroupID(_group_id);
     }
 
     /**
@@ -81,11 +130,40 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      *
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
-    function mintPackage(bytes32[] calldata commitment) external virtual isMinter {
+    function mintPackage(address recipient, bytes32[] calldata commitment, uint256[] calldata user_entropy) external virtual isMinter {
 	for(uint i=0;i<commitment.length;i++){
 	    IRNG(RNG_addr).open(commitment[i]);
-	    uint256 rvalue=IRNG(RNG_addr).getRandomValue(commitment[i]);
-	    
+	    uint256 nft_id=IRNG(RNG_addr).getRandomValue(commitment[i], user_entropy[i]);
+	    FireZardNFT(NFT_addr).mint(
+		recipient,
+		nft_id,
+		1,
+		FireZardUtil.DRAGON_CARD_TYPE_CODE
+	    );
+	    for(uint j=0;j<stats.length;j++){
+		if(!stats[j].is_mutable)continue;
+		bytes32 tag_key = FireZardUtil.getTagKey(nft_id,stats[j].name);
+		FireZardUtil.StatType statType = stats[j].statType;
+		if(statType == FireZardUtil.StatType.Integer){
+		    uint256 tag_value = IStatsDerive(stats_lib_addr).getStatInt(FireZardUtil.DRAGON_CARD_TYPE_CODE, nft_id, stats[j].name);
+		    FireZardTagStorage(TAG_addr).setTag(group_id, tag_key, tag_value);
+		}else if(statType == FireZardUtil.StatType.String){
+		    string memory tag_value = IStatsDerive(stats_lib_addr).getStatString(FireZardUtil.DRAGON_CARD_TYPE_CODE, nft_id, stats[j].name);
+		    FireZardTagStorage(TAG_addr).setTag(group_id, tag_key, tag_value);
+		}else if(statType == FireZardUtil.StatType.ByteArray){
+		    bytes32 tag_value = IStatsDerive(stats_lib_addr).getStatByte32(FireZardUtil.DRAGON_CARD_TYPE_CODE, nft_id, stats[j].name);
+		    FireZardTagStorage(TAG_addr).setTag(group_id, tag_key, tag_value);
+		}else if(statType == FireZardUtil.StatType.Boolean){
+		    bool tag_value = IStatsDerive(stats_lib_addr).getStatBool(FireZardUtil.DRAGON_CARD_TYPE_CODE, nft_id, stats[j].name);
+		    FireZardTagStorage(TAG_addr).setTag(group_id, tag_key, tag_value);
+		}
+	    }
 	}
     }
+
+    event RNGChange(address rng_contract);
+    event StatsLibChange(address stats_lib);
+    event TAGGroupID(uint8 group_id);
+    event TAGChange(address tag_storage);
+    event NFTChange(address nft_container);
 }
