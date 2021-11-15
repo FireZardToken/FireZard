@@ -402,7 +402,10 @@ contract("FireZardTagStorage", accounts => {
   });
 
   it("Tag storage test: creating/modifying tags", async () => {
-    const BYTE_TYPE = 3;
+    const BYTE_TYPE    = 2;
+    const STRING_TYPE  = 1;
+    const INTEGER_TYPE = 0;
+    const BOOLEAN_TYPE = 3;
 
     const tagStorage = await TagStorage.deployed();
 
@@ -430,20 +433,40 @@ contract("FireZardTagStorage", accounts => {
 	"Adder2 must be group2 member"
     );
 
-    await tagStorage.setTag(group1,keccak256('test3.bytearray'),keccak256('byte value'),{from: adder1});
+//    await tagStorage.setTag['uint8', 'bytes32', 'bytes32'](group1,keccak256('test3.bytearray'),keccak256('byte value'),{from: adder1});
+    await tagStorage.methods['setTag(uint8,bytes32,bytes32)'](group1,keccak256('test3.bytearray'),keccak256('byte value'),{from: adder1});
     var tag_type = await tagStorage.getTagType(keccak256('test3.bytearray'));
     assert.equal(tag_type, BYTE_TYPE, "Tag must be of Byte array type");
     var value = await tagStorage.getByte32Value(keccak256('test3.bytearray'));
-    assert.equal(value, keccak256('byte value'), "Byte array value must be hash of 'byte value'");
+    assert.equal(value, '0x'+keccak256('byte value').toString('hex'), "Byte array value must be hash of 'byte value'");
     var group = await tagStorage.getTagGroup(keccak256('test3.bytearray'));
     assert.equal(group,group1,"Tag must be associated to group1");
 
 
-    console.log(tag_type.toString(10));
-/*    await tagStorage.setTag(group1,keccak256('test3.string'),'string value',{from: adder1}),
-    await tagStorage.setTag(group1,keccak256('test3.int'),100,{from: adder1}),
-    await tagStorage.setTag(group1,keccak256('test3.bool'),true,{from: adder1}),*/
+    await tagStorage.methods['setTag(uint8,bytes32,string)'](group1,keccak256('test3.string'),'string value',{from: adder1});
+    tag_type = await tagStorage.getTagType(keccak256('test3.string'));
+    assert.equal(tag_type, STRING_TYPE, "Tag must be of String type");
+    value = await tagStorage.getStringValue(keccak256('test3.string'));
+    assert.equal(value, 'string value', "String value must be 'string value'");
+    group = await tagStorage.getTagGroup(keccak256('test3.string'));
+    assert.equal(group,group1,"Tag must be associated to group1");
 
+
+    await tagStorage.methods['setTag(uint8,bytes32,uint256)'](group1,keccak256('test3.int'),100,{from: adder1});
+    tag_type = await tagStorage.getTagType(keccak256('test3.int'));
+    assert.equal(tag_type, INTEGER_TYPE, "Tag must be of Integer type");
+    value = await tagStorage.getIntValue(keccak256('test3.int'));
+    assert.equal(value, 100, "Int value must be 100");
+    group = await tagStorage.getTagGroup(keccak256('test3.int'));
+    assert.equal(group,group1,"Tag must be associated to group1");
+
+    await tagStorage.methods['setTag(uint8,bytes32,bool)'](group1,keccak256('test3.bool'),true,{from: adder1});
+    tag_type = await tagStorage.getTagType(keccak256('test3.bool'));
+    assert.equal(tag_type, BOOLEAN_TYPE, "Tag must be of Boolean type");
+    value = await tagStorage.getBooleanValue(keccak256('test3.bool'));
+    assert.equal(value, true, "Boolean value must be true");
+    group = await tagStorage.getTagGroup(keccak256('test3.bool'));
+    assert.equal(group,group1,"Tag must be associated to group1");
 
   });
 
