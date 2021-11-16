@@ -8,8 +8,6 @@ interface IRNG {
 
     function init(bytes32 commitment) external;
 
-    function open(bytes32 value) external;
-
-    function getRandomValue(bytes32 commitment, uint256 user_entropy) external view returns (uint256);
+    function getRandomValue(uint256 user_entropy) external view returns (uint256);
 
 }

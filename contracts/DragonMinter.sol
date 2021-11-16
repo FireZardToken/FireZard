@@ -132,8 +132,8 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     **/
     function mintPackage(address recipient, bytes32[] calldata commitment, uint256[] calldata user_entropy) external virtual isMinter {
 	for(uint i=0;i<commitment.length;i++){
-	    IRNG(RNG_addr).open(commitment[i]);
-	    uint256 nft_id=IRNG(RNG_addr).getRandomValue(commitment[i], user_entropy[i]);
+//	    IRNG(RNG_addr).open(commitment[i]);
+	    uint256 nft_id=IRNG(RNG_addr).getRandomValue(user_entropy[i]);
 	    FireZardNFT(NFT_addr).mint(
 		recipient,
 		nft_id,

@@ -21,8 +21,15 @@ library FireZardUtil {
     function getTagKey(uint256 nft_id, string calldata name) public pure returns(bytes32) {
 	return keccak256(abi.encodePacked(nft_id, name));
     }
-/*    function saveStat(address tagStorage, Stat calldata stat, string calldata name) external {
-	byte32 tag_key = keccak256(name);
-	
-    }*/
+
+    function getRandomItem(uint256 rvalue, uint256[] calldata distribution, uint256 size) public pure returns(uint256) {
+	uint256 ratio = (~uint256(0)-1)/size;
+	uint256 svalue = 0;
+	for(uint256 i=0;i<distribution.length;i++){
+	    svalue+=ratio*distribution[i];
+	    if(rvalue < svalue)
+		return i;
+	}
+	return distribution.length;
+    }
 }
