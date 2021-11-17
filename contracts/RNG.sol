@@ -25,7 +25,7 @@ contract RNG is IRNG, Ownable {
 	emit ConfirmationCap(cap);
     }
 
-    function init(bytes32 commitment) external {
+    function commit(bytes32 commitment) external {
 	require((commitments[commitment] == 0),"The commitment should not have been initialized before");
 	commitments[commitment] = block.number;
     }

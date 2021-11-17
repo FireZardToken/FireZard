@@ -120,7 +120,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     **/
     function initPackage(bytes32[] calldata commitment) external virtual {
 	for(uint i=0;i<commitment.length;i++)
-	    IRNG(RNG_addr).init(commitment[i]);
+	    IRNG(RNG_addr).commit(commitment[i]);
     }
 
     /**
