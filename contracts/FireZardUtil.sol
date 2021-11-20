@@ -31,5 +31,6 @@ library FireZardUtil {
 		return i;
 	}
 	return distribution.length;
+	return 0;
     }
 }

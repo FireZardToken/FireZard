@@ -9,7 +9,7 @@ contract RNG is IRNG, Ownable {
     bool public test_mode;
 
     mapping(bytes32 => uint256) commitments;
-//    mapping(bytes32 => uint256) rvalues;
+    mapping(bytes32 => uint256) rvalues;
 
 /*    constructor(){
 	test_mode = false;
@@ -38,16 +38,24 @@ contract RNG is IRNG, Ownable {
 	emit ResetCommitment(commitment);
     }
 
+    function _getRandomValue(uint256 user_entropy) external view returns (uint256) {
+
+    }
+
     function getRandomValue(uint256 user_entropy) external view returns (uint256) {
 	bytes32 commitment = keccak256(abi.encodePacked(user_entropy));
-/*	uint256 rvalue = rvalues[commitment];
+	uint256 rvalue = rvalues[commitment];
 	if(rvalue != 0)
-	    return rvalue;*/
+	    return rvalue;
 	uint256 block_num  = commitments[commitment];
 	require((block.number - block_num  > commitment_confirmation_cap),"The entropy must have been committed at least the commitment_confirmation_cap blocks earlier");
-	return uint256(keccak256(abi.encodePacked(blockhash(block_num),commitment_confirmation_cap)));
+	rvalue = uint256(keccak256(abi.encodePacked(blockhash(block_num+commitment_confirmation_cap),user_entropy)));
 //	rvalues[commitment] = rvalue;
-//	return rvalue;
+	return rvalue;
+    }
+
+    function getRandomValue(uint256 user_entropy) public returns (uint256) {
+	
     }
 
     event ConfirmationCap(uint256 cap);
