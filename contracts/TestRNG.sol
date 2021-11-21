@@ -18,4 +18,14 @@ contract TestRNG {
 	return FireZardUtil.getRandomItem(rvalue, distrib, 2);
     }
 
+    function throwDice(uint256 rvalue) public pure returns(uint256){
+	uint256[] memory distrib = new uint256[](5);
+	distrib[0] = 1;
+	distrib[1] = 1;
+	distrib[2] = 1;
+	distrib[3] = 1;
+	distrib[4] = 1;
+	return FireZardUtil.getRandomItem(rvalue, distrib, 6);
+    }
+
 }

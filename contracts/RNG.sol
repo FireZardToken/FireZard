@@ -2,6 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+
+import "./FireZardUtil.sol";
+
 import "./IRNG.sol";
 
 contract RNG is IRNG, Ownable {
@@ -26,38 +29,45 @@ contract RNG is IRNG, Ownable {
     }
 
     function commit(bytes32 commitment) external {
-	require((commitments[commitment] == 0),"The commitment should not have been initialized before");
+	require((commitments[commitment] == 0),"The entropy should not have been commited before");
 	commitments[commitment] = block.number;
+
+	emit Commit(commitment);
     }
 
     function resetCommitment(bytes32 commitment) external onlyOwner {
 	require(test_mode, "This method works in test mode only");
 	commitments[commitment] = 0;
-//	rvalues[commitment] = 0;
+	rvalues[commitment] = 0;
 
 	emit ResetCommitment(commitment);
     }
 
-    function _getRandomValue(uint256 user_entropy) external view returns (uint256) {
-
-    }
-
-    function getRandomValue(uint256 user_entropy) external view returns (uint256) {
-	bytes32 commitment = keccak256(abi.encodePacked(user_entropy));
-	uint256 rvalue = rvalues[commitment];
-	if(rvalue != 0)
-	    return rvalue;
-	uint256 block_num  = commitments[commitment];
+    function _getRandomValue(uint256 block_num, bytes32 user_entropy) internal view returns (uint256) {
 	require((block.number - block_num  > commitment_confirmation_cap),"The entropy must have been committed at least the commitment_confirmation_cap blocks earlier");
-	rvalue = uint256(keccak256(abi.encodePacked(blockhash(block_num+commitment_confirmation_cap),user_entropy)));
-//	rvalues[commitment] = rvalue;
-	return rvalue;
+	return uint256(keccak256(abi.encodePacked(blockhash(block_num+commitment_confirmation_cap),user_entropy)));
     }
 
-    function getRandomValue(uint256 user_entropy) public returns (uint256) {
-	
+/*    function _deriveCommitment(uint256 user_entropy) internal pure returns (bytes32){
+	return keccak256(abi.encodePacked(user_entropy));
+    }*/
+
+    function lock(bytes32 entropy) external{
+	bytes32 commitment = FireZardUtil.deriveCommitment(entropy);
+	require(rvalues[commitment] == 0, "The entropy should not have been locked before");
+	uint256 block_num = commitments[commitment];
+	require(block_num > 0, "The entropy must have been committed earlier");
+	rvalues[commitment] = _getRandomValue(block_num,entropy);
+
+	emit EntropyLock(commitment);
+    }
+
+    function read(bytes32 commitment) external view returns (uint256){
+	return rvalues[commitment];
     }
 
     event ConfirmationCap(uint256 cap);
     event ResetCommitment(bytes32 commitment);
+    event EntropyLock(bytes32 commitment);
+    event Commit(bytes32 commitment);
 }

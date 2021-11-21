@@ -31,6 +31,10 @@ library FireZardUtil {
 		return i;
 	}
 	return distribution.length;
-	return 0;
     }
+
+      function deriveCommitment(bytes32 entropy) public pure returns (bytes32){
+        return keccak256(abi.encodePacked(entropy));
+    }
+
 }
