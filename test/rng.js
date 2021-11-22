@@ -58,6 +58,40 @@ const checkTossCoinDistrib = async(rng, test_rng, util, commit_period, rounds) =
     return (side0<side1);
 }
 
+const checkTossCoinDistrib1 = async(rng, test_rng, util, commit_period, rounds) => {
+    await rng.setCommitmentConfirmationCap(commit_period);
+    var side0 = 0;
+    var side1 = 0;
+    for(var i=0;i<rounds;i++){
+	const rvalue = await getRValue(rng, test_rng, commit_period);
+	const coin_side = await test_rng.tossCoin1(rvalue);
+	if(coin_side == 0)side0++;
+	    else side1++;
+    }
+//    console.log("side0: "+side0);
+//    console.log("side1: "+side1);
+
+//    assert.equal(Math.abs(side1-side0)<=rounds*0.3,true,"Unbalanced coin flip");
+    assert.equal((side0>=0.4*(rounds/4))&&(side0<=1.4*(rounds/4)),true,"Unbalanced coin sides");
+}
+
+const checkTossCoinDistrib2 = async(rng, test_rng, util, commit_period, rounds) => {
+    await rng.setCommitmentConfirmationCap(commit_period);
+    var side0 = 0;
+    var side1 = 0;
+    for(var i=0;i<rounds;i++){
+	const rvalue = await getRValue(rng, test_rng, commit_period);
+	const coin_side = await test_rng.tossCoin2(rvalue);
+	if(coin_side == 0)side0++;
+	    else side1++;
+    }
+//    console.log("side0: "+side0);
+//    console.log("side1: "+side1);
+
+//    assert.equal(Math.abs(side1-side0)<=rounds*0.3,true,"Unbalanced coin flip");
+    assert.equal((side1>=0.4*(rounds/4))&&(side1<=1.4*(rounds/4)),true,"Unbalanced coin sides");
+}
+
 const checkDiceDistrib = async(rng, test_rng, util, commit_period, rounds) => {
     await rng.setCommitmentConfirmationCap(commit_period);
     var side = [];
@@ -97,7 +131,7 @@ contract("RNG", accounts => {
     assert.equal((coin_sides_count>=2)&&(coin_sides_count<=4),true,"Unbalanced coin flip sides sum");
   });*/
 
-  it("RNG dice tests", async () => {
+/*  it("RNG dice tests", async () => {
     const rng = await RNG.deployed();
     const test_rng = await TestRNG.deployed();
     const util = await Util.deployed();
@@ -115,7 +149,26 @@ contract("RNG", accounts => {
 
     for(i=0;i<6;i++)
 	assert.equal(dice_sides_count[i]<3,true,"Biased side "+i+" count");
-  });
+  });*/
 
+/*  it("RNG flip coin tests, side0: 25% chance, side1 75% chance", async () => {
+    const rng = await RNG.deployed();
+    const test_rng = await TestRNG.deployed();
+    const util = await Util.deployed();
+
+    for(i=0;i<5;i++)
+	await checkTossCoinDistrib1(rng, test_rng, util, 1, 100);
+
+  });*/
+
+  it("RNG flip coin tests, side0: 75% chance, side1 25% chance", async () => {
+    const rng = await RNG.deployed();
+    const test_rng = await TestRNG.deployed();
+    const util = await Util.deployed();
+
+    for(i=0;i<5;i++)
+	await checkTossCoinDistrib2(rng, test_rng, util, 1, 100);
+
+  });
 
 });
