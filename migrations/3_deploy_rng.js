@@ -3,5 +3,5 @@ var Util = artifacts.require("./FireZardUtil.sol");
 
 module.exports = function(deployer, network, accounts) {
   deployer.link(Util, RNG);
-  deployer.deploy(RNG, (network === 'test'));
+  deployer.deploy(RNG, (network === 'test')||(network === 'develop'));
 };

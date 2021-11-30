@@ -8,7 +8,7 @@ import "./FireZardUtil.sol";
 import "./IRNG.sol";
 
 contract RNG is IRNG, Ownable {
-    uint256 public commitment_confirmation_cap = 10;
+    uint256 public commitment_confirmation_cap = 1;
     bool public test_mode;
 
     mapping(bytes32 => uint256) commitments;

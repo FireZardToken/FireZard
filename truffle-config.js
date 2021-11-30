@@ -1,6 +1,8 @@
 const path = require("path");
-const PrivateKeyProvider = require("truffle-privatekey-provider");
-const pKey = "8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63";
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
+//const PrivateKeyProvider = require("truffle-privatekey-provider");
+//const pKey = "8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -8,7 +10,8 @@ module.exports = {
   contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
     develop: {
-      port: 8545
+      provider: () => new HDWalletProvider(mnemonic, `http://127.0.0.1:8545/`),
+      network_id: '*'
     },
     testnet: {
 	provider: function() {                                                                                                                                                                                                     

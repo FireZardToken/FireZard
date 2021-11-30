@@ -6,6 +6,13 @@ import "./FireZardUtil.sol";
 contract TestRNG {
 
     uint256 public data;
+    uint256[] public distrib512;
+
+    constructor() {
+	distrib512 = new uint256[](511);
+//	for(uint i=0;i<511;i++)
+//	    distrib512[i] = 1;
+    }
 
     function writeSomeData(uint256 _data) public virtual {
 	data = _data;
@@ -40,6 +47,15 @@ contract TestRNG {
 	distrib[3] = 1;
 	distrib[4] = 1;
 	return FireZardUtil.getRandomItem(rvalue, distrib, 6);
+    }
+
+    function getSample512(uint256 rvalue) public view returns(uint256) {
+	return FireZardUtil.getRandomItem(rvalue, distrib512, 512);
+    }
+
+    function fillDistrib512(uint256 p) external {
+	for(uint i=p;(i<p+64)&&(i<511);i++)
+	    distrib512[i] = 1;
     }
 
 }

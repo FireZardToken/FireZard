@@ -14,6 +14,9 @@ const Util = artifacts.require("FireZardUtil");
 //const keccak256 = require('keccak256');
 
 const { keccak256 } = require("@ethersproject/keccak256");
+
+//const { hash, toHex, generateNonce, getRValue } = require('../client/src/helper.js');
+
 const hash = (nonce) => {
       return Buffer.from(keccak256(toHex(nonce)).replace('0x',''), 'hex');
 }
@@ -115,6 +118,11 @@ const checkDiceDistrib = async(rng, test_rng, util, commit_period, rounds) => {
     return maxi;
 }
 
+const getSample512 = async(rng, test_rng, commit_period) => {
+    const rvalue = await getRValue(rng, test_rng, commit_period);
+    return await test_rng.getSample512(rvalue);
+}
+
 contract("RNG", accounts => {
 
 
@@ -161,7 +169,7 @@ contract("RNG", accounts => {
 
   });*/
 
-  it("RNG flip coin tests, side0: 75% chance, side1 25% chance", async () => {
+/*  it("RNG flip coin tests, side0: 75% chance, side1 25% chance", async () => {
     const rng = await RNG.deployed();
     const test_rng = await TestRNG.deployed();
     const util = await Util.deployed();
@@ -169,6 +177,19 @@ contract("RNG", accounts => {
     for(i=0;i<5;i++)
 	await checkTossCoinDistrib2(rng, test_rng, util, 1, 100);
 
-  });
+  });*/
+
+    it("RNG 512 sampling test", async () => {
+	const rng = await RNG.deployed();
+	const test_rng = await TestRNG.deployed();
+
+	for(var p=0;p<=448;p+=64)
+	    await test_rng.fillDistrib512(p);
+
+	for(var i=0;i<512;i++){
+	    var sample = await getSample512(rng, test_rng, 1);
+	    console.log(sample.toString(10));
+	}
+    });
 
 });
