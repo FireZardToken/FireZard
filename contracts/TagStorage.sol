@@ -14,10 +14,10 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {FireZardUtil} from "./FireZardUtil.sol";
+import {Util} from "./Util.sol";
 
 
-contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
+contract TagStorage is Context, Ownable, AccessControlEnumerable {
     bytes32 public constant ADDER_ROLE = keccak256('ADDER_ROLE');
 
     mapping (bytes32 => uint8) tagGroup;
@@ -25,45 +25,45 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
     mapping (bytes32 => string) tagStringValue;
     mapping (bytes32 => uint256) tagIntValue;
     mapping (bytes32 => bool) tagBooleanValue;
-    mapping (bytes32 => FireZardUtil.StatType) tagType;
+    mapping (bytes32 => Util.StatType) tagType;
     mapping (bytes32 => bool) groupMember;
 
     modifier onlyAdder() {
-	require(hasRole(ADDER_ROLE, msg.sender),"FireZardTagStorage: The caller must have adder's priviledges");
+	require(hasRole(ADDER_ROLE, msg.sender),"TagStorage: The caller must have adder's priviledges");
 	_;
     }
 
     modifier onlyAdmin() {
-	require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender),"FireZardTagStorage: The caller must have admin's priviledges");
+	require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender),"TagStorage: The caller must have admin's priviledges");
 	_;
     }
 
     modifier authorizeEdit(uint8 groupID, bytes32 key) {
 	if(tagGroup[key]>0){
 	    bytes32 groupMemberKey = keccak256(abi.encode(msg.sender,tagGroup[key]));
-	    require(groupMember[groupMemberKey],"FireZardTagStorage: Need to be tag's group member");
+	    require(groupMember[groupMemberKey],"TagStorage: Need to be tag's group member");
 	}
 	tagGroup[key] = groupID;
 	_;
     }
 
     modifier byte32Tag(bytes32 key) {
-	require((tagType[key] == FireZardUtil.StatType.ByteArray), "FireZardTagStorage: The tag must be a byte array");
+	require((tagType[key] == Util.StatType.ByteArray), "TagStorage: The tag must be a byte array");
 	_;
     }
 
     modifier stringTag(bytes32 key) {
-	require((tagType[key] == FireZardUtil.StatType.String), "FireZardTagStorage: The tag must be a string");
+	require((tagType[key] == Util.StatType.String), "TagStorage: The tag must be a string");
 	_;
     }
 
     modifier intTag(bytes32 key) {
-	require((tagType[key] == FireZardUtil.StatType.Integer), "FireZardTagStorage: The tag must be an integer");
+	require((tagType[key] == Util.StatType.Integer), "TagStorage: The tag must be an integer");
 	_;
     }
 
     modifier booleanTag(bytes32 key) {
-	require((tagType[key] == FireZardUtil.StatType.Boolean), "FireZardTagStorage: The tag must be a boolean");
+	require((tagType[key] == Util.StatType.Boolean), "TagStorage: The tag must be a boolean");
 	_;
     }
 
@@ -132,7 +132,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param value   The value (type byte32) of the tag
     **/
     function setTag(uint8 groupID, bytes32 key, bytes32 value) public virtual onlyAdder authorizeEdit(groupID, key) {
-	tagType[key] = FireZardUtil.StatType.ByteArray;
+	tagType[key] = Util.StatType.ByteArray;
 	tagByte32Value[key] = value;
     }
 
@@ -146,7 +146,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param value   The value (type string) of the tag
     **/
     function setTag(uint8 groupID, bytes32 key, string calldata value) public virtual onlyAdder authorizeEdit(groupID, key) {
-	tagType[key] = FireZardUtil.StatType.String;
+	tagType[key] = Util.StatType.String;
 	tagStringValue[key] = value;
     }
 
@@ -160,7 +160,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param value   The value (type uint256) of the tag
     **/
     function setTag(uint8 groupID, bytes32 key, uint256 value) public virtual onlyAdder authorizeEdit(groupID, key) {
-	tagType[key] = FireZardUtil.StatType.Integer;
+	tagType[key] = Util.StatType.Integer;
 	tagIntValue[key] = value;
     }
 
@@ -174,7 +174,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param value   The value (type boolean) of the tag
     **/
     function setTag(uint8 groupID, bytes32 key, bool value) public virtual onlyAdder authorizeEdit(groupID, key) {
-	tagType[key] = FireZardUtil.StatType.Boolean;
+	tagType[key] = Util.StatType.Boolean;
 	tagBooleanValue[key] = value;
     }
 
@@ -184,7 +184,7 @@ contract FireZardTagStorage is Context, Ownable, AccessControlEnumerable {
      * @param  key The tag's key
      * @return The tag's value data type
     **/
-    function getTagType(bytes32 key) public view returns (FireZardUtil.StatType) {
+    function getTagType(bytes32 key) public view returns (Util.StatType) {
 	return tagType[key];
     }
 

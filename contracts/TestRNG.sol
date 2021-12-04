@@ -1,7 +1,7 @@
 
 pragma solidity ^0.8.0;
 
-import "./FireZardUtil.sol";
+import "./Util.sol";
 
 contract TestRNG {
 
@@ -22,21 +22,21 @@ contract TestRNG {
 	uint256[] memory distrib = new uint256[](1);
 	distrib[0] = 1;
 	
-	return FireZardUtil.getRandomItem(rvalue, distrib, 2);
+	return Util.getRandomItem(rvalue, distrib, 2);
     }
 
     function tossCoin1(uint256 rvalue) public pure returns(uint256){
 	uint256[] memory distrib = new uint256[](1);
 	distrib[0] = 1;
 	
-	return FireZardUtil.getRandomItem(rvalue, distrib, 4);
+	return Util.getRandomItem(rvalue, distrib, 4);
     }
 
     function tossCoin2(uint256 rvalue) public pure returns(uint256){
 	uint256[] memory distrib = new uint256[](1);
 	distrib[0] = 3;
 	
-	return FireZardUtil.getRandomItem(rvalue, distrib, 4);
+	return Util.getRandomItem(rvalue, distrib, 4);
     }
 
     function throwDice(uint256 rvalue) public pure returns(uint256){
@@ -46,11 +46,11 @@ contract TestRNG {
 	distrib[2] = 1;
 	distrib[3] = 1;
 	distrib[4] = 1;
-	return FireZardUtil.getRandomItem(rvalue, distrib, 6);
+	return Util.getRandomItem(rvalue, distrib, 6);
     }
 
     function getSample512(uint256 rvalue) public view returns(uint256) {
-	return FireZardUtil.getRandomItem(rvalue, distrib512, 512);
+	return Util.getRandomItem(rvalue, distrib512, 512);
     }
 
     function fillDistrib512(uint256 p) external {

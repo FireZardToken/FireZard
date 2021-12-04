@@ -1,6 +1,6 @@
 /**
- * Derives stats from card ID
- * @title  Interface for deriving dragon card stats from its ID
+ * Derives dragon card stats from card ID
+ * @title  Deriving dragon card stats from its ID
  * @author CryptoHog
  * @notice Defines an interface for a contract deriving the stats from a randomly generated ID
  */

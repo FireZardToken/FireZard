@@ -4,9 +4,9 @@
 
 pragma solidity ^0.8.0;
 
-import "./FireZardTagStorage.sol";
+//import "./TagStorage.sol";
 
-library FireZardUtil {
+library Util {
     bytes public constant DRAGON_CARD_TYPE_CODE = abi.encodePacked(keccak256('DRAGON_CARD'));
 
     enum CardRarity{ Common, Uncommon, Rare, Super_Rare, Ultra_Rare }

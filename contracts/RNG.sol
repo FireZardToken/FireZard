@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./FireZardUtil.sol";
+import "./Util.sol";
 
 import "./IRNG.sol";
 
@@ -53,7 +53,7 @@ contract RNG is IRNG, Ownable {
     }*/
 
     function lock(bytes32 entropy) external{
-	bytes32 commitment = FireZardUtil.deriveCommitment(entropy);
+	bytes32 commitment = Util.deriveCommitment(entropy);
 	require(rvalues[commitment] == 0, "The entropy should not have been locked before");
 	uint256 block_num = commitments[commitment];
 	require(block_num > 0, "The entropy must have been committed earlier");
