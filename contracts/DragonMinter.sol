@@ -167,7 +167,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 		recipient,
 		nft_id,
 		1,
-		Util.DRAGON_CARD_TYPE_CODE
+		abi.encodePacked(Util.DRAGON_CARD_TYPE_CODE)
 	    );
 	    for(uint j=0;j<stats.length;j++){
 		if(!stats[j].is_mutable)continue;

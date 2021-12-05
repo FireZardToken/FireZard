@@ -8,8 +8,37 @@
 pragma solidity ^0.8.0;
 
 import "./Util.sol";
+import "./IStatsDerive.sol";
+import "./StatsDistrib.sol";
 
-interface IStatsDerive {
+contract DragonStats is IStatsDerive {
+    string public constant RARITY_STR = 'rarity';
+    string public constant HEALTH_STR = 'health';
+    string public constant TYPE_STR   = 'type';
+    bytes32 public constant H_RARITY_STR = keccak256(abi.encodePacked(RARITY_STR));
+    bytes32 public constant H_HEALTH_STR = keccak256(abi.encodePacked(HEALTH_STR));
+    bytes32 public constant H_TYPE_STR = keccak256(abi.encodePacked(TYPE_STR));
+
+    address public	statsDistrib;
+
+    constructor(address _statsDistrib){
+	linkStatsDistrib(_statsDistrib);
+    }
+
+    function linkStatsDistrib(address _statsDistrib) public {
+	statsDistrib = _statsDistrib;
+	emit StatsDistribLink(statsDistrib);
+    }
+
+    function deriveRarity(uint256 id) internal view returns (Util.CardRarity) {
+	uint256 rvalue = uint256(keccak256(abi.encode(id,RARITY_STR)));
+	return Util.CardRarity(Util.getRandomItem(rvalue, StatsDistrib(statsDistrib).getDragonCardRarities(), StatsDistrib(statsDistrib).dragonCardRarityPopulationSize()));
+    }
+
+    function deriveType(uint256 id) internal view returns (Util.CardType) {
+	uint256 rvalue = uint256(keccak256(abi.encode(id,TYPE_STR)));
+	return Util.CardType(Util.getRandomItem(rvalue, StatsDistrib(statsDistrib).getDragonCardTypes(), StatsDistrib(statsDistrib).dragonCardTypePopulationSize()));
+    }
 
     /**
      * @notice Derive an integer stat from the card's ID by the stats' name
@@ -18,7 +47,17 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatInt(bytes calldata nft_type, uint256 id, string calldata name) external view returns (uint256);
+    function getStatInt(bytes32 nft_type, uint256 id, string calldata name) external view returns (uint256){
+	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
+	bytes32 h_name = keccak256(abi.encodePacked(name));
+	if(h_name == H_RARITY_STR)
+	    return uint256(deriveRarity(id));
+	if(h_name == H_TYPE_STR)
+	    return uint256(deriveType(id));
+	if(h_name == H_HEALTH_STR)
+	    return Util.MAX_UINT;
+	revert("Unsupported stat");
+    }
 
     /**
      * @notice Derive a string stat from the card's ID by the stats' name
@@ -27,7 +66,9 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatString(bytes calldata nft_type, uint256 id, string calldata name) external view returns (string calldata);
+    function getStatString(bytes32 nft_type, uint256 id, string calldata name) external view returns (string calldata){
+	revert("Unsupported stat");
+    }
 
     /**
      * @notice Derive a 32 byte array stat from the card's ID by the stats' name
@@ -36,7 +77,9 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatByte32(bytes calldata nft_type, uint256 id, string calldata name) external view returns (bytes32);
+    function getStatByte32(bytes32 nft_type, uint256 id, string calldata name) external view returns (bytes32){
+	revert("Unsupported stat");
+    }
 
     /**
      * @notice Derive a boolean stat from the card's ID by the stats' name
@@ -45,12 +88,22 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatBool(bytes calldata nft_type, uint256 id, string calldata name) external view returns (bool);
+    function getStatBool(bytes32 nft_type, uint256 id, string calldata name) external view returns (bool){
+	revert("Unsupported stat");
+    }
 
     /**
      * @notice Defines a set of stats that can be derived
      *
      * @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation
     **/
-    function stats(bytes calldata nft_type) external view returns (Util.Stat[] calldata);
+    function stats(bytes32 nft_type) external view returns (Util.Stat[] memory) {
+	Util.Stat[] memory stats_list = new Util.Stat[](3);
+	stats_list[0] = Util.Stat("rarity", Util.StatType.Integer, true);
+	stats_list[1] = Util.Stat("health", Util.StatType.Integer, false);
+	stats_list[2] = Util.Stat("type", Util.StatType.Integer, true);
+	return stats_list;
+    }
+
+    event StatsDistribLink(address _statsDistrib);
 }

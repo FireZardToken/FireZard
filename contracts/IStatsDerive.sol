@@ -18,7 +18,7 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatInt(bytes calldata nft_type, uint256 id, string calldata name) external view returns (uint256);
+    function getStatInt(bytes32 nft_type, uint256 id, string calldata name) external view returns (uint256);
 
     /**
      * @notice Derive a string stat from the card's ID by the stats' name
@@ -27,7 +27,7 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatString(bytes calldata nft_type, uint256 id, string calldata name) external view returns (string calldata);
+    function getStatString(bytes32 nft_type, uint256 id, string calldata name) external view returns (string calldata);
 
     /**
      * @notice Derive a 32 byte array stat from the card's ID by the stats' name
@@ -36,7 +36,7 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatByte32(bytes calldata nft_type, uint256 id, string calldata name) external view returns (bytes32);
+    function getStatByte32(bytes32 nft_type, uint256 id, string calldata name) external view returns (bytes32);
 
     /**
      * @notice Derive a boolean stat from the card's ID by the stats' name
@@ -45,12 +45,12 @@ interface IStatsDerive {
      * @param name The stats' name
      * @return The stats' value
     **/
-    function getStatBool(bytes calldata nft_type, uint256 id, string calldata name) external view returns (bool);
+    function getStatBool(bytes32 nft_type, uint256 id, string calldata name) external view returns (bool);
 
     /**
      * @notice Defines a set of stats that can be derived
      *
      * @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation
     **/
-    function stats(bytes calldata nft_type) external view returns (Util.Stat[] calldata);
+    function stats(bytes32 nft_type) external view returns (Util.Stat[] memory);
 }
