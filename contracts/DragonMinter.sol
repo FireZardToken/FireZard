@@ -62,7 +62,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 
     function saveStats(Util.Stat[] memory _stats) internal {
 	for(uint256 i=0;i<_stats.length;i++){
-	    stats[i] = _stats[i];
+	    stats.push(_stats[i]);
 	}
 	stats_length = _stats.length;
     }
@@ -160,7 +160,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      *
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
-    function mintPackage(address recipient, bytes32[] calldata commitment) external virtual isMinter {
+    function openPackage(address recipient, bytes32[] calldata commitment) external virtual isMinter{
 	for(uint i=0;i<commitment.length;i++){
 	    uint256 nft_id=IRNG(RNG_addr).read(commitment[i]);
 	    FireZardNFT(NFT_addr).mint(
@@ -169,7 +169,7 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 		1,
 		abi.encodePacked(Util.DRAGON_CARD_TYPE_CODE)
 	    );
-	    for(uint j=0;j<stats.length;j++){
+	    for(uint j=0;j<stats_length;j++){
 		if(!stats[j].is_mutable)continue;
 		bytes32 tag_key = Util.getTagKey(nft_id,stats[j].name);
 		Util.StatType statType = stats[j].statType;

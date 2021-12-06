@@ -97,11 +97,11 @@ contract DragonStats is IStatsDerive {
      *
      * @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation
     **/
-    function stats(bytes32 nft_type) external view returns (Util.Stat[] memory) {
+    function stats(bytes32 nft_type) external pure returns (Util.Stat[] memory) {
 	Util.Stat[] memory stats_list = new Util.Stat[](3);
-	stats_list[0] = Util.Stat("rarity", Util.StatType.Integer, true);
-	stats_list[1] = Util.Stat("health", Util.StatType.Integer, false);
-	stats_list[2] = Util.Stat("type", Util.StatType.Integer, true);
+	stats_list[0] = Util.Stat(RARITY_STR, Util.StatType.Integer, false);
+	stats_list[1] = Util.Stat(HEALTH_STR, Util.StatType.Integer, true);
+	stats_list[2] = Util.Stat(TYPE_STR, Util.StatType.Integer, false);
 	return stats_list;
     }
 

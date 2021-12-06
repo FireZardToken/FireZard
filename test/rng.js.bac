@@ -9,15 +9,15 @@ const {
 
 const RNG = artifacts.require("RNG");
 const TestRNG = artifacts.require("TestRNG");
-const Util = artifacts.require("FireZardUtil");
+const Util = artifacts.require("Util");
 
 //const keccak256 = require('keccak256');
 
-const { keccak256 } = require("@ethersproject/keccak256");
+//const { keccak256 } = require("@ethersproject/keccak256");
 
-//const { hash, toHex, generateNonce, getRValue } = require('../client/src/helper.js');
+const { hash, toHex, generateNonce, getRValue, getSample512 } = require('./helper.js');
 
-const hash = (nonce) => {
+/*const hash = (nonce) => {
       return Buffer.from(keccak256(toHex(nonce)).replace('0x',''), 'hex');
 }
 
@@ -122,7 +122,7 @@ const getSample512 = async(rng, test_rng, commit_period) => {
     const rvalue = await getRValue(rng, test_rng, commit_period);
     return await test_rng.getSample512(rvalue);
 }
-
+*/
 contract("RNG", accounts => {
 
 
