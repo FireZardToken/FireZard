@@ -7,6 +7,8 @@ const {
   expectRevert,
 } = require('@openzeppelin/test-helpers');
 
+const chai = require('chai');
+
 const { keccak256 } = require("@ethersproject/keccak256");
 
 const { generateNonce } = require('./helper.js');
@@ -18,6 +20,9 @@ const Stats = artifacts.require("DragonStats");
 const Minter = artifacts.require("DragonMinter");
 const TestRNG = artifacts.require("TestRNG");
 const Util = artifacts.require("Util");
+
+chai.use(require('chai-bn')(BN));
+const should = require('chai').should();
 
 contract("DragonMinter", accounts => {
 
@@ -68,7 +73,8 @@ contract("DragonMinter", accounts => {
 	const util     = await Util.deployed();
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
-	console.log("DRAGON_CARD_TYPE_CODE: "+DRAGON_CARD_TYPE_CODE);
+	const MAX_UINT = await util.MAX_UINT.call();
+//	console.log("DRAGON_CARD_TYPE_CODE: "+DRAGON_CARD_TYPE_CODE);
 
 	var commitments = [];
 	var nonces = [];
@@ -86,9 +92,9 @@ contract("DragonMinter", accounts => {
 	await minter.openPackage(accounts[1], commitments);
 
 	for(var i=0;i<commitments.length;i++){
-	    console.log("============================================================================");
-	    console.log("Commitment: "+commitments[i]);
-	    console.log("Nonce: "+nonces[i].toString('hex'));
+//	    console.log("============================================================================");
+//	    console.log("Commitment: "+commitments[i]);
+//	    console.log("Nonce: "+nonces[i].toString('hex'));
 	    var id = await rng.read(commitments[i]);
 	    var balance = await nft.balanceOf(accounts[1],id);
 	    var token_type = await nft.typeOf(id);
@@ -96,7 +102,11 @@ contract("DragonMinter", accounts => {
 	    var card_type = await stats.getStatInt(token_type, id, await stats.TYPE_STR());
 	    var health = await tag.getIntValue(await util.getTagKey(id, await stats.HEALTH_STR()));
 
-	    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	    assert.equal(balance, 1, "Excatly one dragon card must be minted");
+	    assert.equal(token_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+	    health.should.be.a.bignumber.equal(MAX_UINT);
+
+/*	    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	    console.log("ID: "+id);
 	    console.log("Balance is "+balance.toString(10));
 	    console.log("Token type: "+token_type);
@@ -104,7 +114,7 @@ contract("DragonMinter", accounts => {
 	    console.log("Card type: "+card_type.toString(10));
 	    console.log("Health: "+health.toString(10));
 	    console.log();
-	    console.log();
+	    console.log();*/
 	}
     });
 });
