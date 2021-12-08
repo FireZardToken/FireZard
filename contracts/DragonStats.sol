@@ -12,12 +12,28 @@ import "./IStatsDerive.sol";
 import "./StatsDistrib.sol";
 
 contract DragonStats is IStatsDerive {
+    bytes32 public constant VERSION = keccak256(abi.encodePacked('DragonStats-v1'));
     string public constant RARITY_STR = 'rarity';
     string public constant HEALTH_STR = 'health';
     string public constant TYPE_STR   = 'type';
+    string public constant ATTACK_STR = 'attack';
+    string public constant DEFENSE_STR= 'defense';
     bytes32 public constant H_RARITY_STR = keccak256(abi.encodePacked(RARITY_STR));
     bytes32 public constant H_HEALTH_STR = keccak256(abi.encodePacked(HEALTH_STR));
     bytes32 public constant H_TYPE_STR = keccak256(abi.encodePacked(TYPE_STR));
+    bytes32 public constant H_ATTACK_STR = keccak256(abi.encodePacked(ATTACK_STR));
+    bytes32 public constant H_DEFENSE_STR = keccak256(abi.encodePacked(DEFENSE_STR));
+
+    struct DragonStatsView{
+	bytes32 nft_type;
+	bytes32 version;
+
+	uint256 rarity;
+	uint256 health;
+	uint256 type;
+	uint256 attack;
+	uint256 defense;
+    }
 
     address public	statsDistrib;
 
@@ -54,7 +70,7 @@ contract DragonStats is IStatsDerive {
 	    return uint256(deriveRarity(id));
 	if(h_name == H_TYPE_STR)
 	    return uint256(deriveType(id));
-	if(h_name == H_HEALTH_STR)
+	if((h_name == H_HEALTH_STR)||(h_name == H_ATTACK_STR)||(h_name == H_DEFENSE_STR))
 	    return Util.MAX_UINT;
 	revert("Unsupported stat");
     }
@@ -67,6 +83,7 @@ contract DragonStats is IStatsDerive {
      * @return The stats' value
     **/
     function getStatString(bytes32 nft_type, uint256 id, string calldata name) external view returns (string calldata){
+	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
 	revert("Unsupported stat");
     }
 
@@ -78,6 +95,7 @@ contract DragonStats is IStatsDerive {
      * @return The stats' value
     **/
     function getStatByte32(bytes32 nft_type, uint256 id, string calldata name) external view returns (bytes32){
+	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
 	revert("Unsupported stat");
     }
 
@@ -89,6 +107,7 @@ contract DragonStats is IStatsDerive {
      * @return The stats' value
     **/
     function getStatBool(bytes32 nft_type, uint256 id, string calldata name) external view returns (bool){
+	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
 	revert("Unsupported stat");
     }
 
@@ -98,10 +117,13 @@ contract DragonStats is IStatsDerive {
      * @return An enumerable set (actually, an array) of stats that can be derived by the interface implementation
     **/
     function stats(bytes32 nft_type) external pure returns (Util.Stat[] memory) {
-	Util.Stat[] memory stats_list = new Util.Stat[](3);
+	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
+	Util.Stat[] memory stats_list = new Util.Stat[](5);
 	stats_list[0] = Util.Stat(RARITY_STR, Util.StatType.Integer, false);
 	stats_list[1] = Util.Stat(HEALTH_STR, Util.StatType.Integer, true);
 	stats_list[2] = Util.Stat(TYPE_STR, Util.StatType.Integer, false);
+	stats_list[3] = Util.Stat(ATTACK_STR, Util.StatType.Integer, true);
+	stats_list[4] = Util.Stat(DEFENSE_STR, Util.StatType.Integer, true);
 	return stats_list;
     }
 
