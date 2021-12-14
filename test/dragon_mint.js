@@ -71,34 +71,37 @@ contract("DragonMinter", accounts => {
 	const rng      = await RNG.deployed();
 	const test_rng = await TestRNG.deployed();
 	const nft      = await NFT.deployed();
-	const stats    = await Stats.deployed();
+	const stats_lib= await Stats.deployed();
 	const tag      = await TAG.deployed();
 	const view = await View.deployed();
 	const util     = await Util.deployed();
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
 	const MAX_UINT = await util.MAX_UINT.call();
+	await view.linkStatsLib(stats_lib.address, DRAGON_CARD_TYPE_CODE);
+
 	const stats = await view.stats(DRAGON_CARD_TYPE_CODE);
 
+//	console.log(stats);
+
 	for(var j=0;j<stats.length;j++){
-		var stat_value = await view.getStat(card_type, id, stats[j].name);
-		if(stats[j].name == await stats.RARITY_STR()){
+		if(stats[j].name == await stats_lib.RARITY_STR()){
 			assert.equal(stats[j].statType, 0, "Rarity stat should be of integer type");
 			assert.equal(stats[j].is_mutable, false, "Rarity stat should be immutable");
 		}
-		if(stats[j].name == await stats.HEALTH_STR()){
+		if(stats[j].name == await stats_lib.HEALTH_STR()){
 			assert.equal(stats[j].statType, 0, "Health stat should be of integer type");
 			assert.equal(stats[j].is_mutable, true, "Health stat should be mutable");
 		}
-		if(stats[j].name == await stats.TYPE_STR()){
+		if(stats[j].name == await stats_lib.TYPE_STR()){
 			assert.equal(stats[j].statType, 0, "Type stat should be of integer type");
-			assert.equal(stats[j].is_mutable, true, "Type stat should be immutable");
+			assert.equal(stats[j].is_mutable, false, "Type stat should be immutable");
 		}
-		if(stats[j].name == await stats.ATTACK_STR()){
+		if(stats[j].name == await stats_lib.ATTACK_STR()){
 			assert.equal(stats[j].statType, 0, "Attack stat should be of integer type");
 			assert.equal(stats[j].is_mutable, true, "Attack stat should be mutable");
 		}
-		if(stats[j].name == await stats.DEFENSE_STR()){
+		if(stats[j].name == await stats_lib.DEFENSE_STR()){
 			assert.equal(stats[j].statType, 0, "Defense stat should be of integer type");
 			assert.equal(stats[j].is_mutable, true, "Defense stat should be mutable");
 		}
@@ -126,34 +129,34 @@ contract("DragonMinter", accounts => {
 	    var id = await rng.read(commitments[i]);
 	    var balance = await nft.balanceOf(accounts[1],id);
 	    var token_type = await nft.typeOf(id);
-	    var rarity = await stats.getStatInt(token_type, id, await stats.RARITY_STR());
-	    var card_type = await stats.getStatInt(token_type, id, await stats.TYPE_STR());
-	    var attack = await stats.getStatInt(token_type, id, await stats.ATTACK_STR());
-	    var defense = await stats.getStatInt(token_type, id, await stats.DEFENSE_STR());
-	    var health = await tag.getIntValue(await util.getTagKey(id, await stats.HEALTH_STR()));
+	    var rarity = await stats_lib.getStatInt(token_type, id, await stats_lib.RARITY_STR());
+	    var card_type = await stats_lib.getStatInt(token_type, id, await stats_lib.TYPE_STR());
+	    var attack = await tag.getIntValue(await util.getTagKey(id, await stats_lib.ATTACK_STR()));
+	    var defense = await tag.getIntValue(await util.getTagKey(id, await stats_lib.DEFENSE_STR()));
+	    var health = await tag.getIntValue(await util.getTagKey(id, await stats_lib.HEALTH_STR()));
 
 	    assert.equal(balance, 1, "Excatly one dragon card must be minted");
 	    assert.equal(token_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
 	    health.should.be.a.bignumber.equal(MAX_UINT);
 
 	    for(var j=0;j<stats.length;j++){
-		    var stat_value = await view.getStat(card_type, id, stats[j].name);
-		    assert.equal(stat_value.statType, stats.statType, "Stat type must coincide with the queried stat type");
-		    if(stats[j].name == await stats.RARITY_STR()){
+		    var stat_value = await view.getStat(token_type, id, stats[j].name);
+		    assert.equal(stat_value.statType, stats[j].statType, "Stat type must coincide with the queried stat type");
+		    if(stats[j].name == await stats_lib.RARITY_STR()){
 			assert.equal(stat_value.int_val,rarity,"View must return correct rarity stat");
 		    }
-		    if(stats[j].name == await stats.HEALTH_STR()){
+		    if(stats[j].name == await stats_lib.HEALTH_STR()){
 //			assert.equal(stat_value.int_val,health,"View must return correct rarity stat");
 			health.should.be.a.bignumber.equal(stat_value.int_val);
 		    }
-		    if(stats[j].name == await stats.TYPE_STR()){
+		    if(stats[j].name == await stats_lib.TYPE_STR()){
 			assert.equal(stat_value.int_val,card_type,"View must return correct rarity stat");
 		    }
-		    if(stats[j].name == await stats.ATTACK_STR()){
+		    if(stats[j].name == await stats_lib.ATTACK_STR()){
 //			assert.equal(stat_value.int_val,rarity,"View must return correct rarity stat");
 			attack.should.be.a.bignumber.equal(stat_value.int_val);
 		    }
-		    if(stats[j].name == await stats.DEFENSE_STR()){
+		    if(stats[j].name == await stats_lib.DEFENSE_STR()){
 //			assert.equal(stat_value.int_val,rarity,"View must return correct rarity stat");
 			defense.should.be.a.bignumber.equal(stat_value.int_val);
 		    }
@@ -172,7 +175,7 @@ contract("DragonMinter", accounts => {
 	}
     });
 
-    it("Testing generic stats viewer", async () => {
+/*    it("Testing generic stats viewer", async () => {
 	const rng  = await RNG.deployed();
 	const view = await View.deployed();
 
@@ -184,5 +187,5 @@ contract("DragonMinter", accounts => {
 		
 	    }
 	}
-    });
+    }); */
 });
