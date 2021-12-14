@@ -21,6 +21,14 @@ library Util {
 	bool is_mutable;
     }
 
+    struct StatValue{
+	StatType statType;
+	uint256  int_val;
+	string   str_val;
+	bytes32  bta_val;
+	bool     bool_val;
+    }
+
     function getTagKey(uint256 nft_id, string calldata name) public pure returns(bytes32) {
 	return keccak256(abi.encodePacked(nft_id, name));
     }

@@ -30,7 +30,7 @@ contract DragonStats is IStatsDerive {
 
 	uint256 rarity;
 	uint256 health;
-	uint256 type;
+	Util.CardType card_type;
 	uint256 attack;
 	uint256 defense;
     }
