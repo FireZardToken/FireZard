@@ -24,16 +24,6 @@ contract DragonStats is IStatsDerive {
     bytes32 public constant H_ATTACK_STR = keccak256(abi.encodePacked(ATTACK_STR));
     bytes32 public constant H_DEFENSE_STR = keccak256(abi.encodePacked(DEFENSE_STR));
 
-    struct DragonStatsView{
-	bytes32 nft_type;
-	bytes32 version;
-
-	uint256 rarity;
-	uint256 health;
-	Util.CardType card_type;
-	uint256 attack;
-	uint256 defense;
-    }
 
     address public	statsDistrib;
 

@@ -8,6 +8,8 @@ import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.
 
 contract FireZardNFT is ERC1155PresetMinterPauser {
 
+    mapping(uint256 => address[]) public ownership;
+
     mapping(uint256 => bytes32) public token_type;
 
     constructor(string memory uri) ERC1155PresetMinterPauser(uri) {
