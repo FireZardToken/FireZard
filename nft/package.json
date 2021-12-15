@@ -1,0 +1,24 @@
+{
+  "name": "firezard_nft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.2",
+    "@truffle/hdwallet-provider": "^1.7.0",
+    "chai-bignumber": "^3.0.0",
+    "keccak256": "^1.0.3",
+    "truffle-privatekey-provider": "^1.5.0"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.13"
+  }
+}
