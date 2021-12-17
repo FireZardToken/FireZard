@@ -9,7 +9,8 @@ import {Util} from "./Util.sol";
 
 contract DragonStatsView is Ownable{
 
-    
+    address public	viewer_addr;
+    address public	NFT_addr;
 
     struct DragonStatsView{
 	address owner;
