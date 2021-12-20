@@ -20,6 +20,7 @@ const Stats = artifacts.require("DragonStats");
 const Minter = artifacts.require("DragonMinter");
 const TestRNG = artifacts.require("TestRNG");
 const View = artifacts.require("StatsView");
+const DragonView = artifacts.require("DragonCardView");
 const Util = artifacts.require("Util");
 
 chai.use(require('chai-bn')(BN));
@@ -67,14 +68,15 @@ contract("DragonMinter", accounts => {
     });
 
     it("Testing minting of Dragon cards with (pseudo-)randomly generated stats", async () => {
-	const minter   = await Minter.deployed();
-	const rng      = await RNG.deployed();
-	const test_rng = await TestRNG.deployed();
-	const nft      = await NFT.deployed();
-	const stats_lib= await Stats.deployed();
-	const tag      = await TAG.deployed();
-	const view = await View.deployed();
-	const util     = await Util.deployed();
+	const minter    = await Minter.deployed();
+	const rng       = await RNG.deployed();
+	const test_rng  = await TestRNG.deployed();
+	const nft       = await NFT.deployed();
+	const stats_lib = await Stats.deployed();
+	const tag       = await TAG.deployed();
+	const view	= await View.deployed();
+	const dragonView= await DragonView.deployed();
+	const util      = await Util.deployed();
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
 	const MAX_UINT = await util.MAX_UINT.call();
@@ -119,7 +121,7 @@ contract("DragonMinter", accounts => {
 	await test_rng.writeSomeData(generateNonce());
 
 	await minter.lockPackage(nonces);
-	
+
 	await minter.openPackage(accounts[1], commitments);
 
 	for(var i=0;i<commitments.length;i++){
@@ -162,7 +164,18 @@ contract("DragonMinter", accounts => {
 		    }
 	    }
 
-
+	    var dsv = await dragonView.getView(id);
+	    var version = await dragonView.VERSION();
+	    assert.equal(dsv.owner,accounts[1],"Owner must be returned correctly");
+	    assert.equal(dsv.stacked,1,"Dragon card is not stackable");
+	    assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+	    assert.equal(dsv.version, version, "Version must be returned correctly");
+	    rarity.should.be.a.bignumber.equal(dsv.rarity);
+	    health.should.be.a.bignumber.equal(dsv.health);
+	    assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
+	    attack.should.be.a.bignumber.equal(dsv.attack);
+	    defense.should.be.a.bignumber.equal(dsv.defense);
+	    
 /*	    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	    console.log("ID: "+id);
 	    console.log("Balance is "+balance.toString(10));
