@@ -12,6 +12,7 @@ const chai = require('chai');
 const { keccak256 } = require("@ethersproject/keccak256");
 
 const { generateNonce } = require('./helper.js');
+const { mint, getView } = require('../client/src/dragon_card.js');
 
 const RNG = artifacts.require("RNG");
 const TAG = artifacts.require("TagStorage");
@@ -23,6 +24,9 @@ const View = artifacts.require("StatsView");
 const DragonView = artifacts.require("DragonCardView");
 const Util = artifacts.require("Util");
 
+const minter_abi = require('../client/src/contracts/DragonMinter.json');
+const dragon_view_abi = require('../client/src/contracts/DragonCardView.json');
+
 chai.use(require('chai-bn')(BN));
 const should = require('chai').should();
 
@@ -30,7 +34,7 @@ contract("DragonMinter", accounts => {
 
 	var commitments = [];
 
-    it("Testing authorized DragonMinter control", async () => {
+/*    it("Testing authorized DragonMinter control", async () => {
 	const minter = await Minter.deployed();
 	const rng    = await RNG.deployed();
 	const tag    = await TAG.deployed();
@@ -65,7 +69,7 @@ contract("DragonMinter", accounts => {
 	    minter.removeMinter(accounts[2], {from: accounts[1]}),
 	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
 	);
-    });
+    });*/
 
     it("Testing minting of Dragon cards with (pseudo-)randomly generated stats", async () => {
 	const minter    = await Minter.deployed();
@@ -77,6 +81,11 @@ contract("DragonMinter", accounts => {
 	const view	= await View.deployed();
 	const dragonView= await DragonView.deployed();
 	const util      = await Util.deployed();
+
+	const dragon_view_instance = new web3.eth.Contract(
+	    dragon_view_abi.abi,
+	    dragonView.address
+	);
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
 	const MAX_UINT = await util.MAX_UINT.call();
@@ -139,6 +148,8 @@ contract("DragonMinter", accounts => {
 
 	    assert.equal(balance, 1, "Excatly one dragon card must be minted");
 	    assert.equal(token_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+	    attack.should.be.a.bignumber.equal(MAX_UINT);
+	    defense.should.be.a.bignumber.equal(MAX_UINT);
 	    health.should.be.a.bignumber.equal(MAX_UINT);
 
 	    for(var j=0;j<stats.length;j++){
@@ -175,30 +186,64 @@ contract("DragonMinter", accounts => {
 	    assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
 	    attack.should.be.a.bignumber.equal(dsv.attack);
 	    defense.should.be.a.bignumber.equal(dsv.defense);
-	    
-/*	    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-	    console.log("ID: "+id);
-	    console.log("Balance is "+balance.toString(10));
-	    console.log("Token type: "+token_type);
-	    console.log("Rarity: "+rarity.toString(10));
-	    console.log("Card type: "+card_type.toString(10));
-	    console.log("Health: "+health.toString(10));
-	    console.log();
-	    console.log();*/
+	
+
+	    dsv = await getView(dragon_view_instance, id);
+	    assert.equal(dsv.owner,accounts[1],"Owner must be returned correctly");
+	    assert.equal(dsv.stacked,1,"Dragon card is not stackable");
+	    assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+	    assert.equal(dsv.version, version, "Version must be returned correctly");
+	    rarity.should.be.a.bignumber.equal(dsv.rarity);
+	    health.should.be.a.bignumber.equal(dsv.health);
+	    assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
+	    attack.should.be.a.bignumber.equal(dsv.attack);
+	    defense.should.be.a.bignumber.equal(dsv.defense);
+
 	}
+
+	await expectRevert(
+	    minter.openPackage(accounts[1], commitments),
+	    'Same dragon card can be openned at most once -- Reason given: Same dragon card can be openned at most once.'
+	);
+
     });
 
-/*    it("Testing generic stats viewer", async () => {
-	const rng  = await RNG.deployed();
-	const view = await View.deployed();
+    it("Testing minting of Dragon cards with the backend nodejs library", async () => {
+	const minter    = await Minter.deployed();
+	const dragonView= await DragonView.deployed();
+	const util      = await Util.deployed();
+
+	const minter_instance = new web3.eth.Contract(
+	    minter_abi.abi,
+	    minter.address
+	);
+	const dragon_view_instance = new web3.eth.Contract(
+	    dragon_view_abi.abi,
+	    dragonView.address
+	);
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
-	const stats = await view.stats(DRAGON_CARD_TYPE_CODE);
-	for(var i=0;i<commitments.length;i++){
-	    var id = await rng.read(commitments[i]);
-	    for(var j=0;j<stats.length;j++){
-		
-	    }
-	}
-    }); */
+	const MAX_UINT = await util.MAX_UINT.call();
+
+	const size = 10;
+
+	var cap = await minter_instance.methods.getBlockConfirmationCap().call();
+//	console.log("cap: "+cap);
+//	console.log(JSON.stringify(minter_instance));
+//	console.log("minter: "+minter.address);
+	console.log("size: "+accounts.length);
+//	await minter_instance.methods.testWrite(accounts).send({from: accounts[0], gas: 1500000});
+	var ids = await mint(web3, minter_instance, accounts[0], size);
+//	var gas_limit = web3.eth.getBlock('latest').gasLimit;
+/*	for(var i=0;i<ids.size;i++){
+	    var dsv = await getView(dragon_view_instance, ids[i]);
+
+	    assert.equal(dsv.stacked, 1, "Excatly one dragon card must be minted");
+	    assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+	    dsv.attack.should.be.a.bignumber.equal(MAX_UINT);
+	    dsv.defense.should.be.a.bignumber.equal(MAX_UINT);
+	    dsv.health.should.be.a.bignumber.equal(MAX_UINT);
+	}*/
+
+    });
 });

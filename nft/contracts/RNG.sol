@@ -66,6 +66,10 @@ contract RNG is IRNG, Ownable {
 	return rvalues[commitment];
     }
 
+    function getBlockConfirmationCap() external view returns (uint256){
+	return commitment_confirmation_cap;
+    }
+
     event ConfirmationCap(uint256 cap);
     event ResetCommitment(bytes32 commitment);
     event EntropyLock(bytes32 commitment);

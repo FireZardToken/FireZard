@@ -97,25 +97,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"dragonCardRarity\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dragonCardRarityPopulationSize\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"dragonCardType\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dragonCardTypePopulationSize\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDragonCardRarities\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDragonCardTypes\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/StatsDistrib.sol\":\"StatsDistrib\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/StatsDistrib.sol\":{\"keccak256\":\"0x218ee2e4f80ebb143e085a795349bdf5d6bf462a9676eeff83fb864024f6e9c9\",\"urls\":[\"bzz-raw://9766e2084f2ff7f86e689effcc28572c1daaa981bf33028bb2b3cb85741d55ce\",\"dweb:/ipfs/QmNioTTWQMCerQB7Aa7yezZP7bzJE9u1HcXR3RfZj37fL2\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060408051600480825260a0820190925290602082016080803683375050815161004192600092506020019061019f565b50600160008081548110610057576100576101ff565b9060005260206000200181905550600a600060018154811061007b5761007b6101ff565b90600052602060002001819055506014600060028154811061009f5761009f6101ff565b9060005260206000200181905550607d60006003815481106100c3576100c36101ff565b60009182526020909120015561020060015560408051600480825260a08201909252908160200160208202803683375050815161010792600292506020019061019f565b506001600260008154811061011e5761011e6101ff565b906000526020600020018190555060016002600181548110610142576101426101ff565b9060005260206000200181905550600160028081548110610165576101656101ff565b906000526020600020018190555060016002600381548110610189576101896101ff565b6000918252602090912001556005600355610215565b8280548282559060005260206000209081019282156101da579160200282015b828111156101da5782518255916020019190600101906101bf565b506101e69291506101ea565b5090565b5b808211156101e657600081556001016101eb565b634e487b7160e01b600052603260045260246000fd5b610240806102246000396000f3fe608060405234801561001057600080fd5b50600436106100615760003560e01c806238857b14610066578063221cf8f81461008c57806397dfd7e8146100a15780639f1349ed146100b4578063a9e790c8146100bd578063d710216e146100c5575b600080fd5b6100796100743660046101ad565b6100ce565b6040519081526020015b60405180910390f35b6100946100ef565b60405161008391906101c6565b6100796100af3660046101ad565b610147565b61007960015481565b610094610157565b61007960035481565b600081815481106100de57600080fd5b600091825260209091200154905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561013d57602002820191906000526020600020905b815481526020019060010190808311610129575b5050505050905090565b600281815481106100de57600080fd5b6060600080548060200260200160405190810160405280929190818152602001828054801561013d5760200282019190600052602060002090815481526020019060010190808311610129575050505050905090565b6000602082840312156101bf57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b818110156101fe578351835292840192918401916001016101e2565b5090969550505050505056fea26469706673582212206e663771de11814139d95c02b707fcfe7250d111da3ed9096643342584bf336064736f6c634300080a0033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100615760003560e01c806238857b14610066578063221cf8f81461008c57806397dfd7e8146100a15780639f1349ed146100b4578063a9e790c8146100bd578063d710216e146100c5575b600080fd5b6100796100743660046101ad565b6100ce565b6040519081526020015b60405180910390f35b6100946100ef565b60405161008391906101c6565b6100796100af3660046101ad565b610147565b61007960015481565b610094610157565b61007960035481565b600081815481106100de57600080fd5b600091825260209091200154905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561013d57602002820191906000526020600020905b815481526020019060010190808311610129575b5050505050905090565b600281815481106100de57600080fd5b6060600080548060200260200160405190810160405280929190818152602001828054801561013d5760200282019190600052602060002090815481526020019060010190808311610129575050505050905090565b6000602082840312156101bf57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b818110156101fe578351835292840192918401916001016101e2565b5090969550505050505056fea26469706673582212206e663771de11814139d95c02b707fcfe7250d111da3ed9096643342584bf336064736f6c634300080a0033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"dragonCardRarity\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dragonCardRarityPopulationSize\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"dragonCardType\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dragonCardTypePopulationSize\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDragonCardRarities\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDragonCardTypes\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/StatsDistrib.sol\":\"StatsDistrib\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/StatsDistrib.sol\":{\"keccak256\":\"0x218ee2e4f80ebb143e085a795349bdf5d6bf462a9676eeff83fb864024f6e9c9\",\"urls\":[\"bzz-raw://9766e2084f2ff7f86e689effcc28572c1daaa981bf33028bb2b3cb85741d55ce\",\"dweb:/ipfs/QmNioTTWQMCerQB7Aa7yezZP7bzJE9u1HcXR3RfZj37fL2\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060408051600480825260a0820190925290602082016080803683375050815161004192600092506020019061019f565b50600160008081548110610057576100576101ff565b9060005260206000200181905550600a600060018154811061007b5761007b6101ff565b90600052602060002001819055506014600060028154811061009f5761009f6101ff565b9060005260206000200181905550607d60006003815481106100c3576100c36101ff565b60009182526020909120015561020060015560408051600480825260a08201909252908160200160208202803683375050815161010792600292506020019061019f565b506001600260008154811061011e5761011e6101ff565b906000526020600020018190555060016002600181548110610142576101426101ff565b9060005260206000200181905550600160028081548110610165576101656101ff565b906000526020600020018190555060016002600381548110610189576101896101ff565b6000918252602090912001556005600355610215565b8280548282559060005260206000209081019282156101da579160200282015b828111156101da5782518255916020019190600101906101bf565b506101e69291506101ea565b5090565b5b808211156101e657600081556001016101eb565b634e487b7160e01b600052603260045260246000fd5b610240806102246000396000f3fe608060405234801561001057600080fd5b50600436106100615760003560e01c806238857b14610066578063221cf8f81461008c57806397dfd7e8146100a15780639f1349ed146100b4578063a9e790c8146100bd578063d710216e146100c5575b600080fd5b6100796100743660046101ad565b6100ce565b6040519081526020015b60405180910390f35b6100946100ef565b60405161008391906101c6565b6100796100af3660046101ad565b610147565b61007960015481565b610094610157565b61007960035481565b600081815481106100de57600080fd5b600091825260209091200154905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561013d57602002820191906000526020600020905b815481526020019060010190808311610129575b5050505050905090565b600281815481106100de57600080fd5b6060600080548060200260200160405190810160405280929190818152602001828054801561013d5760200282019190600052602060002090815481526020019060010190808311610129575050505050905090565b6000602082840312156101bf57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b818110156101fe578351835292840192918401916001016101e2565b5090969550505050505056fea2646970667358221220a898815ed5a8b14d59a06eeecb24ae304fdf6a5d3b4ca1556a33108045c416ef64736f6c634300080b0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100615760003560e01c806238857b14610066578063221cf8f81461008c57806397dfd7e8146100a15780639f1349ed146100b4578063a9e790c8146100bd578063d710216e146100c5575b600080fd5b6100796100743660046101ad565b6100ce565b6040519081526020015b60405180910390f35b6100946100ef565b60405161008391906101c6565b6100796100af3660046101ad565b610147565b61007960015481565b610094610157565b61007960035481565b600081815481106100de57600080fd5b600091825260209091200154905081565b6060600280548060200260200160405190810160405280929190818152602001828054801561013d57602002820191906000526020600020905b815481526020019060010190808311610129575b5050505050905090565b600281815481106100de57600080fd5b6060600080548060200260200160405190810160405280929190818152602001828054801561013d5760200282019190600052602060002090815481526020019060010190808311610129575050505050905090565b6000602082840312156101bf57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b818110156101fe578351835292840192918401916001016101e2565b5090969550505050505056fea2646970667358221220a898815ed5a8b14d59a06eeecb24ae304fdf6a5d3b4ca1556a33108045c416ef64736f6c634300080b0033",
   "immutableReferences": {},
   "generatedSources": [
     {
       "ast": {
         "nodeType": "YulBlock",
-        "src": "0:275:29",
+        "src": "0:275:34",
         "statements": [
           {
             "nodeType": "YulBlock",
-            "src": "6:3:29",
+            "src": "6:3:34",
             "statements": []
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "46:95:29",
+              "src": "46:95:34",
               "statements": [
                 {
                   "expression": {
@@ -123,7 +123,7 @@
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "63:1:29",
+                        "src": "63:1:34",
                         "type": "",
                         "value": "0"
                       },
@@ -132,14 +132,14 @@
                           {
                             "kind": "number",
                             "nodeType": "YulLiteral",
-                            "src": "70:3:29",
+                            "src": "70:3:34",
                             "type": "",
                             "value": "224"
                           },
                           {
                             "kind": "number",
                             "nodeType": "YulLiteral",
-                            "src": "75:10:29",
+                            "src": "75:10:34",
                             "type": "",
                             "value": "0x4e487b71"
                           }
@@ -147,22 +147,22 @@
                         "functionName": {
                           "name": "shl",
                           "nodeType": "YulIdentifier",
-                          "src": "66:3:29"
+                          "src": "66:3:34"
                         },
                         "nodeType": "YulFunctionCall",
-                        "src": "66:20:29"
+                        "src": "66:20:34"
                       }
                     ],
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "56:6:29"
+                      "src": "56:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "56:31:29"
+                    "src": "56:31:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "56:31:29"
+                  "src": "56:31:34"
                 },
                 {
                   "expression": {
@@ -170,14 +170,14 @@
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "103:1:29",
+                        "src": "103:1:34",
                         "type": "",
                         "value": "4"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "106:4:29",
+                        "src": "106:4:34",
                         "type": "",
                         "value": "0x41"
                       }
@@ -185,13 +185,13 @@
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "96:6:29"
+                      "src": "96:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "96:15:29"
+                    "src": "96:15:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "96:15:29"
+                  "src": "96:15:34"
                 },
                 {
                   "expression": {
@@ -199,14 +199,14 @@
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "127:1:29",
+                        "src": "127:1:34",
                         "type": "",
                         "value": "0"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "130:4:29",
+                        "src": "130:4:34",
                         "type": "",
                         "value": "0x24"
                       }
@@ -214,24 +214,24 @@
                     "functionName": {
                       "name": "revert",
                       "nodeType": "YulIdentifier",
-                      "src": "120:6:29"
+                      "src": "120:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "120:15:29"
+                    "src": "120:15:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "120:15:29"
+                  "src": "120:15:34"
                 }
               ]
             },
             "name": "panic_error_0x41",
             "nodeType": "YulFunctionDefinition",
-            "src": "14:127:29"
+            "src": "14:127:34"
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "178:95:29",
+              "src": "178:95:34",
               "statements": [
                 {
                   "expression": {
@@ -239,7 +239,7 @@
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "195:1:29",
+                        "src": "195:1:34",
                         "type": "",
                         "value": "0"
                       },
@@ -248,14 +248,14 @@
                           {
                             "kind": "number",
                             "nodeType": "YulLiteral",
-                            "src": "202:3:29",
+                            "src": "202:3:34",
                             "type": "",
                             "value": "224"
                           },
                           {
                             "kind": "number",
                             "nodeType": "YulLiteral",
-                            "src": "207:10:29",
+                            "src": "207:10:34",
                             "type": "",
                             "value": "0x4e487b71"
                           }
@@ -263,22 +263,22 @@
                         "functionName": {
                           "name": "shl",
                           "nodeType": "YulIdentifier",
-                          "src": "198:3:29"
+                          "src": "198:3:34"
                         },
                         "nodeType": "YulFunctionCall",
-                        "src": "198:20:29"
+                        "src": "198:20:34"
                       }
                     ],
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "188:6:29"
+                      "src": "188:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "188:31:29"
+                    "src": "188:31:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "188:31:29"
+                  "src": "188:31:34"
                 },
                 {
                   "expression": {
@@ -286,14 +286,14 @@
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "235:1:29",
+                        "src": "235:1:34",
                         "type": "",
                         "value": "4"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "238:4:29",
+                        "src": "238:4:34",
                         "type": "",
                         "value": "0x32"
                       }
@@ -301,13 +301,13 @@
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "228:6:29"
+                      "src": "228:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "228:15:29"
+                    "src": "228:15:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "228:15:29"
+                  "src": "228:15:34"
                 },
                 {
                   "expression": {
@@ -315,14 +315,14 @@
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "259:1:29",
+                        "src": "259:1:34",
                         "type": "",
                         "value": "0"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "262:4:29",
+                        "src": "262:4:34",
                         "type": "",
                         "value": "0x24"
                       }
@@ -330,24 +330,24 @@
                     "functionName": {
                       "name": "revert",
                       "nodeType": "YulIdentifier",
-                      "src": "252:6:29"
+                      "src": "252:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "252:15:29"
+                    "src": "252:15:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "252:15:29"
+                  "src": "252:15:34"
                 }
               ]
             },
             "name": "panic_error_0x32",
             "nodeType": "YulFunctionDefinition",
-            "src": "146:127:29"
+            "src": "146:127:34"
           }
         ]
       },
       "contents": "{\n    { }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function panic_error_0x32()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x32)\n        revert(0, 0x24)\n    }\n}",
-      "id": 29,
+      "id": 34,
       "language": "Yul",
       "name": "#utility.yul"
     }
@@ -356,22 +356,22 @@
     {
       "ast": {
         "nodeType": "YulBlock",
-        "src": "0:1015:29",
+        "src": "0:1015:34",
         "statements": [
           {
             "nodeType": "YulBlock",
-            "src": "6:3:29",
+            "src": "6:3:34",
             "statements": []
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "84:110:29",
+              "src": "84:110:34",
               "statements": [
                 {
                   "body": {
                     "nodeType": "YulBlock",
-                    "src": "130:16:29",
+                    "src": "130:16:34",
                     "statements": [
                       {
                         "expression": {
@@ -379,14 +379,14 @@
                             {
                               "kind": "number",
                               "nodeType": "YulLiteral",
-                              "src": "139:1:29",
+                              "src": "139:1:34",
                               "type": "",
                               "value": "0"
                             },
                             {
                               "kind": "number",
                               "nodeType": "YulLiteral",
-                              "src": "142:1:29",
+                              "src": "142:1:34",
                               "type": "",
                               "value": "0"
                             }
@@ -394,13 +394,13 @@
                           "functionName": {
                             "name": "revert",
                             "nodeType": "YulIdentifier",
-                            "src": "132:6:29"
+                            "src": "132:6:34"
                           },
                           "nodeType": "YulFunctionCall",
-                          "src": "132:12:29"
+                          "src": "132:12:34"
                         },
                         "nodeType": "YulExpressionStatement",
-                        "src": "132:12:29"
+                        "src": "132:12:34"
                       }
                     ]
                   },
@@ -411,26 +411,26 @@
                           {
                             "name": "dataEnd",
                             "nodeType": "YulIdentifier",
-                            "src": "105:7:29"
+                            "src": "105:7:34"
                           },
                           {
                             "name": "headStart",
                             "nodeType": "YulIdentifier",
-                            "src": "114:9:29"
+                            "src": "114:9:34"
                           }
                         ],
                         "functionName": {
                           "name": "sub",
                           "nodeType": "YulIdentifier",
-                          "src": "101:3:29"
+                          "src": "101:3:34"
                         },
                         "nodeType": "YulFunctionCall",
-                        "src": "101:23:29"
+                        "src": "101:23:34"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "126:2:29",
+                        "src": "126:2:34",
                         "type": "",
                         "value": "32"
                       }
@@ -438,38 +438,38 @@
                     "functionName": {
                       "name": "slt",
                       "nodeType": "YulIdentifier",
-                      "src": "97:3:29"
+                      "src": "97:3:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "97:32:29"
+                    "src": "97:32:34"
                   },
                   "nodeType": "YulIf",
-                  "src": "94:52:29"
+                  "src": "94:52:34"
                 },
                 {
                   "nodeType": "YulAssignment",
-                  "src": "155:33:29",
+                  "src": "155:33:34",
                   "value": {
                     "arguments": [
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "178:9:29"
+                        "src": "178:9:34"
                       }
                     ],
                     "functionName": {
                       "name": "calldataload",
                       "nodeType": "YulIdentifier",
-                      "src": "165:12:29"
+                      "src": "165:12:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "165:23:29"
+                    "src": "165:23:34"
                   },
                   "variableNames": [
                     {
                       "name": "value0",
                       "nodeType": "YulIdentifier",
-                      "src": "155:6:29"
+                      "src": "155:6:34"
                     }
                   ]
                 }
@@ -481,13 +481,13 @@
               {
                 "name": "headStart",
                 "nodeType": "YulTypedName",
-                "src": "50:9:29",
+                "src": "50:9:34",
                 "type": ""
               },
               {
                 "name": "dataEnd",
                 "nodeType": "YulTypedName",
-                "src": "61:7:29",
+                "src": "61:7:34",
                 "type": ""
               }
             ],
@@ -495,31 +495,31 @@
               {
                 "name": "value0",
                 "nodeType": "YulTypedName",
-                "src": "73:6:29",
+                "src": "73:6:34",
                 "type": ""
               }
             ],
-            "src": "14:180:29"
+            "src": "14:180:34"
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "300:76:29",
+              "src": "300:76:34",
               "statements": [
                 {
                   "nodeType": "YulAssignment",
-                  "src": "310:26:29",
+                  "src": "310:26:34",
                   "value": {
                     "arguments": [
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "322:9:29"
+                        "src": "322:9:34"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "333:2:29",
+                        "src": "333:2:34",
                         "type": "",
                         "value": "32"
                       }
@@ -527,16 +527,16 @@
                     "functionName": {
                       "name": "add",
                       "nodeType": "YulIdentifier",
-                      "src": "318:3:29"
+                      "src": "318:3:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "318:18:29"
+                    "src": "318:18:34"
                   },
                   "variableNames": [
                     {
                       "name": "tail",
                       "nodeType": "YulIdentifier",
-                      "src": "310:4:29"
+                      "src": "310:4:34"
                     }
                   ]
                 },
@@ -546,24 +546,24 @@
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "352:9:29"
+                        "src": "352:9:34"
                       },
                       {
                         "name": "value0",
                         "nodeType": "YulIdentifier",
-                        "src": "363:6:29"
+                        "src": "363:6:34"
                       }
                     ],
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "345:6:29"
+                      "src": "345:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "345:25:29"
+                    "src": "345:25:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "345:25:29"
+                  "src": "345:25:34"
                 }
               ]
             },
@@ -573,13 +573,13 @@
               {
                 "name": "headStart",
                 "nodeType": "YulTypedName",
-                "src": "269:9:29",
+                "src": "269:9:34",
                 "type": ""
               },
               {
                 "name": "value0",
                 "nodeType": "YulTypedName",
-                "src": "280:6:29",
+                "src": "280:6:34",
                 "type": ""
               }
             ],
@@ -587,24 +587,24 @@
               {
                 "name": "tail",
                 "nodeType": "YulTypedName",
-                "src": "291:4:29",
+                "src": "291:4:34",
                 "type": ""
               }
             ],
-            "src": "199:177:29"
+            "src": "199:177:34"
           },
           {
             "body": {
               "nodeType": "YulBlock",
-              "src": "532:481:29",
+              "src": "532:481:34",
               "statements": [
                 {
                   "nodeType": "YulVariableDeclaration",
-                  "src": "542:12:29",
+                  "src": "542:12:34",
                   "value": {
                     "kind": "number",
                     "nodeType": "YulLiteral",
-                    "src": "552:2:29",
+                    "src": "552:2:34",
                     "type": "",
                     "value": "32"
                   },
@@ -612,40 +612,40 @@
                     {
                       "name": "_1",
                       "nodeType": "YulTypedName",
-                      "src": "546:2:29",
+                      "src": "546:2:34",
                       "type": ""
                     }
                   ]
                 },
                 {
                   "nodeType": "YulVariableDeclaration",
-                  "src": "563:32:29",
+                  "src": "563:32:34",
                   "value": {
                     "arguments": [
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "581:9:29"
+                        "src": "581:9:34"
                       },
                       {
                         "name": "_1",
                         "nodeType": "YulIdentifier",
-                        "src": "592:2:29"
+                        "src": "592:2:34"
                       }
                     ],
                     "functionName": {
                       "name": "add",
                       "nodeType": "YulIdentifier",
-                      "src": "577:3:29"
+                      "src": "577:3:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "577:18:29"
+                    "src": "577:18:34"
                   },
                   "variables": [
                     {
                       "name": "tail_1",
                       "nodeType": "YulTypedName",
-                      "src": "567:6:29",
+                      "src": "567:6:34",
                       "type": ""
                     }
                   ]
@@ -656,66 +656,66 @@
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "611:9:29"
+                        "src": "611:9:34"
                       },
                       {
                         "name": "_1",
                         "nodeType": "YulIdentifier",
-                        "src": "622:2:29"
+                        "src": "622:2:34"
                       }
                     ],
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "604:6:29"
+                      "src": "604:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "604:21:29"
+                    "src": "604:21:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "604:21:29"
+                  "src": "604:21:34"
                 },
                 {
                   "nodeType": "YulVariableDeclaration",
-                  "src": "634:17:29",
+                  "src": "634:17:34",
                   "value": {
                     "name": "tail_1",
                     "nodeType": "YulIdentifier",
-                    "src": "645:6:29"
+                    "src": "645:6:34"
                   },
                   "variables": [
                     {
                       "name": "pos",
                       "nodeType": "YulTypedName",
-                      "src": "638:3:29",
+                      "src": "638:3:34",
                       "type": ""
                     }
                   ]
                 },
                 {
                   "nodeType": "YulVariableDeclaration",
-                  "src": "660:27:29",
+                  "src": "660:27:34",
                   "value": {
                     "arguments": [
                       {
                         "name": "value0",
                         "nodeType": "YulIdentifier",
-                        "src": "680:6:29"
+                        "src": "680:6:34"
                       }
                     ],
                     "functionName": {
                       "name": "mload",
                       "nodeType": "YulIdentifier",
-                      "src": "674:5:29"
+                      "src": "674:5:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "674:13:29"
+                    "src": "674:13:34"
                   },
                   "variables": [
                     {
                       "name": "length",
                       "nodeType": "YulTypedName",
-                      "src": "664:6:29",
+                      "src": "664:6:34",
                       "type": ""
                     }
                   ]
@@ -726,39 +726,39 @@
                       {
                         "name": "tail_1",
                         "nodeType": "YulIdentifier",
-                        "src": "703:6:29"
+                        "src": "703:6:34"
                       },
                       {
                         "name": "length",
                         "nodeType": "YulIdentifier",
-                        "src": "711:6:29"
+                        "src": "711:6:34"
                       }
                     ],
                     "functionName": {
                       "name": "mstore",
                       "nodeType": "YulIdentifier",
-                      "src": "696:6:29"
+                      "src": "696:6:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "696:22:29"
+                    "src": "696:22:34"
                   },
                   "nodeType": "YulExpressionStatement",
-                  "src": "696:22:29"
+                  "src": "696:22:34"
                 },
                 {
                   "nodeType": "YulAssignment",
-                  "src": "727:25:29",
+                  "src": "727:25:34",
                   "value": {
                     "arguments": [
                       {
                         "name": "headStart",
                         "nodeType": "YulIdentifier",
-                        "src": "738:9:29"
+                        "src": "738:9:34"
                       },
                       {
                         "kind": "number",
                         "nodeType": "YulLiteral",
-                        "src": "749:2:29",
+                        "src": "749:2:34",
                         "type": "",
                         "value": "64"
                       }
@@ -766,59 +766,59 @@
                     "functionName": {
                       "name": "add",
                       "nodeType": "YulIdentifier",
-                      "src": "734:3:29"
+                      "src": "734:3:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "734:18:29"
+                    "src": "734:18:34"
                   },
                   "variableNames": [
                     {
                       "name": "pos",
                       "nodeType": "YulIdentifier",
-                      "src": "727:3:29"
+                      "src": "727:3:34"
                     }
                   ]
                 },
                 {
                   "nodeType": "YulVariableDeclaration",
-                  "src": "761:29:29",
+                  "src": "761:29:34",
                   "value": {
                     "arguments": [
                       {
                         "name": "value0",
                         "nodeType": "YulIdentifier",
-                        "src": "779:6:29"
+                        "src": "779:6:34"
                       },
                       {
                         "name": "_1",
                         "nodeType": "YulIdentifier",
-                        "src": "787:2:29"
+                        "src": "787:2:34"
                       }
                     ],
                     "functionName": {
                       "name": "add",
                       "nodeType": "YulIdentifier",
-                      "src": "775:3:29"
+                      "src": "775:3:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "775:15:29"
+                    "src": "775:15:34"
                   },
                   "variables": [
                     {
                       "name": "srcPtr",
                       "nodeType": "YulTypedName",
-                      "src": "765:6:29",
+                      "src": "765:6:34",
                       "type": ""
                     }
                   ]
                 },
                 {
                   "nodeType": "YulVariableDeclaration",
-                  "src": "799:10:29",
+                  "src": "799:10:34",
                   "value": {
                     "kind": "number",
                     "nodeType": "YulLiteral",
-                    "src": "808:1:29",
+                    "src": "808:1:34",
                     "type": "",
                     "value": "0"
                   },
@@ -826,7 +826,7 @@
                     {
                       "name": "i",
                       "nodeType": "YulTypedName",
-                      "src": "803:1:29",
+                      "src": "803:1:34",
                       "type": ""
                     }
                   ]
@@ -834,7 +834,7 @@
                 {
                   "body": {
                     "nodeType": "YulBlock",
-                    "src": "867:120:29",
+                    "src": "867:120:34",
                     "statements": [
                       {
                         "expression": {
@@ -842,97 +842,97 @@
                             {
                               "name": "pos",
                               "nodeType": "YulIdentifier",
-                              "src": "888:3:29"
+                              "src": "888:3:34"
                             },
                             {
                               "arguments": [
                                 {
                                   "name": "srcPtr",
                                   "nodeType": "YulIdentifier",
-                                  "src": "899:6:29"
+                                  "src": "899:6:34"
                                 }
                               ],
                               "functionName": {
                                 "name": "mload",
                                 "nodeType": "YulIdentifier",
-                                "src": "893:5:29"
+                                "src": "893:5:34"
                               },
                               "nodeType": "YulFunctionCall",
-                              "src": "893:13:29"
+                              "src": "893:13:34"
                             }
                           ],
                           "functionName": {
                             "name": "mstore",
                             "nodeType": "YulIdentifier",
-                            "src": "881:6:29"
+                            "src": "881:6:34"
                           },
                           "nodeType": "YulFunctionCall",
-                          "src": "881:26:29"
+                          "src": "881:26:34"
                         },
                         "nodeType": "YulExpressionStatement",
-                        "src": "881:26:29"
+                        "src": "881:26:34"
                       },
                       {
                         "nodeType": "YulAssignment",
-                        "src": "920:19:29",
+                        "src": "920:19:34",
                         "value": {
                           "arguments": [
                             {
                               "name": "pos",
                               "nodeType": "YulIdentifier",
-                              "src": "931:3:29"
+                              "src": "931:3:34"
                             },
                             {
                               "name": "_1",
                               "nodeType": "YulIdentifier",
-                              "src": "936:2:29"
+                              "src": "936:2:34"
                             }
                           ],
                           "functionName": {
                             "name": "add",
                             "nodeType": "YulIdentifier",
-                            "src": "927:3:29"
+                            "src": "927:3:34"
                           },
                           "nodeType": "YulFunctionCall",
-                          "src": "927:12:29"
+                          "src": "927:12:34"
                         },
                         "variableNames": [
                           {
                             "name": "pos",
                             "nodeType": "YulIdentifier",
-                            "src": "920:3:29"
+                            "src": "920:3:34"
                           }
                         ]
                       },
                       {
                         "nodeType": "YulAssignment",
-                        "src": "952:25:29",
+                        "src": "952:25:34",
                         "value": {
                           "arguments": [
                             {
                               "name": "srcPtr",
                               "nodeType": "YulIdentifier",
-                              "src": "966:6:29"
+                              "src": "966:6:34"
                             },
                             {
                               "name": "_1",
                               "nodeType": "YulIdentifier",
-                              "src": "974:2:29"
+                              "src": "974:2:34"
                             }
                           ],
                           "functionName": {
                             "name": "add",
                             "nodeType": "YulIdentifier",
-                            "src": "962:3:29"
+                            "src": "962:3:34"
                           },
                           "nodeType": "YulFunctionCall",
-                          "src": "962:15:29"
+                          "src": "962:15:34"
                         },
                         "variableNames": [
                           {
                             "name": "srcPtr",
                             "nodeType": "YulIdentifier",
-                            "src": "952:6:29"
+                            "src": "952:6:34"
                           }
                         ]
                       }
@@ -943,41 +943,41 @@
                       {
                         "name": "i",
                         "nodeType": "YulIdentifier",
-                        "src": "829:1:29"
+                        "src": "829:1:34"
                       },
                       {
                         "name": "length",
                         "nodeType": "YulIdentifier",
-                        "src": "832:6:29"
+                        "src": "832:6:34"
                       }
                     ],
                     "functionName": {
                       "name": "lt",
                       "nodeType": "YulIdentifier",
-                      "src": "826:2:29"
+                      "src": "826:2:34"
                     },
                     "nodeType": "YulFunctionCall",
-                    "src": "826:13:29"
+                    "src": "826:13:34"
                   },
                   "nodeType": "YulForLoop",
                   "post": {
                     "nodeType": "YulBlock",
-                    "src": "840:18:29",
+                    "src": "840:18:34",
                     "statements": [
                       {
                         "nodeType": "YulAssignment",
-                        "src": "842:14:29",
+                        "src": "842:14:34",
                         "value": {
                           "arguments": [
                             {
                               "name": "i",
                               "nodeType": "YulIdentifier",
-                              "src": "851:1:29"
+                              "src": "851:1:34"
                             },
                             {
                               "kind": "number",
                               "nodeType": "YulLiteral",
-                              "src": "854:1:29",
+                              "src": "854:1:34",
                               "type": "",
                               "value": "1"
                             }
@@ -985,16 +985,16 @@
                           "functionName": {
                             "name": "add",
                             "nodeType": "YulIdentifier",
-                            "src": "847:3:29"
+                            "src": "847:3:34"
                           },
                           "nodeType": "YulFunctionCall",
-                          "src": "847:9:29"
+                          "src": "847:9:34"
                         },
                         "variableNames": [
                           {
                             "name": "i",
                             "nodeType": "YulIdentifier",
-                            "src": "842:1:29"
+                            "src": "842:1:34"
                           }
                         ]
                       }
@@ -1002,24 +1002,24 @@
                   },
                   "pre": {
                     "nodeType": "YulBlock",
-                    "src": "822:3:29",
+                    "src": "822:3:34",
                     "statements": []
                   },
-                  "src": "818:169:29"
+                  "src": "818:169:34"
                 },
                 {
                   "nodeType": "YulAssignment",
-                  "src": "996:11:29",
+                  "src": "996:11:34",
                   "value": {
                     "name": "pos",
                     "nodeType": "YulIdentifier",
-                    "src": "1004:3:29"
+                    "src": "1004:3:34"
                   },
                   "variableNames": [
                     {
                       "name": "tail",
                       "nodeType": "YulIdentifier",
-                      "src": "996:4:29"
+                      "src": "996:4:34"
                     }
                   ]
                 }
@@ -1031,13 +1031,13 @@
               {
                 "name": "headStart",
                 "nodeType": "YulTypedName",
-                "src": "501:9:29",
+                "src": "501:9:34",
                 "type": ""
               },
               {
                 "name": "value0",
                 "nodeType": "YulTypedName",
-                "src": "512:6:29",
+                "src": "512:6:34",
                 "type": ""
               }
             ],
@@ -1045,36 +1045,36 @@
               {
                 "name": "tail",
                 "nodeType": "YulTypedName",
-                "src": "523:4:29",
+                "src": "523:4:34",
                 "type": ""
               }
             ],
-            "src": "381:632:29"
+            "src": "381:632:34"
           }
         ]
       },
       "contents": "{\n    { }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_array$_t_uint256_$dyn_memory_ptr__to_t_array$_t_uint256_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        pos := add(headStart, 64)\n        let srcPtr := add(value0, _1)\n        let i := 0\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, mload(srcPtr))\n            pos := add(pos, _1)\n            srcPtr := add(srcPtr, _1)\n        }\n        tail := pos\n    }\n}",
-      "id": 29,
+      "id": 34,
       "language": "Yul",
       "name": "#utility.yul"
     }
   ],
-  "sourceMap": "26:802:25:-:0;;;236:374;;;;;;;;;-1:-1:-1;272:16:25;;;286:1;272:16;;;;;;;;;;;;;;;;;;-1:-1:-1;;253:35:25;;;;:16;;-1:-1:-1;253:35:25;;;;:::i;:::-;;313:1;291:16;308:1;291:19;;;;;;;;:::i;:::-;;;;;;;;:23;;;;339:2;317:16;334:1;317:19;;;;;;;;:::i;:::-;;;;;;;;:24;;;;366:2;344:16;361:1;344:19;;;;;;;;:::i;:::-;;;;;;;;:24;;;;393:3;371:16;388:1;371:19;;;;;;;;:::i;:::-;;;;;;;;;;:25;432:3;399:30;:36;456:16;;;470:1;456:16;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;439:33:25;;;;:14;;-1:-1:-1;439:33:25;;;;:::i;:::-;;495:1;475:14;490:1;475:17;;;;;;;;:::i;:::-;;;;;;;;:21;;;;519:1;499:14;514:1;499:17;;;;;;;;:::i;:::-;;;;;;;;:21;;;;543:1;523:14;538:1;523:17;;;;;;;;:::i;:::-;;;;;;;;:21;;;;567:1;547:14;562:1;547:17;;;;;;;;:::i;:::-;;;;;;;;;;:21;602:1;571:28;:32;26:802;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;26:802:25;;;-1:-1:-1;26:802:25;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;146:127:29;207:10;202:3;198:20;195:1;188:31;238:4;235:1;228:15;262:4;259:1;252:15;146:127;26:802:25;;;;;;",
-  "deployedSourceMap": "26:802:25:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;55:33;;;;;;:::i;:::-;;:::i;:::-;;;345:25:29;;;333:2;318:18;55:33:25;;;;;;;;726:99;;;:::i;:::-;;;;;;;:::i;147:31::-;;;;;;:::i;:::-;;:::i;94:47::-;;;;;;616:104;;;:::i;184:45::-;;;;;;55:33;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;55:33:25;:::o;726:99::-;777:16;804:14;797:21;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;726:99;:::o;147:31::-;;;;;;;;;;;;616:104;670:16;697;690:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;616:104;:::o;14:180:29:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:29;;14:180;-1:-1:-1;14:180:29:o;381:632::-;552:2;604:21;;;674:13;;577:18;;;696:22;;;523:4;;552:2;775:15;;;;749:2;734:18;;;523:4;818:169;832:6;829:1;826:13;818:169;;;893:13;;881:26;;962:15;;;;927:12;;;;854:1;847:9;818:169;;;-1:-1:-1;1004:3:29;;381:632;-1:-1:-1;;;;;;381:632:29:o",
+  "sourceMap": "26:802:29:-:0;;;236:374;;;;;;;;;-1:-1:-1;272:16:29;;;286:1;272:16;;;;;;;;;;;;;;;;;;-1:-1:-1;;253:35:29;;;;:16;;-1:-1:-1;253:35:29;;;;:::i;:::-;;313:1;291:16;308:1;291:19;;;;;;;;:::i;:::-;;;;;;;;:23;;;;339:2;317:16;334:1;317:19;;;;;;;;:::i;:::-;;;;;;;;:24;;;;366:2;344:16;361:1;344:19;;;;;;;;:::i;:::-;;;;;;;;:24;;;;393:3;371:16;388:1;371:19;;;;;;;;:::i;:::-;;;;;;;;;;:25;432:3;399:30;:36;456:16;;;470:1;456:16;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;439:33:29;;;;:14;;-1:-1:-1;439:33:29;;;;:::i;:::-;;495:1;475:14;490:1;475:17;;;;;;;;:::i;:::-;;;;;;;;:21;;;;519:1;499:14;514:1;499:17;;;;;;;;:::i;:::-;;;;;;;;:21;;;;543:1;523:14;538:1;523:17;;;;;;;;:::i;:::-;;;;;;;;:21;;;;567:1;547:14;562:1;547:17;;;;;;;;:::i;:::-;;;;;;;;;;:21;602:1;571:28;:32;26:802;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;26:802:29;;;-1:-1:-1;26:802:29;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;146:127:34;207:10;202:3;198:20;195:1;188:31;238:4;235:1;228:15;262:4;259:1;252:15;146:127;26:802:29;;;;;;",
+  "deployedSourceMap": "26:802:29:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;55:33;;;;;;:::i;:::-;;:::i;:::-;;;345:25:34;;;333:2;318:18;55:33:29;;;;;;;;726:99;;;:::i;:::-;;;;;;;:::i;147:31::-;;;;;;:::i;:::-;;:::i;94:47::-;;;;;;616:104;;;:::i;184:45::-;;;;;;55:33;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;55:33:29;:::o;726:99::-;777:16;804:14;797:21;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;726:99;:::o;147:31::-;;;;;;;;;;;;616:104;670:16;697;690:23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;616:104;:::o;14:180:34:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:34;;14:180;-1:-1:-1;14:180:34:o;381:632::-;552:2;604:21;;;674:13;;577:18;;;696:22;;;523:4;;552:2;775:15;;;;749:2;734:18;;;523:4;818:169;832:6;829:1;826:13;818:169;;;893:13;;881:26;;962:15;;;;927:12;;;;854:1;847:9;818:169;;;-1:-1:-1;1004:3:34;;381:632;-1:-1:-1;;;;;;381:632:34:o",
   "source": "\npragma solidity ^0.8.0;\n\ncontract StatsDistrib {\n\n    uint256[] public dragonCardRarity;\n    uint256   public dragonCardRarityPopulationSize;\n    uint256[] public dragonCardType;\n    uint256   public dragonCardTypePopulationSize;\n\n    constructor() {\n\tdragonCardRarity = new uint256[](4);\n\tdragonCardRarity[0] = 1;\n\tdragonCardRarity[1] = 10;\n\tdragonCardRarity[2] = 20;\n\tdragonCardRarity[3] = 125;\n\tdragonCardRarityPopulationSize = 512;\n\n\tdragonCardType = new uint256[](4);\n\tdragonCardType[0] = 1;\n\tdragonCardType[1] = 1;\n\tdragonCardType[2] = 1;\n\tdragonCardType[3] = 1;\n\tdragonCardTypePopulationSize = 5;\n    }\n\n    function getDragonCardRarities() public view returns (uint256[] memory){\n\treturn dragonCardRarity;\n    }\n\n    function getDragonCardTypes() public view returns (uint256[] memory){\n\treturn dragonCardType;\n    }\n\n}",
-  "sourcePath": "/home/vrogojin/Projects/firezard_nft/contracts/StatsDistrib.sol",
+  "sourcePath": "/home/vrogojin/Projects/FireZard/nft/contracts/StatsDistrib.sol",
   "ast": {
     "absolutePath": "project:/contracts/StatsDistrib.sol",
     "exportedSymbols": {
       "StatsDistrib": [
-        4813
+        5889
       ]
     },
-    "id": 4814,
+    "id": 5890,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 4708,
+        "id": 5784,
         "literals": [
           "solidity",
           "^",
@@ -1082,7 +1082,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "1:23:25"
+        "src": "1:23:29"
       },
       {
         "abstract": false,
@@ -1091,24 +1091,24 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 4813,
+        "id": 5889,
         "linearizedBaseContracts": [
-          4813
+          5889
         ],
         "name": "StatsDistrib",
-        "nameLocation": "35:12:25",
+        "nameLocation": "35:12:29",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
             "functionSelector": "0038857b",
-            "id": 4711,
+            "id": 5787,
             "mutability": "mutable",
             "name": "dragonCardRarity",
-            "nameLocation": "72:16:25",
+            "nameLocation": "72:16:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "55:33:25",
+            "scope": 5889,
+            "src": "55:33:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1117,18 +1117,18 @@
             },
             "typeName": {
               "baseType": {
-                "id": 4709,
+                "id": 5785,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "55:7:25",
+                "src": "55:7:29",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
-              "id": 4710,
+              "id": 5786,
               "nodeType": "ArrayTypeName",
-              "src": "55:9:25",
+              "src": "55:9:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                 "typeString": "uint256[]"
@@ -1139,13 +1139,13 @@
           {
             "constant": false,
             "functionSelector": "9f1349ed",
-            "id": 4713,
+            "id": 5789,
             "mutability": "mutable",
             "name": "dragonCardRarityPopulationSize",
-            "nameLocation": "111:30:25",
+            "nameLocation": "111:30:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "94:47:25",
+            "scope": 5889,
+            "src": "94:47:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1153,10 +1153,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 4712,
+              "id": 5788,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "94:7:25",
+              "src": "94:7:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -1167,13 +1167,13 @@
           {
             "constant": false,
             "functionSelector": "97dfd7e8",
-            "id": 4716,
+            "id": 5792,
             "mutability": "mutable",
             "name": "dragonCardType",
-            "nameLocation": "164:14:25",
+            "nameLocation": "164:14:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "147:31:25",
+            "scope": 5889,
+            "src": "147:31:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1182,18 +1182,18 @@
             },
             "typeName": {
               "baseType": {
-                "id": 4714,
+                "id": 5790,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "147:7:25",
+                "src": "147:7:29",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
-              "id": 4715,
+              "id": 5791,
               "nodeType": "ArrayTypeName",
-              "src": "147:9:25",
+              "src": "147:9:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                 "typeString": "uint256[]"
@@ -1204,13 +1204,13 @@
           {
             "constant": false,
             "functionSelector": "d710216e",
-            "id": 4718,
+            "id": 5794,
             "mutability": "mutable",
             "name": "dragonCardTypePopulationSize",
-            "nameLocation": "201:28:25",
+            "nameLocation": "201:28:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "184:45:25",
+            "scope": 5889,
+            "src": "184:45:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1218,10 +1218,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 4717,
+              "id": 5793,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "184:7:25",
+              "src": "184:7:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -1231,24 +1231,24 @@
           },
           {
             "body": {
-              "id": 4793,
+              "id": 5869,
               "nodeType": "Block",
-              "src": "250:360:25",
+              "src": "250:360:29",
               "statements": [
                 {
                   "expression": {
-                    "id": 4727,
+                    "id": 5803,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4721,
+                      "id": 5797,
                       "name": "dragonCardRarity",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4711,
-                      "src": "253:16:25",
+                      "referencedDeclaration": 5787,
+                      "src": "253:16:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                         "typeString": "uint256[] storage ref"
@@ -1260,14 +1260,14 @@
                       "arguments": [
                         {
                           "hexValue": "34",
-                          "id": 4725,
+                          "id": 5801,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "286:1:25",
+                          "src": "286:1:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_4_by_1",
                             "typeString": "int_const 4"
@@ -1282,38 +1282,38 @@
                             "typeString": "int_const 4"
                           }
                         ],
-                        "id": 4724,
+                        "id": 5800,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "NewExpression",
-                        "src": "272:13:25",
+                        "src": "272:13:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
                           "typeString": "function (uint256) pure returns (uint256[] memory)"
                         },
                         "typeName": {
                           "baseType": {
-                            "id": 4722,
+                            "id": 5798,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "276:7:25",
+                            "src": "276:7:29",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             }
                           },
-                          "id": 4723,
+                          "id": 5799,
                           "nodeType": "ArrayTypeName",
-                          "src": "276:9:25",
+                          "src": "276:9:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                             "typeString": "uint256[]"
                           }
                         }
                       },
-                      "id": 4726,
+                      "id": 5802,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1321,54 +1321,54 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "272:16:25",
+                      "src": "272:16:29",
                       "tryCall": false,
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                         "typeString": "uint256[] memory"
                       }
                     },
-                    "src": "253:35:25",
+                    "src": "253:35:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "id": 4728,
+                  "id": 5804,
                   "nodeType": "ExpressionStatement",
-                  "src": "253:35:25"
+                  "src": "253:35:29"
                 },
                 {
                   "expression": {
-                    "id": 4733,
+                    "id": 5809,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4729,
+                        "id": 5805,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "291:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "291:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4731,
+                      "id": 5807,
                       "indexExpression": {
                         "hexValue": "30",
-                        "id": 4730,
+                        "id": 5806,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "308:1:25",
+                        "src": "308:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_0_by_1",
                           "typeString": "int_const 0"
@@ -1380,7 +1380,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "291:19:25",
+                      "src": "291:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1390,61 +1390,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4732,
+                      "id": 5808,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "313:1:25",
+                      "src": "313:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "291:23:25",
+                    "src": "291:23:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4734,
+                  "id": 5810,
                   "nodeType": "ExpressionStatement",
-                  "src": "291:23:25"
+                  "src": "291:23:29"
                 },
                 {
                   "expression": {
-                    "id": 4739,
+                    "id": 5815,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4735,
+                        "id": 5811,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "317:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "317:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4737,
+                      "id": 5813,
                       "indexExpression": {
                         "hexValue": "31",
-                        "id": 4736,
+                        "id": 5812,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "334:1:25",
+                        "src": "334:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_1_by_1",
                           "typeString": "int_const 1"
@@ -1456,7 +1456,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "317:19:25",
+                      "src": "317:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1466,61 +1466,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "3130",
-                      "id": 4738,
+                      "id": 5814,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "339:2:25",
+                      "src": "339:2:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_10_by_1",
                         "typeString": "int_const 10"
                       },
                       "value": "10"
                     },
-                    "src": "317:24:25",
+                    "src": "317:24:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4740,
+                  "id": 5816,
                   "nodeType": "ExpressionStatement",
-                  "src": "317:24:25"
+                  "src": "317:24:29"
                 },
                 {
                   "expression": {
-                    "id": 4745,
+                    "id": 5821,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4741,
+                        "id": 5817,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "344:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "344:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4743,
+                      "id": 5819,
                       "indexExpression": {
                         "hexValue": "32",
-                        "id": 4742,
+                        "id": 5818,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "361:1:25",
+                        "src": "361:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_2_by_1",
                           "typeString": "int_const 2"
@@ -1532,7 +1532,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "344:19:25",
+                      "src": "344:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1542,61 +1542,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "3230",
-                      "id": 4744,
+                      "id": 5820,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "366:2:25",
+                      "src": "366:2:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_20_by_1",
                         "typeString": "int_const 20"
                       },
                       "value": "20"
                     },
-                    "src": "344:24:25",
+                    "src": "344:24:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4746,
+                  "id": 5822,
                   "nodeType": "ExpressionStatement",
-                  "src": "344:24:25"
+                  "src": "344:24:29"
                 },
                 {
                   "expression": {
-                    "id": 4751,
+                    "id": 5827,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4747,
+                        "id": 5823,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "371:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "371:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4749,
+                      "id": 5825,
                       "indexExpression": {
                         "hexValue": "33",
-                        "id": 4748,
+                        "id": 5824,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "388:1:25",
+                        "src": "388:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_3_by_1",
                           "typeString": "int_const 3"
@@ -1608,7 +1608,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "371:19:25",
+                      "src": "371:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1618,44 +1618,44 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "313235",
-                      "id": 4750,
+                      "id": 5826,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "393:3:25",
+                      "src": "393:3:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_125_by_1",
                         "typeString": "int_const 125"
                       },
                       "value": "125"
                     },
-                    "src": "371:25:25",
+                    "src": "371:25:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4752,
+                  "id": 5828,
                   "nodeType": "ExpressionStatement",
-                  "src": "371:25:25"
+                  "src": "371:25:29"
                 },
                 {
                   "expression": {
-                    "id": 4755,
+                    "id": 5831,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4753,
+                      "id": 5829,
                       "name": "dragonCardRarityPopulationSize",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4713,
-                      "src": "399:30:25",
+                      "referencedDeclaration": 5789,
+                      "src": "399:30:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1665,44 +1665,44 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "353132",
-                      "id": 4754,
+                      "id": 5830,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "432:3:25",
+                      "src": "432:3:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_512_by_1",
                         "typeString": "int_const 512"
                       },
                       "value": "512"
                     },
-                    "src": "399:36:25",
+                    "src": "399:36:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4756,
+                  "id": 5832,
                   "nodeType": "ExpressionStatement",
-                  "src": "399:36:25"
+                  "src": "399:36:29"
                 },
                 {
                   "expression": {
-                    "id": 4763,
+                    "id": 5839,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4757,
+                      "id": 5833,
                       "name": "dragonCardType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4716,
-                      "src": "439:14:25",
+                      "referencedDeclaration": 5792,
+                      "src": "439:14:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                         "typeString": "uint256[] storage ref"
@@ -1714,14 +1714,14 @@
                       "arguments": [
                         {
                           "hexValue": "34",
-                          "id": 4761,
+                          "id": 5837,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "470:1:25",
+                          "src": "470:1:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_4_by_1",
                             "typeString": "int_const 4"
@@ -1736,38 +1736,38 @@
                             "typeString": "int_const 4"
                           }
                         ],
-                        "id": 4760,
+                        "id": 5836,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "NewExpression",
-                        "src": "456:13:25",
+                        "src": "456:13:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
                           "typeString": "function (uint256) pure returns (uint256[] memory)"
                         },
                         "typeName": {
                           "baseType": {
-                            "id": 4758,
+                            "id": 5834,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "460:7:25",
+                            "src": "460:7:29",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             }
                           },
-                          "id": 4759,
+                          "id": 5835,
                           "nodeType": "ArrayTypeName",
-                          "src": "460:9:25",
+                          "src": "460:9:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                             "typeString": "uint256[]"
                           }
                         }
                       },
-                      "id": 4762,
+                      "id": 5838,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1775,54 +1775,54 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "456:16:25",
+                      "src": "456:16:29",
                       "tryCall": false,
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                         "typeString": "uint256[] memory"
                       }
                     },
-                    "src": "439:33:25",
+                    "src": "439:33:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "id": 4764,
+                  "id": 5840,
                   "nodeType": "ExpressionStatement",
-                  "src": "439:33:25"
+                  "src": "439:33:29"
                 },
                 {
                   "expression": {
-                    "id": 4769,
+                    "id": 5845,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4765,
+                        "id": 5841,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "475:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "475:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4767,
+                      "id": 5843,
                       "indexExpression": {
                         "hexValue": "30",
-                        "id": 4766,
+                        "id": 5842,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "490:1:25",
+                        "src": "490:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_0_by_1",
                           "typeString": "int_const 0"
@@ -1834,7 +1834,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "475:17:25",
+                      "src": "475:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1844,61 +1844,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4768,
+                      "id": 5844,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "495:1:25",
+                      "src": "495:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "475:21:25",
+                    "src": "475:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4770,
+                  "id": 5846,
                   "nodeType": "ExpressionStatement",
-                  "src": "475:21:25"
+                  "src": "475:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4775,
+                    "id": 5851,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4771,
+                        "id": 5847,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "499:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "499:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4773,
+                      "id": 5849,
                       "indexExpression": {
                         "hexValue": "31",
-                        "id": 4772,
+                        "id": 5848,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "514:1:25",
+                        "src": "514:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_1_by_1",
                           "typeString": "int_const 1"
@@ -1910,7 +1910,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "499:17:25",
+                      "src": "499:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1920,61 +1920,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4774,
+                      "id": 5850,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "519:1:25",
+                      "src": "519:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "499:21:25",
+                    "src": "499:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4776,
+                  "id": 5852,
                   "nodeType": "ExpressionStatement",
-                  "src": "499:21:25"
+                  "src": "499:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4781,
+                    "id": 5857,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4777,
+                        "id": 5853,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "523:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "523:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4779,
+                      "id": 5855,
                       "indexExpression": {
                         "hexValue": "32",
-                        "id": 4778,
+                        "id": 5854,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "538:1:25",
+                        "src": "538:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_2_by_1",
                           "typeString": "int_const 2"
@@ -1986,7 +1986,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "523:17:25",
+                      "src": "523:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1996,61 +1996,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4780,
+                      "id": 5856,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "543:1:25",
+                      "src": "543:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "523:21:25",
+                    "src": "523:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4782,
+                  "id": 5858,
                   "nodeType": "ExpressionStatement",
-                  "src": "523:21:25"
+                  "src": "523:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4787,
+                    "id": 5863,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4783,
+                        "id": 5859,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "547:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "547:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4785,
+                      "id": 5861,
                       "indexExpression": {
                         "hexValue": "33",
-                        "id": 4784,
+                        "id": 5860,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "562:1:25",
+                        "src": "562:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_3_by_1",
                           "typeString": "int_const 3"
@@ -2062,7 +2062,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "547:17:25",
+                      "src": "547:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2072,44 +2072,44 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4786,
+                      "id": 5862,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "567:1:25",
+                      "src": "567:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "547:21:25",
+                    "src": "547:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4788,
+                  "id": 5864,
                   "nodeType": "ExpressionStatement",
-                  "src": "547:21:25"
+                  "src": "547:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4791,
+                    "id": 5867,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4789,
+                      "id": 5865,
                       "name": "dragonCardTypePopulationSize",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4718,
-                      "src": "571:28:25",
+                      "referencedDeclaration": 5794,
+                      "src": "571:28:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2119,33 +2119,33 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "35",
-                      "id": 4790,
+                      "id": 5866,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "602:1:25",
+                      "src": "602:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_5_by_1",
                         "typeString": "int_const 5"
                       },
                       "value": "5"
                     },
-                    "src": "571:32:25",
+                    "src": "571:32:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4792,
+                  "id": 5868,
                   "nodeType": "ExpressionStatement",
-                  "src": "571:32:25"
+                  "src": "571:32:29"
                 }
               ]
             },
-            "id": 4794,
+            "id": 5870,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -2153,76 +2153,76 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4719,
+              "id": 5795,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "247:2:25"
+              "src": "247:2:29"
             },
             "returnParameters": {
-              "id": 4720,
+              "id": 5796,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "250:0:25"
+              "src": "250:0:29"
             },
-            "scope": 4813,
-            "src": "236:374:25",
+            "scope": 5889,
+            "src": "236:374:29",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 4802,
+              "id": 5878,
               "nodeType": "Block",
-              "src": "687:33:25",
+              "src": "687:33:29",
               "statements": [
                 {
                   "expression": {
-                    "id": 4800,
+                    "id": 5876,
                     "name": "dragonCardRarity",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 4711,
-                    "src": "697:16:25",
+                    "referencedDeclaration": 5787,
+                    "src": "697:16:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "functionReturnParameters": 4799,
-                  "id": 4801,
+                  "functionReturnParameters": 5875,
+                  "id": 5877,
                   "nodeType": "Return",
-                  "src": "690:23:25"
+                  "src": "690:23:29"
                 }
               ]
             },
             "functionSelector": "a9e790c8",
-            "id": 4803,
+            "id": 5879,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getDragonCardRarities",
-            "nameLocation": "625:21:25",
+            "nameLocation": "625:21:29",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4795,
+              "id": 5871,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "646:2:25"
+              "src": "646:2:29"
             },
             "returnParameters": {
-              "id": 4799,
+              "id": 5875,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4798,
+                  "id": 5874,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4803,
-                  "src": "670:16:25",
+                  "scope": 5879,
+                  "src": "670:16:29",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -2231,18 +2231,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 4796,
+                      "id": 5872,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "670:7:25",
+                      "src": "670:7:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 4797,
+                    "id": 5873,
                     "nodeType": "ArrayTypeName",
-                    "src": "670:9:25",
+                    "src": "670:9:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -2251,67 +2251,67 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "669:18:25"
+              "src": "669:18:29"
             },
-            "scope": 4813,
-            "src": "616:104:25",
+            "scope": 5889,
+            "src": "616:104:29",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 4811,
+              "id": 5887,
               "nodeType": "Block",
-              "src": "794:31:25",
+              "src": "794:31:29",
               "statements": [
                 {
                   "expression": {
-                    "id": 4809,
+                    "id": 5885,
                     "name": "dragonCardType",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 4716,
-                    "src": "804:14:25",
+                    "referencedDeclaration": 5792,
+                    "src": "804:14:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "functionReturnParameters": 4808,
-                  "id": 4810,
+                  "functionReturnParameters": 5884,
+                  "id": 5886,
                   "nodeType": "Return",
-                  "src": "797:21:25"
+                  "src": "797:21:29"
                 }
               ]
             },
             "functionSelector": "221cf8f8",
-            "id": 4812,
+            "id": 5888,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getDragonCardTypes",
-            "nameLocation": "735:18:25",
+            "nameLocation": "735:18:29",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4804,
+              "id": 5880,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "753:2:25"
+              "src": "753:2:29"
             },
             "returnParameters": {
-              "id": 4808,
+              "id": 5884,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4807,
+                  "id": 5883,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4812,
-                  "src": "777:16:25",
+                  "scope": 5888,
+                  "src": "777:16:29",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -2320,18 +2320,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 4805,
+                      "id": 5881,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "777:7:25",
+                      "src": "777:7:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 4806,
+                    "id": 5882,
                     "nodeType": "ArrayTypeName",
-                    "src": "777:9:25",
+                    "src": "777:9:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -2340,34 +2340,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "776:18:25"
+              "src": "776:18:29"
             },
-            "scope": 4813,
-            "src": "726:99:25",
+            "scope": 5889,
+            "src": "726:99:29",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 4814,
-        "src": "26:802:25",
+        "scope": 5890,
+        "src": "26:802:29",
         "usedErrors": []
       }
     ],
-    "src": "1:827:25"
+    "src": "1:827:29"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/StatsDistrib.sol",
     "exportedSymbols": {
       "StatsDistrib": [
-        4813
+        5889
       ]
     },
-    "id": 4814,
+    "id": 5890,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 4708,
+        "id": 5784,
         "literals": [
           "solidity",
           "^",
@@ -2375,7 +2375,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "1:23:25"
+        "src": "1:23:29"
       },
       {
         "abstract": false,
@@ -2384,24 +2384,24 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 4813,
+        "id": 5889,
         "linearizedBaseContracts": [
-          4813
+          5889
         ],
         "name": "StatsDistrib",
-        "nameLocation": "35:12:25",
+        "nameLocation": "35:12:29",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
             "functionSelector": "0038857b",
-            "id": 4711,
+            "id": 5787,
             "mutability": "mutable",
             "name": "dragonCardRarity",
-            "nameLocation": "72:16:25",
+            "nameLocation": "72:16:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "55:33:25",
+            "scope": 5889,
+            "src": "55:33:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2410,18 +2410,18 @@
             },
             "typeName": {
               "baseType": {
-                "id": 4709,
+                "id": 5785,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "55:7:25",
+                "src": "55:7:29",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
-              "id": 4710,
+              "id": 5786,
               "nodeType": "ArrayTypeName",
-              "src": "55:9:25",
+              "src": "55:9:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                 "typeString": "uint256[]"
@@ -2432,13 +2432,13 @@
           {
             "constant": false,
             "functionSelector": "9f1349ed",
-            "id": 4713,
+            "id": 5789,
             "mutability": "mutable",
             "name": "dragonCardRarityPopulationSize",
-            "nameLocation": "111:30:25",
+            "nameLocation": "111:30:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "94:47:25",
+            "scope": 5889,
+            "src": "94:47:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2446,10 +2446,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 4712,
+              "id": 5788,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "94:7:25",
+              "src": "94:7:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -2460,13 +2460,13 @@
           {
             "constant": false,
             "functionSelector": "97dfd7e8",
-            "id": 4716,
+            "id": 5792,
             "mutability": "mutable",
             "name": "dragonCardType",
-            "nameLocation": "164:14:25",
+            "nameLocation": "164:14:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "147:31:25",
+            "scope": 5889,
+            "src": "147:31:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2475,18 +2475,18 @@
             },
             "typeName": {
               "baseType": {
-                "id": 4714,
+                "id": 5790,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "147:7:25",
+                "src": "147:7:29",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
-              "id": 4715,
+              "id": 5791,
               "nodeType": "ArrayTypeName",
-              "src": "147:9:25",
+              "src": "147:9:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                 "typeString": "uint256[]"
@@ -2497,13 +2497,13 @@
           {
             "constant": false,
             "functionSelector": "d710216e",
-            "id": 4718,
+            "id": 5794,
             "mutability": "mutable",
             "name": "dragonCardTypePopulationSize",
-            "nameLocation": "201:28:25",
+            "nameLocation": "201:28:29",
             "nodeType": "VariableDeclaration",
-            "scope": 4813,
-            "src": "184:45:25",
+            "scope": 5889,
+            "src": "184:45:29",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2511,10 +2511,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 4717,
+              "id": 5793,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "184:7:25",
+              "src": "184:7:29",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -2524,24 +2524,24 @@
           },
           {
             "body": {
-              "id": 4793,
+              "id": 5869,
               "nodeType": "Block",
-              "src": "250:360:25",
+              "src": "250:360:29",
               "statements": [
                 {
                   "expression": {
-                    "id": 4727,
+                    "id": 5803,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4721,
+                      "id": 5797,
                       "name": "dragonCardRarity",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4711,
-                      "src": "253:16:25",
+                      "referencedDeclaration": 5787,
+                      "src": "253:16:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                         "typeString": "uint256[] storage ref"
@@ -2553,14 +2553,14 @@
                       "arguments": [
                         {
                           "hexValue": "34",
-                          "id": 4725,
+                          "id": 5801,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "286:1:25",
+                          "src": "286:1:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_4_by_1",
                             "typeString": "int_const 4"
@@ -2575,38 +2575,38 @@
                             "typeString": "int_const 4"
                           }
                         ],
-                        "id": 4724,
+                        "id": 5800,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "NewExpression",
-                        "src": "272:13:25",
+                        "src": "272:13:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
                           "typeString": "function (uint256) pure returns (uint256[] memory)"
                         },
                         "typeName": {
                           "baseType": {
-                            "id": 4722,
+                            "id": 5798,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "276:7:25",
+                            "src": "276:7:29",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             }
                           },
-                          "id": 4723,
+                          "id": 5799,
                           "nodeType": "ArrayTypeName",
-                          "src": "276:9:25",
+                          "src": "276:9:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                             "typeString": "uint256[]"
                           }
                         }
                       },
-                      "id": 4726,
+                      "id": 5802,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2614,54 +2614,54 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "272:16:25",
+                      "src": "272:16:29",
                       "tryCall": false,
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                         "typeString": "uint256[] memory"
                       }
                     },
-                    "src": "253:35:25",
+                    "src": "253:35:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "id": 4728,
+                  "id": 5804,
                   "nodeType": "ExpressionStatement",
-                  "src": "253:35:25"
+                  "src": "253:35:29"
                 },
                 {
                   "expression": {
-                    "id": 4733,
+                    "id": 5809,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4729,
+                        "id": 5805,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "291:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "291:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4731,
+                      "id": 5807,
                       "indexExpression": {
                         "hexValue": "30",
-                        "id": 4730,
+                        "id": 5806,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "308:1:25",
+                        "src": "308:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_0_by_1",
                           "typeString": "int_const 0"
@@ -2673,7 +2673,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "291:19:25",
+                      "src": "291:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2683,61 +2683,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4732,
+                      "id": 5808,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "313:1:25",
+                      "src": "313:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "291:23:25",
+                    "src": "291:23:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4734,
+                  "id": 5810,
                   "nodeType": "ExpressionStatement",
-                  "src": "291:23:25"
+                  "src": "291:23:29"
                 },
                 {
                   "expression": {
-                    "id": 4739,
+                    "id": 5815,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4735,
+                        "id": 5811,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "317:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "317:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4737,
+                      "id": 5813,
                       "indexExpression": {
                         "hexValue": "31",
-                        "id": 4736,
+                        "id": 5812,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "334:1:25",
+                        "src": "334:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_1_by_1",
                           "typeString": "int_const 1"
@@ -2749,7 +2749,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "317:19:25",
+                      "src": "317:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2759,61 +2759,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "3130",
-                      "id": 4738,
+                      "id": 5814,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "339:2:25",
+                      "src": "339:2:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_10_by_1",
                         "typeString": "int_const 10"
                       },
                       "value": "10"
                     },
-                    "src": "317:24:25",
+                    "src": "317:24:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4740,
+                  "id": 5816,
                   "nodeType": "ExpressionStatement",
-                  "src": "317:24:25"
+                  "src": "317:24:29"
                 },
                 {
                   "expression": {
-                    "id": 4745,
+                    "id": 5821,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4741,
+                        "id": 5817,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "344:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "344:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4743,
+                      "id": 5819,
                       "indexExpression": {
                         "hexValue": "32",
-                        "id": 4742,
+                        "id": 5818,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "361:1:25",
+                        "src": "361:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_2_by_1",
                           "typeString": "int_const 2"
@@ -2825,7 +2825,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "344:19:25",
+                      "src": "344:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2835,61 +2835,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "3230",
-                      "id": 4744,
+                      "id": 5820,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "366:2:25",
+                      "src": "366:2:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_20_by_1",
                         "typeString": "int_const 20"
                       },
                       "value": "20"
                     },
-                    "src": "344:24:25",
+                    "src": "344:24:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4746,
+                  "id": 5822,
                   "nodeType": "ExpressionStatement",
-                  "src": "344:24:25"
+                  "src": "344:24:29"
                 },
                 {
                   "expression": {
-                    "id": 4751,
+                    "id": 5827,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4747,
+                        "id": 5823,
                         "name": "dragonCardRarity",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4711,
-                        "src": "371:16:25",
+                        "referencedDeclaration": 5787,
+                        "src": "371:16:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4749,
+                      "id": 5825,
                       "indexExpression": {
                         "hexValue": "33",
-                        "id": 4748,
+                        "id": 5824,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "388:1:25",
+                        "src": "388:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_3_by_1",
                           "typeString": "int_const 3"
@@ -2901,7 +2901,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "371:19:25",
+                      "src": "371:19:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2911,44 +2911,44 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "313235",
-                      "id": 4750,
+                      "id": 5826,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "393:3:25",
+                      "src": "393:3:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_125_by_1",
                         "typeString": "int_const 125"
                       },
                       "value": "125"
                     },
-                    "src": "371:25:25",
+                    "src": "371:25:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4752,
+                  "id": 5828,
                   "nodeType": "ExpressionStatement",
-                  "src": "371:25:25"
+                  "src": "371:25:29"
                 },
                 {
                   "expression": {
-                    "id": 4755,
+                    "id": 5831,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4753,
+                      "id": 5829,
                       "name": "dragonCardRarityPopulationSize",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4713,
-                      "src": "399:30:25",
+                      "referencedDeclaration": 5789,
+                      "src": "399:30:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2958,44 +2958,44 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "353132",
-                      "id": 4754,
+                      "id": 5830,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "432:3:25",
+                      "src": "432:3:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_512_by_1",
                         "typeString": "int_const 512"
                       },
                       "value": "512"
                     },
-                    "src": "399:36:25",
+                    "src": "399:36:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4756,
+                  "id": 5832,
                   "nodeType": "ExpressionStatement",
-                  "src": "399:36:25"
+                  "src": "399:36:29"
                 },
                 {
                   "expression": {
-                    "id": 4763,
+                    "id": 5839,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4757,
+                      "id": 5833,
                       "name": "dragonCardType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4716,
-                      "src": "439:14:25",
+                      "referencedDeclaration": 5792,
+                      "src": "439:14:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                         "typeString": "uint256[] storage ref"
@@ -3007,14 +3007,14 @@
                       "arguments": [
                         {
                           "hexValue": "34",
-                          "id": 4761,
+                          "id": 5837,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "470:1:25",
+                          "src": "470:1:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_4_by_1",
                             "typeString": "int_const 4"
@@ -3029,38 +3029,38 @@
                             "typeString": "int_const 4"
                           }
                         ],
-                        "id": 4760,
+                        "id": 5836,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "NewExpression",
-                        "src": "456:13:25",
+                        "src": "456:13:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
                           "typeString": "function (uint256) pure returns (uint256[] memory)"
                         },
                         "typeName": {
                           "baseType": {
-                            "id": 4758,
+                            "id": 5834,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "460:7:25",
+                            "src": "460:7:29",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             }
                           },
-                          "id": 4759,
+                          "id": 5835,
                           "nodeType": "ArrayTypeName",
-                          "src": "460:9:25",
+                          "src": "460:9:29",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                             "typeString": "uint256[]"
                           }
                         }
                       },
-                      "id": 4762,
+                      "id": 5838,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -3068,54 +3068,54 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "456:16:25",
+                      "src": "456:16:29",
                       "tryCall": false,
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                         "typeString": "uint256[] memory"
                       }
                     },
-                    "src": "439:33:25",
+                    "src": "439:33:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "id": 4764,
+                  "id": 5840,
                   "nodeType": "ExpressionStatement",
-                  "src": "439:33:25"
+                  "src": "439:33:29"
                 },
                 {
                   "expression": {
-                    "id": 4769,
+                    "id": 5845,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4765,
+                        "id": 5841,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "475:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "475:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4767,
+                      "id": 5843,
                       "indexExpression": {
                         "hexValue": "30",
-                        "id": 4766,
+                        "id": 5842,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "490:1:25",
+                        "src": "490:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_0_by_1",
                           "typeString": "int_const 0"
@@ -3127,7 +3127,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "475:17:25",
+                      "src": "475:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3137,61 +3137,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4768,
+                      "id": 5844,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "495:1:25",
+                      "src": "495:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "475:21:25",
+                    "src": "475:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4770,
+                  "id": 5846,
                   "nodeType": "ExpressionStatement",
-                  "src": "475:21:25"
+                  "src": "475:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4775,
+                    "id": 5851,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4771,
+                        "id": 5847,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "499:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "499:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4773,
+                      "id": 5849,
                       "indexExpression": {
                         "hexValue": "31",
-                        "id": 4772,
+                        "id": 5848,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "514:1:25",
+                        "src": "514:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_1_by_1",
                           "typeString": "int_const 1"
@@ -3203,7 +3203,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "499:17:25",
+                      "src": "499:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3213,61 +3213,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4774,
+                      "id": 5850,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "519:1:25",
+                      "src": "519:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "499:21:25",
+                    "src": "499:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4776,
+                  "id": 5852,
                   "nodeType": "ExpressionStatement",
-                  "src": "499:21:25"
+                  "src": "499:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4781,
+                    "id": 5857,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4777,
+                        "id": 5853,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "523:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "523:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4779,
+                      "id": 5855,
                       "indexExpression": {
                         "hexValue": "32",
-                        "id": 4778,
+                        "id": 5854,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "538:1:25",
+                        "src": "538:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_2_by_1",
                           "typeString": "int_const 2"
@@ -3279,7 +3279,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "523:17:25",
+                      "src": "523:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3289,61 +3289,61 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4780,
+                      "id": 5856,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "543:1:25",
+                      "src": "543:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "523:21:25",
+                    "src": "523:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4782,
+                  "id": 5858,
                   "nodeType": "ExpressionStatement",
-                  "src": "523:21:25"
+                  "src": "523:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4787,
+                    "id": 5863,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 4783,
+                        "id": 5859,
                         "name": "dragonCardType",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4716,
-                        "src": "547:14:25",
+                        "referencedDeclaration": 5792,
+                        "src": "547:14:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4785,
+                      "id": 5861,
                       "indexExpression": {
                         "hexValue": "33",
-                        "id": 4784,
+                        "id": 5860,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "562:1:25",
+                        "src": "562:1:29",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_3_by_1",
                           "typeString": "int_const 3"
@@ -3355,7 +3355,7 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "547:17:25",
+                      "src": "547:17:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3365,44 +3365,44 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "31",
-                      "id": 4786,
+                      "id": 5862,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "567:1:25",
+                      "src": "567:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_1_by_1",
                         "typeString": "int_const 1"
                       },
                       "value": "1"
                     },
-                    "src": "547:21:25",
+                    "src": "547:21:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4788,
+                  "id": 5864,
                   "nodeType": "ExpressionStatement",
-                  "src": "547:21:25"
+                  "src": "547:21:29"
                 },
                 {
                   "expression": {
-                    "id": 4791,
+                    "id": 5867,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 4789,
+                      "id": 5865,
                       "name": "dragonCardTypePopulationSize",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4718,
-                      "src": "571:28:25",
+                      "referencedDeclaration": 5794,
+                      "src": "571:28:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -3412,33 +3412,33 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "35",
-                      "id": 4790,
+                      "id": 5866,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "602:1:25",
+                      "src": "602:1:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_5_by_1",
                         "typeString": "int_const 5"
                       },
                       "value": "5"
                     },
-                    "src": "571:32:25",
+                    "src": "571:32:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4792,
+                  "id": 5868,
                   "nodeType": "ExpressionStatement",
-                  "src": "571:32:25"
+                  "src": "571:32:29"
                 }
               ]
             },
-            "id": 4794,
+            "id": 5870,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -3446,76 +3446,76 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4719,
+              "id": 5795,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "247:2:25"
+              "src": "247:2:29"
             },
             "returnParameters": {
-              "id": 4720,
+              "id": 5796,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "250:0:25"
+              "src": "250:0:29"
             },
-            "scope": 4813,
-            "src": "236:374:25",
+            "scope": 5889,
+            "src": "236:374:29",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 4802,
+              "id": 5878,
               "nodeType": "Block",
-              "src": "687:33:25",
+              "src": "687:33:29",
               "statements": [
                 {
                   "expression": {
-                    "id": 4800,
+                    "id": 5876,
                     "name": "dragonCardRarity",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 4711,
-                    "src": "697:16:25",
+                    "referencedDeclaration": 5787,
+                    "src": "697:16:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "functionReturnParameters": 4799,
-                  "id": 4801,
+                  "functionReturnParameters": 5875,
+                  "id": 5877,
                   "nodeType": "Return",
-                  "src": "690:23:25"
+                  "src": "690:23:29"
                 }
               ]
             },
             "functionSelector": "a9e790c8",
-            "id": 4803,
+            "id": 5879,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getDragonCardRarities",
-            "nameLocation": "625:21:25",
+            "nameLocation": "625:21:29",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4795,
+              "id": 5871,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "646:2:25"
+              "src": "646:2:29"
             },
             "returnParameters": {
-              "id": 4799,
+              "id": 5875,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4798,
+                  "id": 5874,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4803,
-                  "src": "670:16:25",
+                  "scope": 5879,
+                  "src": "670:16:29",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -3524,18 +3524,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 4796,
+                      "id": 5872,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "670:7:25",
+                      "src": "670:7:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 4797,
+                    "id": 5873,
                     "nodeType": "ArrayTypeName",
-                    "src": "670:9:25",
+                    "src": "670:9:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -3544,67 +3544,67 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "669:18:25"
+              "src": "669:18:29"
             },
-            "scope": 4813,
-            "src": "616:104:25",
+            "scope": 5889,
+            "src": "616:104:29",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 4811,
+              "id": 5887,
               "nodeType": "Block",
-              "src": "794:31:25",
+              "src": "794:31:29",
               "statements": [
                 {
                   "expression": {
-                    "id": 4809,
+                    "id": 5885,
                     "name": "dragonCardType",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 4716,
-                    "src": "804:14:25",
+                    "referencedDeclaration": 5792,
+                    "src": "804:14:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
                     }
                   },
-                  "functionReturnParameters": 4808,
-                  "id": 4810,
+                  "functionReturnParameters": 5884,
+                  "id": 5886,
                   "nodeType": "Return",
-                  "src": "797:21:25"
+                  "src": "797:21:29"
                 }
               ]
             },
             "functionSelector": "221cf8f8",
-            "id": 4812,
+            "id": 5888,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getDragonCardTypes",
-            "nameLocation": "735:18:25",
+            "nameLocation": "735:18:29",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4804,
+              "id": 5880,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "753:2:25"
+              "src": "753:2:29"
             },
             "returnParameters": {
-              "id": 4808,
+              "id": 5884,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4807,
+                  "id": 5883,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4812,
-                  "src": "777:16:25",
+                  "scope": 5888,
+                  "src": "777:16:29",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -3613,18 +3613,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 4805,
+                      "id": 5881,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "777:7:25",
+                      "src": "777:7:29",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 4806,
+                    "id": 5882,
                     "nodeType": "ArrayTypeName",
-                    "src": "777:9:25",
+                    "src": "777:9:29",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -3633,29 +3633,29 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "776:18:25"
+              "src": "776:18:29"
             },
-            "scope": 4813,
-            "src": "726:99:25",
+            "scope": 5889,
+            "src": "726:99:29",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 4814,
-        "src": "26:802:25",
+        "scope": 5890,
+        "src": "26:802:29",
         "usedErrors": []
       }
     ],
-    "src": "1:827:25"
+    "src": "1:827:29"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.10+commit.fc410830.Emscripten.clang"
+    "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-05T14:08:39.975Z",
+  "updatedAt": "2021-12-21T22:10:19.663Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

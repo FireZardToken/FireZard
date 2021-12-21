@@ -59,7 +59,6 @@ contract DragonCardView is Ownable{
         emit StatsLibLink(dragon_stats);
     }
 
-
     function getView(uint256 id) public view returns (DragonStatsView memory) {
 	bytes32 nft_type = FireZardNFT(NFT_addr).typeOf(id);
 	string memory	rarity  = DragonStats(dragon_stats_addr).RARITY_STR();

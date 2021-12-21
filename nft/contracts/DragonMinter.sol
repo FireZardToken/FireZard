@@ -19,6 +19,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FireZardNFT.sol";
 import "./IRNG.sol";
+import "./RNG.sol";
 import "./IStatsDerive.sol";
 import "./TagStorage.sol";
 import {Util} from "./Util.sol";
@@ -34,6 +35,8 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     uint8 public 	group_id;
     Util.Stat[] public stats;
     uint256 public	stats_length;
+
+    mapping(uint256 => address) public	test_vars;
 
     modifier isMinter() {
 	_;
@@ -160,9 +163,10 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      *
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
-    function openPackage(address recipient, bytes32[] calldata commitment) external virtual isMinter{
+    function openPackage(address recipient, bytes32[] calldata commitment) external virtual {
 	for(uint i=0;i<commitment.length;i++){
 	    uint256 nft_id=IRNG(RNG_addr).read(commitment[i]);
+	    require(FireZardNFT(NFT_addr).totalSupply(nft_id) == 0, "Same dragon card can be openned at most once");
 	    FireZardNFT(NFT_addr).mint(
 		recipient,
 		nft_id,
@@ -190,9 +194,29 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 	}
     }
 
+    function readPackage(bytes32[] calldata commitment) external virtual view returns (uint256[] memory) {
+	uint256[] memory	ids = new uint256[](commitment.length);
+	for(uint i=0;i<commitment.length;i++)
+	    ids[i] = IRNG(RNG_addr).read(commitment[i]);
+	return ids;
+    }
+
+    function getBlockConfirmationCap() external view returns (uint256){
+	return RNG(RNG_addr).getBlockConfirmationCap();
+    }
+
+    function testWrite(address[] calldata something) external virtual {
+	for(uint i=0;i<something.length;i++){
+	    test_vars[i] = something[i];
+	    emit Test(msg.sender, something[i]);
+	}
+    }
+
     event RNGLink(address rng_contract);
     event StatsLibLink(address stats_lib);
     event TAGGroupID(uint8 group_id);
     event TAGLink(address tag_storage);
     event NFTLink(address nft_container);
+
+    event Test(address sender, address something);
 }

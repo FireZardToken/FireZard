@@ -33,5 +33,4 @@ interface IRNG {
      * @param commitment The commitment identifying the resulting randomly generated number
     **/
     function read(bytes32 commitment) external view returns (uint256);
-
 }
