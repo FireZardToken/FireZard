@@ -211,6 +211,7 @@ contract("DragonMinter", accounts => {
     it("Testing minting of Dragon cards with the backend nodejs library", async () => {
 	const minter    = await Minter.deployed();
 	const dragonView= await DragonView.deployed();
+	const test_rng  = await TestRNG.deployed();
 	const util      = await Util.deployed();
 
 	const minter_instance = new web3.eth.Contract(
@@ -228,14 +229,11 @@ contract("DragonMinter", accounts => {
 	const size = 10;
 
 	var cap = await minter_instance.methods.getBlockConfirmationCap().call();
-//	console.log("cap: "+cap);
-//	console.log(JSON.stringify(minter_instance));
-//	console.log("minter: "+minter.address);
-	console.log("size: "+accounts.length);
-//	await minter_instance.methods.testWrite(accounts).send({from: accounts[0], gas: 1500000});
-	var ids = await mint(web3, minter_instance, accounts[0], size);
-//	var gas_limit = web3.eth.getBlock('latest').gasLimit;
-/*	for(var i=0;i<ids.size;i++){
+	let [ids, foo] = await Promise.all([
+		mint(web3, minter_instance, accounts[0], size),
+		setTimeout(() => {test_rng.writeSomeData(generateNonce());}, 3000)
+	    ]);
+	for(var i=0;i<ids.size;i++){
 	    var dsv = await getView(dragon_view_instance, ids[i]);
 
 	    assert.equal(dsv.stacked, 1, "Excatly one dragon card must be minted");
@@ -243,7 +241,7 @@ contract("DragonMinter", accounts => {
 	    dsv.attack.should.be.a.bignumber.equal(MAX_UINT);
 	    dsv.defense.should.be.a.bignumber.equal(MAX_UINT);
 	    dsv.health.should.be.a.bignumber.equal(MAX_UINT);
-	}*/
+	}
 
     });
 });

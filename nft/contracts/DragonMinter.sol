@@ -205,18 +205,9 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 	return RNG(RNG_addr).getBlockConfirmationCap();
     }
 
-    function testWrite(address[] calldata something) external virtual {
-	for(uint i=0;i<something.length;i++){
-	    test_vars[i] = something[i];
-	    emit Test(msg.sender, something[i]);
-	}
-    }
-
     event RNGLink(address rng_contract);
     event StatsLibLink(address stats_lib);
     event TAGGroupID(uint8 group_id);
     event TAGLink(address tag_storage);
     event NFTLink(address nft_container);
-
-    event Test(address sender, address something);
 }

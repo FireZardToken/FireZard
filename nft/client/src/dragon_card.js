@@ -25,10 +25,13 @@ const waitBeforeUnlock = async(web3, minter) => {
     const start = await web3.eth.getBlockNumber();
     const confirmation_cap = await minter.methods.getBlockConfirmationCap().call();
     var current = start;
+//    console.log(current);
     do{
 	await sleep(3000);
 	current = await web3.eth.getBlockNumber();
-    }while(current-start > confirmation_cap);
+//	console.log(current);
+    }while(current-start < confirmation_cap);
+//    console.log("DONE!");
 }
 
 const sendLoop = (method, tries) => {
@@ -36,17 +39,17 @@ const sendLoop = (method, tries) => {
 	console.error(err);
 	if(tries>10)throw Error("Failed after 10 tries. Giving up.");
 	console.log(tries+": retrying...");
-	sendLoop(method, tries+1);
+	return sendLoop(method, tries+1);
     });
 }
 
 const lockPackage = async(minter, account, nonces) => {
-    method = () => {return minter.methods.lockPackage(nonces).send({from: account});}
+    method = () => {return minter.methods.lockPackage(nonces).send({from: account, gas: 1500000});}
     return await sendLoop(method, 0);
 }
 
 const openPackage = async(minter, account, commitments) => {
-    method = () => {return minter.methods.openPackage(account, commitments).send({from: account});}
+    method = () => {return minter.methods.openPackage(account, commitments).send({from: account, gas: 3000000});}
     return await sendLoop(method, 0);
 }
 
@@ -61,16 +64,12 @@ const mint = async(web3, minter, account, size) => {
 	nonces[i] = generateNonce();
 	commitments[i] = keccak256('0x'+nonces[i].toString('hex'));
     }
-    console.log("commitments: "+commitments);
-    console.log("account: "+account);
     var cap = await minter.methods.getBlockConfirmationCap().call();
-    console.log("cap: "+cap);
     await minter.methods.initPackage(commitments).send({from: account, gas: 1500000});
-    await waitBeforeUnlock(web3);
-/*    await lockPackage(minter, account, nonces);
+    await waitBeforeUnlock(web3, minter);
+    await lockPackage(minter, account, nonces);
     await openPackage(minter, account, commitments);
-    return await minter.methods.readPackage(commitments).call();*/
-    return nonces;
+    return await minter.methods.readPackage(commitments).call();
 }
 
 const getView = async(viewer, id) => {
