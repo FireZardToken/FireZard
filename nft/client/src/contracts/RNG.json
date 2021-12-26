@@ -94,7 +94,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -107,7 +108,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -127,7 +129,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -211,7 +214,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -224,7 +228,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bool\",\"name\":\"_test_mode\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"}],\"name\":\"Commit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"cap\",\"type\":\"uint256\"}],\"name\":\"ConfirmationCap\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"}],\"name\":\"EntropyLock\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"}],\"name\":\"ResetCommitment\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"}],\"name\":\"commit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"commitment_confirmation_cap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getBlockConfirmationCap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"entropy\",\"type\":\"bytes32\"}],\"name\":\"lock\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"}],\"name\":\"read\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commitment\",\"type\":\"bytes32\"}],\"name\":\"resetCommitment\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cap\",\"type\":\"uint256\"}],\"name\":\"setCommitmentConfirmationCap\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"test_mode\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"commit(bytes32)\":{\"params\":{\"commitment\":\"Commitment for the client's entropy. For instrance, this can be hash of the entropy.*\"}},\"lock(bytes32)\":{\"params\":{\"entropy\":\"Client's entropy*\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"read(bytes32)\":{\"params\":{\"commitment\":\"The commitment identifying the resulting randomly generated number*\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"commit(bytes32)\":{\"notice\":\"Commit a hidden entropy generated by a client.\"},\"lock(bytes32)\":{\"notice\":\"Lock client's entropy. Mix client's entropy with the entropy of a block that was mined before  the method call, but after the block with the client's entropy commitment.  Note, that no miner knows client's entropy when it is commited to the blockchain and cannot manipulate the hash of the block where client's entropy is mixed with the blockchain entropy, since client's entropy is actually revealed after the lock block is mined. On the other hand, the client cannot predict the blockchain entropy either, when the  client's and blockchain's entropies get mixed.\"},\"read(bytes32)\":{\"notice\":\"Read the (pseudo-)random number derived from the client's and blockchain entropies. The number is uniquely defined by the client's entropy commitment.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/RNG.sol\":\"RNG\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e12cbaa7378fd9b62280e4e1d164bedcb4399ce238f5f98fc0eefb7e50577981\",\"dweb:/ipfs/QmXRoFGUgfsaRkoPT5bxNMtSayKTQ8GZATLPXf69HcRA51\"]},\"@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]},\"project:/contracts/IRNG.sol\":{\"keccak256\":\"0xce60d91b198547768f4f803377015314dd3d97be4134be9cd3e3202e9d12b271\",\"urls\":[\"bzz-raw://b592704b421829cd5a16a7ca2ecb05cf79db260229940b2f56cba503ebd273f6\",\"dweb:/ipfs/QmeE1mekd9kWMF3eEGRgq7fjJDKqqLCYU7AZcrGzpGcrES\"]},\"project:/contracts/RNG.sol\":{\"keccak256\":\"0x490d71abf53bd3189f4ab90ca8712136ca0224c8ea162629b108127c320ee752\",\"urls\":[\"bzz-raw://7b8a3d00d9ea92b47a0d1539e8a019e29d2d54207e0d51a10e7e3b90894912b1\",\"dweb:/ipfs/QmVi2A2tcfwxovbvU3KTZPopQd3Zi23KmradRG3gFVS9U7\"]},\"project:/contracts/Util.sol\":{\"keccak256\":\"0xeb2b25ddf3c33fe1ec5d695aae87614a08df65cedfb07d6c97635e0d20bb510e\",\"urls\":[\"bzz-raw://052d3e6a6398fcdb72f8d48eefe87e349b6b4e4fccefd86f1be0e0cedbbe14bb\",\"dweb:/ipfs/QmSai7zbFUJgUSgrtUqhVVHXMyepwY9Q1NvmeV6GXpU9A2\"]}},\"version\":1}",
@@ -9452,9 +9457,91 @@
     "name": "solc",
     "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "97": {
+      "events": {
+        "0x9e8a51bb6b34b9d5d18c14fd753ee3bf44e2256512665a4577281ffcc91943ff": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "bytes32",
+              "name": "commitment",
+              "type": "bytes32"
+            }
+          ],
+          "name": "Commit",
+          "type": "event"
+        },
+        "0xb6d78f6de320575c58204be457b06337e60feb5ad743168491402255688638c3": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "cap",
+              "type": "uint256"
+            }
+          ],
+          "name": "ConfirmationCap",
+          "type": "event"
+        },
+        "0xfcd44fe2414c570f1af4666197b149197ea4a4e0074e764e7e2e2772e3661a1d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "bytes32",
+              "name": "commitment",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EntropyLock",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xac68f90975f9410b216667788d897499268d6d22966a128552c0f7efc72fc332": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "bytes32",
+              "name": "commitment",
+              "type": "bytes32"
+            }
+          ],
+          "name": "ResetCommitment",
+          "type": "event"
+        }
+      },
+      "links": {
+        "Util": "0xA7883f17b38973eD91652C6943Af40f6c3F69bCE"
+      },
+      "address": "0x45dBC744652251165E3F75443aE155Abc3E6bEe1",
+      "transactionHash": "0xb13247cd1a29d67a3eb52cf2a68feb634201c1b02fff23ccb0b7c3f5426591f9"
+    }
+  },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-21T22:56:38.301Z",
+  "updatedAt": "2021-12-23T13:10:24.191Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {

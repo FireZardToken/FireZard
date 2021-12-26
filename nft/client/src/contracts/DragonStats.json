@@ -36,7 +36,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -49,7 +50,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -62,7 +64,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -75,7 +78,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -88,7 +92,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -101,7 +106,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -114,7 +120,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -127,7 +134,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -140,7 +148,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -153,7 +162,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -166,7 +176,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -179,7 +190,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -221,7 +233,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -250,7 +263,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -279,7 +293,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -308,7 +323,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -344,7 +360,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_statsDistrib\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_statsDistrib\",\"type\":\"address\"}],\"name\":\"StatsDistribLink\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"ATTACK_STR\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFENSE_STR\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"HEALTH_STR\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"H_ATTACK_STR\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"H_DEFENSE_STR\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"H_HEALTH_STR\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"H_RARITY_STR\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"H_TYPE_STR\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RARITY_STR\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"TYPE_STR\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"VERSION\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"nft_type\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatBool\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"nft_type\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatByte32\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"nft_type\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatInt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"nft_type\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"getStatString\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_statsDistrib\",\"type\":\"address\"}],\"name\":\"linkStatsDistrib\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"nft_type\",\"type\":\"bytes32\"}],\"name\":\"stats\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"enum Util.StatType\",\"name\":\"statType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"is_mutable\",\"type\":\"bool\"}],\"internalType\":\"struct Util.Stat[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"statsDistrib\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getStatBool(bytes32,uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"getStatByte32(bytes32,uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"getStatInt(bytes32,uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"getStatString(bytes32,uint256,string)\":{\"params\":{\"id\":\"An id generated by an RNG\",\"name\":\"The stats' name\"},\"returns\":{\"_0\":\"The stats' value*\"}},\"stats(bytes32)\":{\"returns\":{\"_0\":\"An enumerable set (actually, an array) of stats that can be derived by the interface implementation*\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"getStatBool(bytes32,uint256,string)\":{\"notice\":\"Derive a boolean stat from the card's ID by the stats' name\"},\"getStatByte32(bytes32,uint256,string)\":{\"notice\":\"Derive a 32 byte array stat from the card's ID by the stats' name\"},\"getStatInt(bytes32,uint256,string)\":{\"notice\":\"Derive an integer stat from the card's ID by the stats' name\"},\"getStatString(bytes32,uint256,string)\":{\"notice\":\"Derive a string stat from the card's ID by the stats' name\"},\"stats(bytes32)\":{\"notice\":\"Defines a set of stats that can be derived\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/DragonStats.sol\":\"DragonStats\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/DragonStats.sol\":{\"keccak256\":\"0x042b639a422e868e56939de0277db78fdf626b8c76f6779a5e0697d33c7735ae\",\"urls\":[\"bzz-raw://c4303786b4c515a9ed08a5f770d09c0247ad0d21cd9470f9ad78a3dd4f2270b1\",\"dweb:/ipfs/QmXGHMs3AvBM2amYRUruMEANTResMUP8SVdg2Qye3ceDYn\"]},\"project:/contracts/IStatsDerive.sol\":{\"keccak256\":\"0xdd2223284d3b3e32860971d7ccbf913293254409c1245f2cdfe83edd635b7f7d\",\"urls\":[\"bzz-raw://8a3211038f36b6a61d7b4c2c068ccda3257fdd146a1290e50fcbda852e96e9fd\",\"dweb:/ipfs/QmRT6C2Ly9qPi8ptC8U54FKG6AoV495yHtLRhxNUjjQP3B\"]},\"project:/contracts/StatsDistrib.sol\":{\"keccak256\":\"0x218ee2e4f80ebb143e085a795349bdf5d6bf462a9676eeff83fb864024f6e9c9\",\"urls\":[\"bzz-raw://9766e2084f2ff7f86e689effcc28572c1daaa981bf33028bb2b3cb85741d55ce\",\"dweb:/ipfs/QmNioTTWQMCerQB7Aa7yezZP7bzJE9u1HcXR3RfZj37fL2\"]},\"project:/contracts/Util.sol\":{\"keccak256\":\"0xeb2b25ddf3c33fe1ec5d695aae87614a08df65cedfb07d6c97635e0d20bb510e\",\"urls\":[\"bzz-raw://052d3e6a6398fcdb72f8d48eefe87e349b6b4e4fccefd86f1be0e0cedbbe14bb\",\"dweb:/ipfs/QmSai7zbFUJgUSgrtUqhVVHXMyepwY9Q1NvmeV6GXpU9A2\"]}},\"version\":1}",
@@ -19454,9 +19471,33 @@
     "name": "solc",
     "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "97": {
+      "events": {
+        "0xd6ebeed44b8b1f3dea0f0065729e759c6e0a54fff5e3457d639ab0cb4b164307": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "_statsDistrib",
+              "type": "address"
+            }
+          ],
+          "name": "StatsDistribLink",
+          "type": "event"
+        }
+      },
+      "links": {
+        "Util": "0xA7883f17b38973eD91652C6943Af40f6c3F69bCE"
+      },
+      "address": "0x110880D49C82455BE43cfACCb1B8f85eA22bc4d4",
+      "transactionHash": "0xc2b11a3272464959551e12f812f6205eb62b62c2551f90e413f2e58ee42b0c50"
+    }
+  },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-21T22:10:19.635Z",
+  "updatedAt": "2021-12-23T13:10:39.105Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {

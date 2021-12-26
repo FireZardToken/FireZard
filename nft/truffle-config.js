@@ -22,6 +22,14 @@ module.exports = {
 	gasPrice: 0,
 	gas: 0xa00000
     },
+    bsc_test: {
+//	provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545/`),
+	provider: () => new HDWalletProvider(mnemonic, `http://173.212.229.120:9646/`),
+	skipDryRun: true,
+	network_id: 97,
+	gasPrice: 0,
+	gas: 0xa00000
+    },
   },
   compilers: {
     solc: {

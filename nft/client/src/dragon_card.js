@@ -1,4 +1,14 @@
 
+const DragonMinterABI = require('./contracts/DragonMinter.json');
+const DragonViewerABI = require('./contracts/DragonCardView.json');
+const RNG_ABI = require('./contracts/RNG.json');
+const NFT_ABI = require('./contracts/FireZardNFT.json');
+const StatsLib_ABI = require('./contracts/DragonStats.json');
+const Storage_ABI = require('./contracts/TagStorage.json');
+const Viewer_ABI = require('./contracts/StatsView.json');
+const Util_ABI = require('./contracts/Util.json');
+
+
 const { keccak256 } = require("@ethersproject/keccak256");
 
 const toHex = (num) => {
@@ -76,4 +86,69 @@ const getView = async(viewer, id) => {
     return await viewer.methods.getView(id).call();
 }
 
-module.exports = { mint, getView }
+const getDragonMinterInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	DragonMinterABI.abi,
+	DragonMinterABI.networks[chainID] && DragonMinterABI.networks[chainID].address
+    );
+}
+
+const getDragonViewerInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	DragonViewerABI.abi,
+	DragonViewerABI.networks[chainID] && DragonViewerABI.networks[chainID].address
+    );
+}
+
+const getRNGInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	RNG_ABI.abi,
+	RNG_ABI.networks[chainID] && RNG_ABI.networks[chainID].address
+    );
+}
+
+const getNFTInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	NFT_ABI.abi,
+	NFT_ABI.networks[chainID] && NFT_ABI.networks[chainID].address
+    );
+}
+
+const getStatsLibInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	StatsLib_ABI.abi,
+	StatsLib_ABI.networks[chainID] && StatsLib_ABI.networks[chainID].address
+    );
+}
+
+const getStorageInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	Storage_ABI.abi,
+	Storage_ABI.networks[chainID] && Storage_ABI.networks[chainID].address
+    );
+}
+
+const getViewerInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	Viewer_ABI.abi,
+	Viewer_ABI.networks[chainID] && Viewer_ABI.networks[chainID].address
+    );
+}
+
+const getUtilInstance = (web3) => {
+    var chainID = web3.currentProvider.chainId;
+    return new web3.eth.Contract(
+	Util_ABI.abi,
+	Util_ABI.networks[chainID] && Util_ABI.networks[chainID].address
+    );
+}
+
+module.exports = { mint, getView, getDragonMinterInstance, getDragonViewerInstance, getRNGInstance, getRNGInstance, 
+    getNFTInstance, getStatsLibInstance, getStorageInstance, getViewerInstance, getUtilInstance }

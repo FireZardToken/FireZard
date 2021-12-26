@@ -230,7 +230,7 @@ contract("DragonMinter", accounts => {
 
 	var cap = await minter_instance.methods.getBlockConfirmationCap().call();
 	let [ids, foo] = await Promise.all([
-		mint(web3, minter_instance, accounts[0], size),
+		mint(web3, minter_instance, accounts[2], size),
 		setTimeout(() => {test_rng.writeSomeData(generateNonce());}, 3000)
 	    ]);
 	for(var i=0;i<ids.size;i++){
