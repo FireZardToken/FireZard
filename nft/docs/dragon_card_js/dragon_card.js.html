@@ -1,4 +1,32 @@
-const DragonMinterABI = require('./contracts/DragonMinter.json');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dragon_card.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dragon_card.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const DragonMinterABI = require('./contracts/DragonMinter.json');
 const DragonViewerABI = require('./contracts/DragonCardView.json');
 const RNG_ABI = require('./contracts/RNG.json');
 const NFT_ABI = require('./contracts/FireZardNFT.json');
@@ -21,7 +49,7 @@ const toHex = (num) => {
     var hexS = num.toString(16);
     const length = 32;
 
-    while (hexS.length < length) hexS = '0'+hexS;
+    while (hexS.length &lt; length) hexS = '0'+hexS;
     return '0x'+hexS;
 }
 
@@ -76,7 +104,7 @@ const waitBeforeLock = async(web3, minter) => {
 	await sleep(3000);
 	current = await web3.eth.getBlockNumber();
 //	console.log(current);
-    }while(current-start < confirmation_cap);
+    }while(current-start &lt; confirmation_cap);
 //    console.log("DONE!");
 }
 
@@ -163,7 +191,7 @@ const mint = async(web3, minter, account, size) => {
     if(typeof size === 'undefined')
 	size = 1;
     // Generating (pseudo-)random numbers (nonces) and their hashes on client side
-    for(var i=0;i<size;i++){
+    for(var i=0;i&lt;size;i++){
 	nonces[i] = generateNonce();
 	commitments[i] = keccak256('0x'+nonces[i].toString('hex'));
     }
@@ -215,7 +243,7 @@ const getDragonMinterInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	DragonMinterABI.abi,
-	DragonMinterABI.networks[chainID] && DragonMinterABI.networks[chainID].address
+	DragonMinterABI.networks[chainID] &amp;&amp; DragonMinterABI.networks[chainID].address
     );
 }
 
@@ -230,7 +258,7 @@ const getDragonViewerInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	DragonViewerABI.abi,
-	DragonViewerABI.networks[chainID] && DragonViewerABI.networks[chainID].address
+	DragonViewerABI.networks[chainID] &amp;&amp; DragonViewerABI.networks[chainID].address
     );
 }
 
@@ -245,7 +273,7 @@ const getRNGInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	RNG_ABI.abi,
-	RNG_ABI.networks[chainID] && RNG_ABI.networks[chainID].address
+	RNG_ABI.networks[chainID] &amp;&amp; RNG_ABI.networks[chainID].address
     );
 }
 
@@ -260,7 +288,7 @@ const getNFTInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	NFT_ABI.abi,
-	NFT_ABI.networks[chainID] && NFT_ABI.networks[chainID].address
+	NFT_ABI.networks[chainID] &amp;&amp; NFT_ABI.networks[chainID].address
     );
 }
 
@@ -275,7 +303,7 @@ const getStatsLibInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	StatsLib_ABI.abi,
-	StatsLib_ABI.networks[chainID] && StatsLib_ABI.networks[chainID].address
+	StatsLib_ABI.networks[chainID] &amp;&amp; StatsLib_ABI.networks[chainID].address
     );
 }
 
@@ -290,7 +318,7 @@ const getStorageInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	Storage_ABI.abi,
-	Storage_ABI.networks[chainID] && Storage_ABI.networks[chainID].address
+	Storage_ABI.networks[chainID] &amp;&amp; Storage_ABI.networks[chainID].address
     );
 }
 
@@ -305,7 +333,7 @@ const getViewerInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	Viewer_ABI.abi,
-	Viewer_ABI.networks[chainID] && Viewer_ABI.networks[chainID].address
+	Viewer_ABI.networks[chainID] &amp;&amp; Viewer_ABI.networks[chainID].address
     );
 }
 
@@ -320,7 +348,7 @@ const getUtilInstance = (web3) => {
     var chainID = web3.currentProvider.chainId;
     return new web3.eth.Contract(
 	Util_ABI.abi,
-	Util_ABI.networks[chainID] && Util_ABI.networks[chainID].address
+	Util_ABI.networks[chainID] &amp;&amp; Util_ABI.networks[chainID].address
     );
 }
 
@@ -356,3 +384,26 @@ module.exports = {
  /** @see {@link getUtilInstance} */
  getUtilInstance 
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-backend_Dragon_Card.html">backend/Dragon/Card</a></li></ul><h3>Global</h3><ul><li><a href="global.html#generateNonce">generateNonce</a></li><li><a href="global.html#getDragonMinterInstance">getDragonMinterInstance</a></li><li><a href="global.html#getDragonViewerInstance">getDragonViewerInstance</a></li><li><a href="global.html#getNFTInstance">getNFTInstance</a></li><li><a href="global.html#getRNGInstance">getRNGInstance</a></li><li><a href="global.html#getStatsLibInstance">getStatsLibInstance</a></li><li><a href="global.html#getStorageInstance">getStorageInstance</a></li><li><a href="global.html#getUtilInstance">getUtilInstance</a></li><li><a href="global.html#getView">getView</a></li><li><a href="global.html#getViewerInstance">getViewerInstance</a></li><li><a href="global.html#hash">hash</a></li><li><a href="global.html#lockPackage">lockPackage</a></li><li><a href="global.html#mint">mint</a></li><li><a href="global.html#openPackage">openPackage</a></li><li><a href="global.html#sendLoop">sendLoop</a></li><li><a href="global.html#sleep">sleep</a></li><li><a href="global.html#toHex">toHex</a></li><li><a href="global.html#waitBeforeLock">waitBeforeLock</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Dec 27 2021 22:08:30 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
