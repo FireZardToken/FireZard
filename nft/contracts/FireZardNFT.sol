@@ -6,15 +6,27 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
 
 //contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply, IERC721, IERC721Metadata {
-contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
+contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply, IERC721Enumerable, IERC721Metadata {
 
-    mapping(uint256 => address) public ownership;
+    // Token ownership mapping: token_id ==> array of token_owner_address
+    mapping(uint256 => address[]) public ownership;
 
+    // Owner's address position in ownership list for token_id
+    mapping(address => mapping(uint256 => uint256)) private ownershipIndex;
+
+    // Token type mapping: token_id ==> token_type (like, DRAGON_CARD_TYPE_CODE, etc.)
     mapping(uint256 => bytes32) public token_type;
+
+    // Inventory: owner_address => array_of_token_ids
+    mapping(address => uint256[]) public inventory;
+
+    // Slot: slot position of token_id in owner_address inventory
+    mapping(address => mapping(uint256 => uint256)) private slot;
+
 
     constructor(string memory uri) ERC1155PresetMinterPauser(uri) {
 	
@@ -44,19 +56,148 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
 	return token_type[id];
     }
 
-    function ownerOf(uint256 id) public view returns (address) {
+    function ownerOf(uint256 id) public view returns (address[] storage) {
 	return ownership[id];
     }
     
-    function updateOwnership(uint256[] memory ids, address owner) internal {
-    	for(uint i=0;i<ids.length;i++){
-    		if(totalSupply(ids[i]) != balanceOf(owner,ids[i]))
-    			ownership[ids[i]] = address(0);
-    		else
-    			ownership[ids[i]] = owner;
-    	}
+    function addOwnership(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    ownershipIndex[owner][ids[i]] = ownership[ids[i]].length;
+	    ownership[ids[i]].push(owner);
+	}
+    }
+
+    function removeOwnership(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    uint256 owner_index = ownershipIndex[owner][ids[i]];
+	    ownership[owner_index] = ownership[ownership.length-1-i];
+	    ownershipIndex[owner][ownership[owner_index]] = owner_index;
+	    delete ownershipIndex[owner][ids[i]];
+	    delete ownership[ownership.length-1-i];
+	}
+	ownership.length-=ids.length;
     }
     
+    function addToInventory(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    slot[owner][ids[i]] = inventory[owner].length;
+	    inventory[owner].push(ids[i]);
+	}
+    }
+
+    function removeFromInventory(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    uint256 token_index = slot[owner][ids[i]];
+	    inventory[token_index] = inventory[inventory.length-1-i];
+	    slot[owner][inventory[token_index]] = token_index;
+	    delete slot[owner][ids[i]];
+	    delete inventory[inventory.length-1-i];
+	}
+	inventory.length-=ids.length;
+    }
+
+    /**
+     * @dev Returns the number of tokens in ``owner``'s account.
+     * @see IERC721
+     */
+    function balanceOf(address owner) external view returns (uint256 balance){
+	return ownership[owner].length;
+    }
+
+    /**
+     * @dev Returns the owner of the `tokenId` token.
+     * @see IERC721
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist and belong to a single owner
+     */
+    function ownerOf(uint256 tokenId) external view returns (address owner){
+	require(ownership[tokenId].length == 1);
+	return ownership[tokenId][0];
+    }
+
+    /**
+     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients
+     * are aware of the ERC721 protocol to prevent tokens from being forever locked.
+     *
+     * @see IERC721
+     *
+     * Requirements:
+     *
+     * - `from` cannot be the zero address.
+     * - `to` cannot be the zero address.
+     * - `tokenId` token must exist and be owned by `from`.
+     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.
+     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
+     *
+     * Emits a {Transfer} event.
+     */
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external {
+	_transferFrom(from, to, tokenId);
+	require(_checkOnERC721Received(from, to, tokenId, _data), "ERC721: transfer to non ERC721Receiver implementer");
+    }
+
+    /**
+     * @dev Transfers `tokenId` token from `from` to `to`.
+     *
+     * @see IERC721
+     *
+     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.
+     *
+     * Requirements:
+     *
+     * - `from` cannot be the zero address.
+     * - `to` cannot be the zero address.
+     * - `tokenId` token must be owned by `from`.
+     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external {
+	_transferFrom(from, to, tokenId);
+    }
+
+    function _transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal {
+	safeTransferFrom(from, 
+	    to, 
+	    tokenId, 
+	    balanceOf(from, tokenId),
+	    bytes(0)
+	);
+    }
+
+    /**
+     * @dev Gives permission to `to` to transfer `tokenId` token to another account.
+     * The approval is cleared when the token is transferred.
+     *
+     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.
+     *
+     * @see IERC721
+     *
+     * Requirements:
+     *
+     * - The caller must own the token or be an approved operator.
+     * - `tokenId` must exist.
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address to, uint256 tokenId) external {
+	
+    }
+
     /**
      * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
      *
@@ -77,8 +218,9 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256 amount,
         bytes calldata data
     ) public virtual override {
-    	super.safeTransferFrom(from, to, id, amount, data);
-    	updateOwnership(asSingletonArray(id), to);
+	uint256[] memory ids = asSingletonArray(id);
+	uint256[] memory amount = asSingletonArray(amount);
+	safeBatchTransferFrom(from,to,ids,amounts,data);
     }
 
     /**
@@ -99,8 +241,30 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256[] calldata amounts,
         bytes calldata data
     ) public virtual override {
-    	super.safeBatchTransferFrom(from, to, ids, amounts, data);
-    	updateOwnership(ids,to);
+
+	uint256[] memory ids_to = idsToChange(ids,to);
+	    super.safeTransferFrom(from, to, ids[0], amounts[0], data);
+	else
+    	    super.safeBatchTransferFrom(from, to, ids, amounts, data);
+	uint256[] memory ids_from = idsToChange(ids,from);
+
+	addOwnership(ids_to,to);
+	addToInventory(ids_to,to);
+	removeOwnership(ids_from,from);
+	removeFromInventory(ids_from,from);
+    }
+
+    function idsToChange(uint256[] memory ids, address owner) internal view returns (uint256[] memory){
+	uint256[] memory ids_tmp = new uint256[](ids.length);
+	uint256 index=0;
+	for(uint i=0;i<ids.length;i++){
+	    if(balanceOf(to,ids)==0)
+		ids_tmp[index++]=ids[i];
+	}
+	uint256[] memory filtered_ids = new uint256[](index);
+	for(uint i=0;i<index;i++)
+	    filtered_ids[i] = ids_tmp[i];
+	return filtered_ids;
     }
 
     /**
@@ -120,8 +284,9 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256 amount,
         bytes memory data
     ) public virtual override {
-	super.mint(to, id, amount, data);
-	updateOwnership(asSingletonArray(id), to);
+	uint256[] memory ids = asSingletonArray(id);
+	uint256[] memory amounts = asSingletonArray(amount);
+	mintBatch(to, ids, amounts, data);
     }
 
     function mintBatch(
@@ -130,8 +295,15 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256[] memory amounts,
         bytes memory data
     ) public virtual override {
-    	super.mintBatch(to, ids, amounts, data);
-    	updateOwnership(ids, to);
+	uint256[] memory ids_to = idsToChange(ids,to);
+
+	if(ids.length == 1)
+	    super.mint(to, ids[0], amounts[0], data);
+	else
+    	    super.mintBatch(to, ids, amounts, data);
+
+	addOwnership(ids_to,to);
+	addToInventory(ids_to,to);
     }
     
     /**
@@ -147,8 +319,9 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256 id,
         uint256 amount
     ) public virtual override {
-	super.burn(from, id, amount);
-    	updateOwnership(asSingletonArray(id), from);
+	uint256[] memory ids = asSingletonArray(id);
+	uint256[] memory amounts = asSingletonArray(amount);
+	burnBatch(from, ids, amounts);
     }
     
     /**
@@ -163,12 +336,26 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256[] memory ids,
         uint256[] memory amounts
     ) public virtual override {
-	super.burnBatch(from, ids, amounts);
-	updateOwnership(ids, from);
+	if(ids.length == 1)
+	    super.burn(from, id, amount);
+	else
+	    super.burnBatch(from, ids, amounts);
+
+	uint256[] memory ids_from = idsToChange(ids,from);
+
+	removeOwnership(ids_from,from);
+	removeFromInventory(ids_from,from);
     }
 
     function asSingletonArray(uint256 element) private pure returns (uint256[] memory) {
         uint256[] memory array = new uint256[](1);
+        array[0] = element;
+
+        return array;
+    }
+
+    function asSingletonAddressArray(address element) private pure returns (address[] memory) {
+        address[] memory array = new address[](1);
         array[0] = element;
 
         return array;
