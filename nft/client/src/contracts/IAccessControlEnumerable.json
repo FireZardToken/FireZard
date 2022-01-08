@@ -804,8 +804,8 @@
     "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-21T22:10:19.517Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-01-08T20:56:24.659Z",
   "devdoc": {
     "details": "External interface of AccessControlEnumerable declared to support ERC165 detection.",
     "kind": "dev",

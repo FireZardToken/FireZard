@@ -366,10 +366,10 @@
     "absolutePath": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
     "exportedSymbols": {
       "Address": [
-        2890
+        2939
       ],
       "Context": [
-        2912
+        2961
       ],
       "ERC1155": [
         1824
@@ -378,7 +378,7 @@
         2237
       ],
       "ERC165": [
-        3139
+        3188
       ],
       "IERC1155": [
         1946
@@ -390,7 +390,7 @@
         1987
       ],
       "IERC165": [
-        3151
+        3200
       ]
     },
     "id": 2238,
@@ -452,9 +452,9 @@
           1824,
           2252,
           1946,
-          3139,
-          3151,
-          2912
+          3188,
+          3200,
+          2961
         ],
         "name": "ERC1155Supply",
         "nameLocation": "525:13:11",
@@ -1982,10 +1982,10 @@
     "absolutePath": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
     "exportedSymbols": {
       "Address": [
-        2890
+        2939
       ],
       "Context": [
-        2912
+        2961
       ],
       "ERC1155": [
         1824
@@ -1994,7 +1994,7 @@
         2237
       ],
       "ERC165": [
-        3139
+        3188
       ],
       "IERC1155": [
         1946
@@ -2006,7 +2006,7 @@
         1987
       ],
       "IERC165": [
-        3151
+        3200
       ]
     },
     "id": 2238,
@@ -2068,9 +2068,9 @@
           1824,
           2252,
           1946,
-          3139,
-          3151,
-          2912
+          3188,
+          3200,
+          2961
         ],
         "name": "ERC1155Supply",
         "nameLocation": "525:13:11",
@@ -3599,8 +3599,8 @@
     "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-21T22:10:19.545Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-01-08T20:56:24.687Z",
   "devdoc": {
     "details": "Extension of ERC1155 that adds tracking of total supply per id. Useful for scenarios where Fungible and Non-fungible tokens have to be clearly identified. Note: While a totalSupply of 1 might mean the corresponding is an NFT, there is no guarantees that no other token with the same id are not going to be minted.",
     "kind": "dev",

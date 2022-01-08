@@ -367,10 +367,10 @@
     "absolutePath": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
     "exportedSymbols": {
       "Address": [
-        2890
+        2939
       ],
       "Context": [
-        2912
+        2961
       ],
       "ERC1155": [
         1824
@@ -379,7 +379,7 @@
         2104
       ],
       "ERC165": [
-        3139
+        3188
       ],
       "IERC1155": [
         1946
@@ -391,7 +391,7 @@
         1987
       ],
       "IERC165": [
-        3151
+        3200
       ],
       "Pausable": [
         728
@@ -481,9 +481,9 @@
           1824,
           2252,
           1946,
-          3139,
-          3151,
-          2912
+          3188,
+          3200,
+          2961
         ],
         "name": "ERC1155Pausable",
         "nameLocation": "525:15:10",
@@ -990,10 +990,10 @@
     "absolutePath": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
     "exportedSymbols": {
       "Address": [
-        2890
+        2939
       ],
       "Context": [
-        2912
+        2961
       ],
       "ERC1155": [
         1824
@@ -1002,7 +1002,7 @@
         2104
       ],
       "ERC165": [
-        3139
+        3188
       ],
       "IERC1155": [
         1946
@@ -1014,7 +1014,7 @@
         1987
       ],
       "IERC165": [
-        3151
+        3200
       ],
       "Pausable": [
         728
@@ -1104,9 +1104,9 @@
           1824,
           2252,
           1946,
-          3139,
-          3151,
-          2912
+          3188,
+          3200,
+          2961
         ],
         "name": "ERC1155Pausable",
         "nameLocation": "525:15:10",
@@ -1614,8 +1614,8 @@
     "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-21T22:10:19.544Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-01-08T20:56:24.686Z",
   "devdoc": {
     "details": "ERC1155 token with pausable token transfers, minting and burning. Useful for scenarios such as preventing trades until the end of an evaluation period, or having an emergency switch for freezing all token transfers in the event of a large bug. _Available since v3.1._",
     "kind": "dev",
