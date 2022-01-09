@@ -13,7 +13,7 @@ contract('ERC1155Burnable', function (accounts) {
   const amounts = [new BN('3000'), new BN('9902')];
 
   beforeEach(async function () {
-    this.token = await ERC1155BurnableMock.new(uri);
+    this.token = await ERC1155BurnableMock.new(uri,"Fire-Zard-Burnable-Test","fzbt");
 
     await this.token.mint(holder, tokenIds[0], amounts[0], '0x');
     await this.token.mint(holder, tokenIds[1], amounts[1], '0x');

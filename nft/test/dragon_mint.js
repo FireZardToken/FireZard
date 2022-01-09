@@ -244,4 +244,24 @@ contract("DragonMinter", accounts => {
 	}
 
     });
+
+    it("Testing nft transfer", async () => {
+	const nft       = await NFT.deployed();
+	
+	const balance1 = await nft.balanceOf(accounts[4],10);
+	balance1.should.be.a.bignumber.equal('0');
+
+	await nft.mint(accounts[4],10,10,'0x');
+	const balance2 = await nft.balanceOf(accounts[4],10);
+	balance2.should.be.a.bignumber.equal('10');
+
+//	await nft.safeTransferFrom(accounts[4], accounts[5], 10, 10, '0x', {from: accounts[4]});
+	await nft.methods['safeTransferFrom(address,address,uint256,uint256,bytes)'](accounts[4], accounts[5], 10, 6, '0x', {from: accounts[4]});
+	const balance3 = await nft.balanceOf(accounts[4],10);
+	balance3.should.be.a.bignumber.equal('4');
+	const balance4 = await nft.balanceOf(accounts[5],10);
+	balance4.should.be.a.bignumber.equal('6');
+
+    });
+
 });

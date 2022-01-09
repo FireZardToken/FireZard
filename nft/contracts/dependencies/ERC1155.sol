@@ -169,7 +169,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         address operator = _msgSender();
 
         _beforeTokenTransfer(operator, from, to, _asSingletonArray(id), _asSingletonArray(amount), data);
-_rebalance(from, to, _asSingletonArray(id), _asSingletonArray(amount), data);
+	_rebalance(from, to, _asSingletonArray(id), _asSingletonArray(amount), data);
 
         emit TransferSingle(operator, from, to, id, amount);
 

@@ -15,7 +15,7 @@ contract('ERC1155Holder', function (accounts) {
   const transferData = '0x12345678';
 
   beforeEach(async function () {
-    this.multiToken = await ERC1155Mock.new(uri, { from: creator });
+    this.multiToken = await ERC1155Mock.new(uri, "Fire-Zard-Test", "fzt", { from: creator });
     this.holder = await ERC1155Holder.new();
     await this.multiToken.mintBatch(creator, multiTokenIds, multiTokenAmounts, '0x', { from: creator });
   });
@@ -23,7 +23,8 @@ contract('ERC1155Holder', function (accounts) {
   shouldSupportInterfaces(['ERC165', 'ERC1155Receiver']);
 
   it('receives ERC1155 tokens from a single ID', async function () {
-    await this.multiToken.safeTransferFrom(
+//    await this.multiToken.safeTransferFrom(
+    await this.multiToken.methods['safeTransferFrom(address,address,uint256,uint256,bytes)'](
       creator,
       this.holder.address,
       multiTokenIds[0],

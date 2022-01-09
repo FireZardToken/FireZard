@@ -133,7 +133,7 @@ const lockPackage = async(minter, account, nonces) => {
  * @param {string[]}	commitments	Commitments of client's entropy - vector of hashes of client's nonces
  */
 const openPackage = async(minter, account, commitments) => {
-    method = () => {return minter.methods.openPackage(account, commitments).send({from: account, gas: 3000000});}
+    method = () => {return minter.methods.openPackage(account, commitments).send({from: account, gas: 6000000});}
     return await sendLoop(method, 0);
 }
 
@@ -169,7 +169,7 @@ const mint = async(web3, minter, account, size) => {
     }
     var cap = await minter.methods.getBlockConfirmationCap().call();
     await minter.methods.initPackage(commitments).send({from: account, gas: 1500000}); // Submitting the commitments
-    await waitBeforeUnlock(web3, minter); // Waiting the minimal number of blocks till the nonces can be locked (the nonces revealed and mixed with the blockchain's entropy)
+    await waitBeforeLock(web3, minter); // Waiting the minimal number of blocks till the nonces can be locked (the nonces revealed and mixed with the blockchain's entropy)
     await lockPackage(minter, account, nonces); // Locking the nonces (mixing the nonces with the respective block hash from the past)
     await openPackage(minter, account, commitments); // Minting the NFT Dragon cards with the (pseudo-)randomly generated numbers as their IDs
     return await minter.methods.readPackage(commitments).call(); // Returning the newly minted NFT IDs

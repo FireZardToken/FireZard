@@ -10,7 +10,7 @@ contract('ERC1155Pausable', function (accounts) {
   const uri = 'https://token.com';
 
   beforeEach(async function () {
-    this.token = await ERC1155PausableMock.new(uri);
+    this.token = await ERC1155PausableMock.new(uri,"Fire-Zard-Pausable-Test","fzpt");
   });
 
   context('when token is paused', function () {
@@ -29,14 +29,20 @@ contract('ERC1155Pausable', function (accounts) {
 
     it('reverts when trying to safeTransferFrom from holder', async function () {
       await expectRevert(
-        this.token.safeTransferFrom(holder, receiver, firstTokenId, firstTokenAmount, '0x', { from: holder }),
+//        this.token.safeTransferFrom(
+	  this.token.methods['safeTransferFrom(address,address,uint256,uint256,bytes)'](
+	    holder, receiver, firstTokenId, firstTokenAmount, '0x', { from: holder }
+	),
         'ERC1155Pausable: token transfer while paused',
       );
     });
 
     it('reverts when trying to safeTransferFrom from operator', async function () {
       await expectRevert(
-        this.token.safeTransferFrom(holder, receiver, firstTokenId, firstTokenAmount, '0x', { from: operator }),
+//        this.token.safeTransferFrom(
+	  this.token.methods['safeTransferFrom(address,address,uint256,uint256,bytes)'](
+	    holder, receiver, firstTokenId, firstTokenAmount, '0x', { from: operator }
+	),
         'ERC1155Pausable: token transfer while paused',
       );
     });

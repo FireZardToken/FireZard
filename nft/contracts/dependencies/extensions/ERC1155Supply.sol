@@ -51,7 +51,8 @@ abstract contract ERC1155Supply is ERC1155 {
 
         if (to == address(0)) {
             for (uint256 i = 0; i < ids.length; ++i) {
-                _totalSupply[ids[i]] -= amounts[i];
+		if(_totalSupply[ids[i]] >= amounts[i])
+            	    _totalSupply[ids[i]] -= amounts[i];
             }
         }
     }

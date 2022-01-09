@@ -63,9 +63,12 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         bytes memory data
     ) internal virtual override(ERC1155PresetMinterPauser, ERC1155Supply) {
 	if(from == address(0)){
+	    uint l=32;
+	    if(data.length<l)l=data.length;
+
 	    bytes32 _token_type;
 
-	    for(uint i=0;i<32;i++)
+	    for(uint i=0;i<l;i++)
 		_token_type |= bytes32(data[i] & 0xFF) >> (i*8);
 
 	    for(uint i=0;i<ids.length;i++)
@@ -167,7 +170,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 
     function addTokens(uint256[] memory ids) internal {
 	for(uint i=0;i<ids.length;i++){
-	    if(!exists(tokens[ids[i]])){
+	    if(!exists(ids[i])){
 		tokenIndex[ids[i]] = tokens.length;
 		tokens.push(ids[i]);
 	    }
@@ -176,7 +179,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 
     function removeTokens(uint256[] memory ids) internal {
 	for(uint i=0;i<ids.length;i++){
-	    if(!exists(tokens[ids[i]])){
+	    if(!exists(ids[i])){
 		uint256 token_index = tokenIndex[ids[i]];
 		tokens[token_index] = tokens[tokens.length-1];
 		tokenIndex[tokens[token_index]] = token_index;
@@ -229,17 +232,29 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         bytes memory data
     ) private {
         if (to.isContract()) {
-            try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (
-                bytes4 response
-            ) {
-                if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {
-                    revert("ERC1155: ERC1155Receiver rejected tokens");
-                }
-            } catch Error(string memory reason) {
-                revert(reason);
-            } catch {
-                revert("ERC1155: transfer to non ERC1155Receiver implementer");
-            }
+	    if(ids.length == 1){
+		try IERC1155Receiver(to).onERC1155Received(operator, from, ids[0], amounts[0], data) returns (bytes4 response) {
+            	    if (response != IERC1155Receiver.onERC1155Received.selector) {
+                	revert("ERC1155: ERC1155Receiver rejected tokens");
+            	    }
+        	} catch Error(string memory reason) {
+            	    revert(reason);
+        	} catch {
+            	    revert("ERC1155: transfer to non ERC1155Receiver implementer");
+        	}
+	    }else{
+        	try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (
+            	    bytes4 response
+        	) {
+            	    if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {
+                	revert("ERC1155: ERC1155Receiver rejected tokens");
+            	    }
+        	} catch Error(string memory reason) {
+            	    revert(reason);
+        	} catch {
+            	    revert("ERC1155: transfer to non ERC1155Receiver implementer");
+        	}
+	    }
         }
     }
 
@@ -556,7 +571,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * See ERC1155Supply
      */
     function exists(uint256 id) public view virtual override returns (bool) {
-        return super.totalSupply(id) > 0;
+        return (super.totalSupply(id) > 0);
     }
 
     /**
