@@ -11,7 +11,7 @@ library Util {
 //    bytes32 public constant DRAGON_CARD_TYPE_CODE = abi.encodePacked(keccak256('DRAGON_CARD'));
     bytes32 public constant DRAGON_CARD_TYPE_CODE = keccak256('DRAGON_CARD');
 
-    enum CardRarity{ Common, Uncommon, Rare, Super_Rare, Ultra_Rare }
+    enum CardRarity{ Ultra_Rare, Super_Rare, Rare, Uncommon, Common }
     enum CardType{ Fire, Ice, Grass, Electric, Water }
     enum StatType{ Integer, String, ByteArray, Boolean }
 

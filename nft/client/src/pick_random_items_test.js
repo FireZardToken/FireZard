@@ -1,6 +1,7 @@
 var { enableEth, getRValue } = require("./helper.js");
 
-const mnemonic="exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost";
+//const mnemonic="exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost";
+const mnemonic = "crouch tell brick vacuum kid stone program useful mechanic hour valve hover";
 const url="http://127.0.0.1:9545/";
 
 const commit_period = 1;
