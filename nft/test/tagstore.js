@@ -7,11 +7,11 @@ const {
   expectRevert, 
 } = require('@openzeppelin/test-helpers');
 
-const TagStorage = artifacts.require("FireZardTagStorage");
+const TagStorage = artifacts.require("TagStorage");
 
 const keccak256 = require('keccak256');
 
-contract("FireZardTagStorage", accounts => {
+contract("TagStorage", accounts => {
 
     var owner    = accounts[0];
     var adder1   = accounts[1];
@@ -121,11 +121,11 @@ contract("FireZardTagStorage", accounts => {
     // Granting adder's role
     await expectRevert(
 	tagStorage.grantAdderRole(admin,{from: attacker}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.grantAdderRole(admin,{from: adder1}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await tagStorage.grantAdderRole(admin,{from: admin}),
     assert.equal(
@@ -138,11 +138,11 @@ contract("FireZardTagStorage", accounts => {
     // Revoking adder's role
     await expectRevert(
 	tagStorage.revokeAdderRole(adder1,{from: attacker}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.revokeAdderRole(adder1,{from: adder1}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await tagStorage.revokeAdderRole(admin,{from: admin}),
     assert.equal(
@@ -154,11 +154,11 @@ contract("FireZardTagStorage", accounts => {
     // Add a member to group
     await expectRevert(
 	tagStorage.addEditor2Group(admin,group1,{from: attacker}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.addEditor2Group(admin,group1,{from: adder1}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await tagStorage.addEditor2Group(admin,group1,{from: admin}),
     assert.equal(
@@ -170,11 +170,11 @@ contract("FireZardTagStorage", accounts => {
     // Remove a member from group
     await expectRevert(
 	tagStorage.removeEditorFromGroup(adder1,group1,{from: attacker}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.removeEditorFromGroup(adder1,group1,{from: adder1}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await tagStorage.removeEditorFromGroup(admin,group1,{from: admin}),
     assert.equal(
@@ -192,19 +192,19 @@ contract("FireZardTagStorage", accounts => {
 
     await expectRevert(
 	tagStorage.grantAdderRole(attacker,{from: admin}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.revokeAdderRole(adder1,{from: admin}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.addEditor2Group(attacker,group1,{from: admin}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
     await expectRevert(
 	tagStorage.removeEditorFromGroup(adder1,group1,{from: admin}),
-	"FireZardTagStorage: The caller must have admin's priviledges -- Reason given: FireZardTagStorage: The caller must have admin's priviledges."
+	"TagStorage: The caller must have admin's priviledges -- Reason given: TagStorage: The caller must have admin's priviledges."
     );
 
 
@@ -256,37 +256,37 @@ contract("FireZardTagStorage", accounts => {
     // Testing attacker's tag addition
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bytearray'),keccak256('some value'),{from: attacker}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.string'),'some value',{from: attacker}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.int'),141,{from: attacker}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bool'),true,{from: attacker}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
 
     // Testing owner's tag addition
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bytearray'),keccak256('some value'),{from: owner}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.string'),'some value',{from: owner}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.int'),141,{from: owner}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bool'),true,{from: owner}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
 
     // Testing adder1 tag addition to group2
@@ -298,19 +298,19 @@ contract("FireZardTagStorage", accounts => {
     // Testing adder1 tag modification for group2
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bytearray'),keccak256('modified value'),{from: adder1}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.string'),'modified value',{from: adder1}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.int'),144,{from: adder1}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bool'),false,{from: adder1}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
 
     // Testing adder2 tag edition, switching to group1
@@ -322,19 +322,19 @@ contract("FireZardTagStorage", accounts => {
     // Testing adder2 tag modification for group1
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bytearray'),keccak256('modified value3'),{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.string'),'modified value3',{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.int'),148,{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bool'),true,{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
 
     await tagStorage.addEditor2Group(adder2,group1);
@@ -360,19 +360,19 @@ contract("FireZardTagStorage", accounts => {
     // Testing adder2 tag modification for group1
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bytearray'),keccak256('modified value4'),{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.string'),'modified value4',{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.int'),152,{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test.bool'),false,{from: adder2}),
-	"FireZardTagStorage: Need to be tag's group member -- Reason given: FireZardTagStorage: Need to be tag's group member."
+	"TagStorage: Need to be tag's group member -- Reason given: TagStorage: Need to be tag's group member."
     );
 
     await tagStorage.revokeAdderRole(adder2);
@@ -385,19 +385,19 @@ contract("FireZardTagStorage", accounts => {
     // Testing adder2 tag addition
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test2.bytearray'),keccak256('modified value4'),{from: adder2}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test2.string'),'modified value4',{from: adder2}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test2.int'),152,{from: adder2}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
     await expectRevert(
 	tagStorage.setTag(group2,keccak256('test2.bool'),false,{from: adder2}),
-	"FireZardTagStorage: The caller must have adder's priviledges -- Reason given: FireZardTagStorage: The caller must have adder's priviledges."
+	"TagStorage: The caller must have adder's priviledges -- Reason given: TagStorage: The caller must have adder's priviledges."
     );
   });
 
