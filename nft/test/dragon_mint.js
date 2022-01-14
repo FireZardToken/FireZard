@@ -19,6 +19,7 @@ const TAG = artifacts.require("TagStorage");
 const NFT = artifacts.require("FireZardNFT");
 const Stats = artifacts.require("DragonStats");
 const Minter = artifacts.require("DragonMinter");
+const FLAME_MOCK = artifacts.require("FLAME_MOCK");
 const TestRNG = artifacts.require("TestRNG");
 const View = artifacts.require("StatsView");
 const DragonView = artifacts.require("DragonCardView");
@@ -79,6 +80,7 @@ contract("DragonMinter", accounts => {
 	const stats_lib = await Stats.deployed();
 	const tag       = await TAG.deployed();
 	const view	= await View.deployed();
+	const flame	= await FLAME_MOCK.deployed();
 	const dragonView= await DragonView.deployed();
 	const util      = await Util.deployed();
 
@@ -86,6 +88,11 @@ contract("DragonMinter", accounts => {
 	    dragon_view_abi.abi,
 	    dragonView.address
 	);
+
+	await minter.linkFLAME(flame.address);
+	await minter.setPrice(1,ether('1500'));
+	await minter.setPrice(10,ether('10000'));
+	await minter.enableMintFee();
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
 	const MAX_UINT = await util.MAX_UINT.call();
@@ -119,19 +126,22 @@ contract("DragonMinter", accounts => {
 	}
 
 
+	await flame.transfer(accounts[3], ether('100000'));
+	await flame.approve(minter.address, MAX_UINT, {from: accounts[3]});
+
 	var nonces = [];
 	for(var i=0;i<10;i++){
 	    var nonce = generateNonce();
 	    commitments[i] = keccak256('0x'+nonce.toString('hex'));
 	    nonces[i] = nonce;
 	}
-	await minter.initPackage(commitments);
+	await minter.initPackage(commitments, {from: accounts[3]});
 
-	await test_rng.writeSomeData(generateNonce());
+	await test_rng.writeSomeData(generateNonce(), {from: accounts[3]});
 
-	await minter.lockPackage(nonces);
+	await minter.lockPackage(nonces, {from: accounts[3]});
 
-	await minter.openPackage(accounts[1], commitments);
+	await minter.openPackage(accounts[1], commitments, {from: accounts[3]});
 
 	for(var i=0;i<commitments.length;i++){
 //	    console.log("============================================================================");
@@ -212,6 +222,7 @@ contract("DragonMinter", accounts => {
 	const minter    = await Minter.deployed();
 	const dragonView= await DragonView.deployed();
 	const test_rng  = await TestRNG.deployed();
+	const flame	= await FLAME_MOCK.deployed();
 	const util      = await Util.deployed();
 
 	const minter_instance = new web3.eth.Contract(
@@ -225,6 +236,9 @@ contract("DragonMinter", accounts => {
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
 	const MAX_UINT = await util.MAX_UINT.call();
+
+	await flame.transfer(accounts[2], ether('100000'));
+	await flame.approve(minter.address, MAX_UINT, {from: accounts[2]});
 
 	const size = 10;
 

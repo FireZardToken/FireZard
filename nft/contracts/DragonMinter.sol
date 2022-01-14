@@ -17,6 +17,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./dependencies/IBEP20.sol";
 import "./FireZardNFT.sol";
 import "./IRNG.sol";
 import "./RNG.sol";
@@ -30,13 +31,18 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     address public      RNG_addr;
     address public	TAG_addr;
     address public	NFT_addr;
+    address public	FLAME_addr;
     address public	stats_lib_addr;
 
     uint8 public 	group_id;
     Util.Stat[] public stats;
     uint256 public	stats_length;
 
-    mapping(uint256 => address) public	test_vars;
+    bool public		testMode=true;
+
+    mapping(uint256 => uint256) public	price_list;
+
+//    mapping(uint256 => address) public	test_vars;
 
     modifier isMinter() {
 	_;
@@ -95,6 +101,14 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     }
 
     /**
+     * @notice Sets link to BEP20 FLAME smart contract
+    **/
+    function linkFLAME(address _flame) public virtual onlyOwner {
+	FLAME_addr = _flame;
+	emit FLAMELink(_flame);
+    }
+
+    /**
      * @notice Sets link to the Stats deriving library
     **/
     function linkStatsLib(address stats_lib) public virtual onlyOwner {
@@ -130,6 +144,25 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 	revokeRole(MINTER_ROLE, entity);
     }
 
+    function enableMintFee() public virtual onlyOwner {
+	testMode = false;
+	emit EnableMintFee();
+    }
+
+    function disableMintFee() public virtual onlyOwner {
+	testMode = true;
+	emit DisableMintFee();
+    }
+
+    function setPrice(uint256 size, uint256 price) public virtual onlyOwner {
+	price_list[size] = price;
+	emit SetPrice(size, price);
+    }
+
+    function getPrice(uint256 size) public virtual view returns (uint256) {
+	return price_list[size];
+    }
+
     /**
      * @notice Initializes RNG with an array of entropy's commitments from user's side.
      * This should be called before revealing the cards.
@@ -141,6 +174,11 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
     function initPackage(bytes32[] calldata commitment) external virtual {
+	if(!testMode){
+	    uint256 price = getPrice(commitment.length);
+	    require(price > 0, "Unacceptable card package size");
+	    IBEP20(FLAME_addr).transferFrom(_msgSender(),address(this),price);
+	}
 	for(uint i=0;i<commitment.length;i++)
 	    IRNG(RNG_addr).commit(commitment[i]);
     }
@@ -210,4 +248,8 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
     event TAGGroupID(uint8 group_id);
     event TAGLink(address tag_storage);
     event NFTLink(address nft_container);
+    event FLAMELink(address _flame);
+    event EnableMintFee();
+    event DisableMintFee();
+    event SetPrice(uint256 size, uint256 price);
 }

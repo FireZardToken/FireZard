@@ -1,10 +1,7 @@
 const path = require("path");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
-//const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
-
-// Temp mnemonic. REMOVE AFTER USE!!!
-const mnemonic = 'crouch tell brick vacuum kid stone program useful mechanic hour valve hover';
+const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
 
 //const PrivateKeyProvider = require("truffle-privatekey-provider");
 //const pKey = "8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63";
@@ -38,7 +35,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: "^0.8",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.9",    // Fetch exact version from solc-bin (default: truffle's version)
       settings: {
         optimizer: {
             enabled: true,
