@@ -14,12 +14,19 @@ contract RNG is IRNG, Ownable {
     mapping(bytes32 => uint256) commitments;
     mapping(bytes32 => uint256) rvalues;
 
-/*    constructor(){
-	test_mode = false;
-    }*/
+    mapping(uint256 => bytes32) block_hashes;
+    uint256 public	latest_block;
 
     constructor(bool _test_mode){
 	test_mode = _test_mode;
+    }
+
+    function updateBlockHashes() external virtual {
+	if((block.number - latest_block) > 255)
+	    latest_block = block.number - 255;
+	for(uint i=latest_block;i<block.number;i++)
+	    block_hashes[i] = blockhash(i);
+	latest_block = block.number;
     }
 
     function setCommitmentConfirmationCap(uint256 cap) external onlyOwner {
@@ -43,14 +50,19 @@ contract RNG is IRNG, Ownable {
 	emit ResetCommitment(commitment);
     }
 
-    function _getRandomValue(uint256 block_num, bytes32 user_entropy) internal view returns (uint256) {
-	require((block.number - block_num  > commitment_confirmation_cap),"The entropy must have been committed at least the commitment_confirmation_cap blocks earlier");
-	return uint256(keccak256(abi.encodePacked(blockhash(block_num+commitment_confirmation_cap),user_entropy)));
+    function _getHash(uint256 _block_num) internal view returns (bytes32) {
+	bytes32 _block_hash;
+	if(block.number - _block_num > 255)
+	    _block_hash = block_hashes[_block_num];
+	else
+	    _block_hash = blockhash(_block_num);
+	return _block_hash;
     }
 
-/*    function _deriveCommitment(uint256 user_entropy) internal pure returns (bytes32){
-	return keccak256(abi.encodePacked(user_entropy));
-    }*/
+    function _getRandomValue(uint256 block_num, bytes32 user_entropy) internal view returns (uint256) {
+	require((block.number - block_num  > commitment_confirmation_cap),"The entropy must have been committed at least the commitment_confirmation_cap blocks earlier");
+	return uint256(keccak256(abi.encodePacked(_getHash(block_num+commitment_confirmation_cap), user_entropy)));
+    }
 
     function lock(bytes32 entropy) external{
 	bytes32 commitment = Util.deriveCommitment(entropy);
