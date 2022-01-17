@@ -11,6 +11,7 @@ const NFT = artifacts.require("FireZardNFT");
 const Stats = artifacts.require("DragonStats");
 const View = artifacts.require("StatsView");
 const Treasury = artifacts.require("Treasury");
+const TagStorage = artifacts.require("TagStorage");
 const Util = artifacts.require("Util");
 
 const chai = require('chai');
@@ -42,7 +43,7 @@ const claimCheck = async(token_id, account, delegatedClaim) => {
 	else
 	    from = account;
 	var rarity = new BN((await this.view.getStat(this.DRAGON_CARD_TYPE_CODE, token_id, 'rarity')).int_val);
-	var reward = await this.treasury.getRewardValue(rarity);
+//	var reward = await this.treasury.getRewardValue(rarity);
 	var reward = new BN(await this.treasury.getRewardValue(rarity));
 	var before_balance = new BN(await web3.eth.getBalance(account));
 	var expected_amount =before_balance.add(reward);
@@ -97,6 +98,22 @@ const checkWithdraw = (accounts) => {
     });
 }
 
+const mint = async(account, token_id, dragon_card) => {
+    var NFT_CODE;
+    if(dragon_card)
+	NFT_CODE = this.DRAGON_CARD_TYPE_CODE;
+    else
+	NFT_CODE = NON_DRAGON_CARD_TYPE_CODE;
+    await this.nft.mint(
+	account,
+	token_id,
+	1,
+	NFT_CODE
+    );
+    var rarity_override_key = await this.util.getTagKey(token_id,"rarity_override");
+    await this.tag_storage.setTag(0,rarity_override_key,false);
+}
+
 const checkRewardingBehavior = (accounts, delegatedClaim) => {
     let context_msg;
     let _UR;
@@ -136,78 +153,22 @@ const checkRewardingBehavior = (accounts, delegatedClaim) => {
 	describe("Claim rewards for minted tokens", () => {
 
 	    before( async () => {
-		await this.nft.mint(
-		    accounts[1],
-		    _UR,
-		    1,
-		    this.DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[2],
-		    _SR,
-		    1,
-		    this.DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[3],
-		    _R,
-		    1,
-		    this.DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[4],
-		    _U,
-		    1,
-		    this.DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[5],
-		    _C,
-		    1,
-		    this.DRAGON_CARD_TYPE_CODE
-		);
+		await this.tag_storage.grantAdderRole(accounts[0]);
+		await this.tag_storage.addEditor2Group(accounts[0],0);
+		await mint(accounts[1],_UR,true);
+		await mint(accounts[2],_SR,true);
+		await mint(accounts[3],_R,true);
+		await mint(accounts[4],_U,true);
+		await mint(accounts[5],_C,true);
 
 		this.shift=0;
 		if(delegatedClaim)this.shift=5;
 
-		await this.nft.mint(
-		    accounts[1],
-		    NON_DRAGON_CARD_IDS[0+this.shift],
-		    1,
-		    NON_DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[2],
-		    NON_DRAGON_CARD_IDS[1+this.shift],
-		    1,
-		    NON_DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[3],
-		    NON_DRAGON_CARD_IDS[2+this.shift],
-		    1,
-		    NON_DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[4],
-		    NON_DRAGON_CARD_IDS[3+this.shift],
-		    1,
-		    NON_DRAGON_CARD_TYPE_CODE
-		);
-
-		await this.nft.mint(
-		    accounts[5],
-		    NON_DRAGON_CARD_IDS[4+this.shift],
-		    1,
-		    NON_DRAGON_CARD_TYPE_CODE
-		);
+		await mint(accounts[1], NON_DRAGON_CARD_IDS[0+this.shift],false);
+		await mint(accounts[2], NON_DRAGON_CARD_IDS[1+this.shift],false);
+		await mint(accounts[3], NON_DRAGON_CARD_IDS[2+this.shift],false);
+		await mint(accounts[4], NON_DRAGON_CARD_IDS[3+this.shift],false);
+		await mint(accounts[5], NON_DRAGON_CARD_IDS[4+this.shift],false);
 
 	    });
 
@@ -267,6 +228,7 @@ contract("Treasury", (accounts) => {
 	this.stats  = await Stats.deployed();
 	this.view	= await View.deployed();
 	this.treasury	= await Treasury.deployed();
+	this.tag_storage= await TagStorage.deployed();
 	this.util      = await Util.deployed();
 
 	this.minter	= accounts[9];
@@ -276,9 +238,9 @@ contract("Treasury", (accounts) => {
 	await this.view.linkStatsLib(this.stats.address, this.DRAGON_CARD_TYPE_CODE);
 
 	await this.treasury.setReward(0,ether('5'));
-	await this.treasury.setReward(1,ether('1'));
-	await this.treasury.setReward(2,ether('0.5'));
-	await this.treasury.setReward(3,ether('0.1'));
+	await this.treasury.setReward(1,ether('0.5'));
+	await this.treasury.setReward(2,ether('0.25'));
+	await this.treasury.setReward(3,ether('0.384'));
 	await this.treasury.setReward(4,ether('0'));
 
 	var MINTER_ROLE = await this.nft.MINTER_ROLE();

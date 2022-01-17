@@ -14,11 +14,13 @@ import "./StatsDistrib.sol";
 contract DragonStats is IStatsDerive {
     bytes32 public constant VERSION = keccak256(abi.encodePacked('DragonStats-v1'));
     string public constant RARITY_STR = 'rarity';
+    string public constant RARITY_OVERRIDE_STR = 'rarity_override';
     string public constant HEALTH_STR = 'health';
     string public constant TYPE_STR   = 'type';
     string public constant ATTACK_STR = 'attack';
     string public constant DEFENSE_STR= 'defense';
     bytes32 public constant H_RARITY_STR = keccak256(abi.encodePacked(RARITY_STR));
+    bytes32 public constant H_RARITY_OVERRIDE_STR = keccak256(abi.encodePacked(RARITY_OVERRIDE_STR));
     bytes32 public constant H_HEALTH_STR = keccak256(abi.encodePacked(HEALTH_STR));
     bytes32 public constant H_TYPE_STR = keccak256(abi.encodePacked(TYPE_STR));
     bytes32 public constant H_ATTACK_STR = keccak256(abi.encodePacked(ATTACK_STR));
@@ -98,6 +100,9 @@ contract DragonStats is IStatsDerive {
     **/
     function getStatBool(bytes32 nft_type, uint256 id, string calldata name) external view returns (bool){
 	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
+	bytes32 h_name = keccak256(abi.encodePacked(name));
+	if(h_name == H_RARITY_OVERRIDE_STR)
+	    return false;
 	revert("Unsupported stat");
     }
 
@@ -108,12 +113,13 @@ contract DragonStats is IStatsDerive {
     **/
     function stats(bytes32 nft_type) external pure returns (Util.Stat[] memory) {
 	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
-	Util.Stat[] memory stats_list = new Util.Stat[](5);
+	Util.Stat[] memory stats_list = new Util.Stat[](6);
 	stats_list[0] = Util.Stat(RARITY_STR, Util.StatType.Integer, false);
 	stats_list[1] = Util.Stat(HEALTH_STR, Util.StatType.Integer, true);
 	stats_list[2] = Util.Stat(TYPE_STR, Util.StatType.Integer, false);
 	stats_list[3] = Util.Stat(ATTACK_STR, Util.StatType.Integer, true);
 	stats_list[4] = Util.Stat(DEFENSE_STR, Util.StatType.Integer, true);
+	stats_list[5] = Util.Stat(RARITY_OVERRIDE_STR, Util.StatType.Boolean, true);
 	return stats_list;
     }
 

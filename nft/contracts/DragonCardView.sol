@@ -61,17 +61,23 @@ contract DragonCardView is Ownable{
 
     function getView(uint256 id) public view returns (DragonStatsView memory) {
 	bytes32 nft_type = FireZardNFT(NFT_addr).typeOf(id);
-	string memory	rarity  = DragonStats(dragon_stats_addr).RARITY_STR();
+	string memory	rarity		= DragonStats(dragon_stats_addr).RARITY_STR();
+	string memory	rarity_override = DragonStats(dragon_stats_addr).RARITY_OVERRIDE_STR();
 	string memory	health  = DragonStats(dragon_stats_addr).HEALTH_STR();
 	string memory	type_s  = DragonStats(dragon_stats_addr).TYPE_STR();
 	string memory	attack  = DragonStats(dragon_stats_addr).ATTACK_STR();
 	string memory	defense = DragonStats(dragon_stats_addr).DEFENSE_STR();
+	Util.CardRarity rarity_val;
+	if(StatsView(viewer_addr).getStat(nft_type, id, rarity_override).bool_val)
+	    rarity_val = Util.CardRarity.Uncommon;
+	else
+	    rarity_val = Util.CardRarity(StatsView(viewer_addr).getStat(nft_type, id, rarity).int_val);
 	return DragonStatsView(
 	    FireZardNFT(NFT_addr).ownerOf(id),
 	    FireZardNFT(NFT_addr).totalSupply(id),
 	    nft_type,
 	    VERSION,
-	    StatsView(viewer_addr).getStat(nft_type, id, rarity).int_val,
+	    uint256(rarity_val),
 	    StatsView(viewer_addr).getStat(nft_type, id, health).int_val,
 	    Util.CardType(StatsView(viewer_addr).getStat(nft_type, id, type_s).int_val),
 	    StatsView(viewer_addr).getStat(nft_type, id, attack).int_val,

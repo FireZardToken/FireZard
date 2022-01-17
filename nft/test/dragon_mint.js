@@ -126,43 +126,66 @@ contract("DragonMinter", accounts => {
 	}
 
 
-	await flame.transfer(accounts[3], ether('100000'));
+	await flame.transfer(accounts[3], ether('500000'));
 	await flame.approve(minter.address, MAX_UINT, {from: accounts[3]});
 
-	var nonces = [];
-	for(var i=0;i<10;i++){
-	    var nonce = generateNonce();
-	    commitments[i] = keccak256('0x'+nonce.toString('hex'));
-	    nonces[i] = nonce;
-	}
-	await minter.initPackage(commitments, {from: accounts[3]});
+	var noncommon_found;
+	var founds = [];
+	founds[0] = false;
+	founds[1] = false;
+	do{
+	    noncommon_found = false;
+	    var nonces = [];
+	    for(var i=0;i<10;i++){
+		var nonce = generateNonce();
+		commitments[i] = keccak256('0x'+nonce.toString('hex'));
+		nonces[i] = nonce;
+	    }
+	    var before_balance = new BN(await flame.balanceOf(accounts[3]));
+	    await minter.initPackage(commitments, {from: accounts[3]});
+	    var after_balance = new BN(await flame.balanceOf(accounts[3]));
+	    expected_amount = after_balance.add(ether('10000'));
+	    before_balance.should.be.bignumber.equals(expected_amount);
 
-	await test_rng.writeSomeData(generateNonce(), {from: accounts[3]});
+	    await test_rng.writeSomeData(generateNonce(), {from: accounts[3]});
 
-	await minter.lockPackage(nonces, {from: accounts[3]});
+	    await minter.lockPackage(nonces, {from: accounts[3]});
 
-	await minter.openPackage(accounts[1], commitments, {from: accounts[3]});
+	    await minter.openPackage(accounts[1], commitments, {from: accounts[3]});
 
-	for(var i=0;i<commitments.length;i++){
+	// Checking if card pack of 10 contains no uncommon cards
+
+	    for(var i=0;i<commitments.length;i++){
+		var id = await rng.read(commitments[i]);
+		var token_type = await nft.typeOf(id);
+		var rarity = new BN(await stats_lib.getStatInt(token_type, id, await stats_lib.RARITY_STR()));
+		if(rarity.toString(10) !== '4')noncommon_found = true;
+		console.log("Rarity: "+rarity);
+	    }
+
+	    console.log("Non-common found: "+noncommon_found);
+
+	    for(var i=0;i<commitments.length;i++){
 //	    console.log("============================================================================");
 //	    console.log("Commitment: "+commitments[i]);
 //	    console.log("Nonce: "+nonces[i].toString('hex'));
-	    var id = await rng.read(commitments[i]);
-	    var balance = await nft.balanceOf(accounts[1],id);
-	    var token_type = await nft.typeOf(id);
-	    var rarity = await stats_lib.getStatInt(token_type, id, await stats_lib.RARITY_STR());
-	    var card_type = await stats_lib.getStatInt(token_type, id, await stats_lib.TYPE_STR());
-	    var attack = await tag.getIntValue(await util.getTagKey(id, await stats_lib.ATTACK_STR()));
-	    var defense = await tag.getIntValue(await util.getTagKey(id, await stats_lib.DEFENSE_STR()));
-	    var health = await tag.getIntValue(await util.getTagKey(id, await stats_lib.HEALTH_STR()));
+		var id = await rng.read(commitments[i]);
+		var balance = await nft.balanceOf(accounts[1],id);
+		var token_type = await nft.typeOf(id);
+		var rarity = (new BN(await stats_lib.getStatInt(token_type, id, await stats_lib.RARITY_STR()))).toString(10);
+//		var rarity_override = await stats_lib.getStatBool(token_type, id, await stats_lib.RARITY_OVERRIDE_STR());
+		var card_type = await stats_lib.getStatInt(token_type, id, await stats_lib.TYPE_STR());
+		var attack = await tag.getIntValue(await util.getTagKey(id, await stats_lib.ATTACK_STR()));
+		var defense = await tag.getIntValue(await util.getTagKey(id, await stats_lib.DEFENSE_STR()));
+		var health = await tag.getIntValue(await util.getTagKey(id, await stats_lib.HEALTH_STR()));
 
-	    assert.equal(balance, 1, "Excatly one dragon card must be minted");
-	    assert.equal(token_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
-	    attack.should.be.a.bignumber.equal(MAX_UINT);
-	    defense.should.be.a.bignumber.equal(MAX_UINT);
-	    health.should.be.a.bignumber.equal(MAX_UINT);
+		assert.equal(balance, 1, "Excatly one dragon card must be minted");
+		assert.equal(token_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+		attack.should.be.a.bignumber.equal(MAX_UINT);
+		defense.should.be.a.bignumber.equal(MAX_UINT);
+		health.should.be.a.bignumber.equal(MAX_UINT);
 
-	    for(var j=0;j<stats.length;j++){
+		for(var j=0;j<stats.length;j++){
 		    var stat_value = await view.getStat(token_type, id, stats[j].name);
 		    assert.equal(stat_value.statType, stats[j].statType, "Stat type must coincide with the queried stat type");
 		    if(stats[j].name == await stats_lib.RARITY_STR()){
@@ -183,38 +206,55 @@ contract("DragonMinter", accounts => {
 //			assert.equal(stat_value.int_val,rarity,"View must return correct rarity stat");
 			defense.should.be.a.bignumber.equal(stat_value.int_val);
 		    }
-	    }
+		}
 
-	    var dsv = await dragonView.getView(id);
-	    var version = await dragonView.VERSION();
-	    assert.equal(dsv.owner,accounts[1],"Owner must be returned correctly");
-	    assert.equal(dsv.stacked,1,"Dragon card is not stackable");
-	    assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
-	    assert.equal(dsv.version, version, "Version must be returned correctly");
-	    rarity.should.be.a.bignumber.equal(dsv.rarity);
-	    health.should.be.a.bignumber.equal(dsv.health);
-	    assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
-	    attack.should.be.a.bignumber.equal(dsv.attack);
-	    defense.should.be.a.bignumber.equal(dsv.defense);
+		var dsv = await dragonView.getView(id);
+		var version = await dragonView.VERSION();
+		assert.equal(dsv.owner,accounts[1],"Owner must be returned correctly");
+		assert.equal(dsv.stacked,1,"Dragon card is not stackable");
+		assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+		assert.equal(dsv.version, version, "Version must be returned correctly");
+		if((!noncommon_found)&&(i==4)){
+		    rarity.should.be.a.bignumber.equal('4');
+		    dsv.rarity.should.be.a.bignumber.equal('3');
+		}else{
+//		    assert.equal(rarity_override,false,"The common rarity type of this card should not be overriden");
+		    rarity.should.be.a.bignumber.equal(dsv.rarity);
+		}
+		health.should.be.a.bignumber.equal(dsv.health);
+		assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
+		attack.should.be.a.bignumber.equal(dsv.attack);
+		defense.should.be.a.bignumber.equal(dsv.defense);
 	
 
-	    dsv = await getView(dragon_view_instance, id);
-	    assert.equal(dsv.owner,accounts[1],"Owner must be returned correctly");
-	    assert.equal(dsv.stacked,1,"Dragon card is not stackable");
-	    assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
-	    assert.equal(dsv.version, version, "Version must be returned correctly");
-	    rarity.should.be.a.bignumber.equal(dsv.rarity);
-	    health.should.be.a.bignumber.equal(dsv.health);
-	    assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
-	    attack.should.be.a.bignumber.equal(dsv.attack);
-	    defense.should.be.a.bignumber.equal(dsv.defense);
+		dsv = await getView(dragon_view_instance, id);
+		assert.equal(dsv.owner,accounts[1],"Owner must be returned correctly");
+		assert.equal(dsv.stacked,1,"Dragon card is not stackable");
+		assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
+		assert.equal(dsv.version, version, "Version must be returned correctly");
+//		rarity.should.be.a.bignumber.equal(dsv.rarity);
+		if((!noncommon_found)&&(i==4)){
+		    rarity.should.be.a.bignumber.equal('4');
+		    dsv.rarity.should.be.a.bignumber.equal('3');
+		}else{
+//		    assert.equal(rarity_override,false,"The common rarity type of this card should not be overriden");
+		    rarity.should.be.a.bignumber.equal(dsv.rarity);
+		}
 
-	}
+		health.should.be.a.bignumber.equal(dsv.health);
+		assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");
+		attack.should.be.a.bignumber.equal(dsv.attack);
+		defense.should.be.a.bignumber.equal(dsv.defense);
 
-	await expectRevert(
-	    minter.openPackage(accounts[1], commitments),
-	    'Same dragon card can be openned at most once -- Reason given: Same dragon card can be openned at most once.'
-	);
+	    }
+
+	    await expectRevert(
+		minter.openPackage(accounts[1], commitments),
+		'Same dragon card can be openned at most once -- Reason given: Same dragon card can be openned at most once.'
+	    );
+	    if(noncommon_found)founds[0] = true;
+		else founds[1] = true;
+	}while((!founds[0])||(!founds[1]));
 
     });
 

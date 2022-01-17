@@ -133,7 +133,7 @@ const lockPackage = async(minter, account, nonces) => {
  * @param {string[]}	commitments	Commitments of client's entropy - vector of hashes of client's nonces
  */
 const openPackage = async(minter, account, commitments) => {
-    method = () => {return minter.methods.openPackage(account, commitments).send({from: account, gas: 3000000});}
+    method = () => {return minter.methods.openPackage(account, commitments).send({from: account, gas: 4000000});}
     return await sendLoop(method, 0);
 }
 

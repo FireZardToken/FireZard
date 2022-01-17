@@ -22,6 +22,8 @@ import "./FireZardNFT.sol";
 import "./IRNG.sol";
 import "./RNG.sol";
 import "./IStatsDerive.sol";
+import "./DragonStats.sol";
+import "./StatsView.sol";
 import "./TagStorage.sol";
 import {Util} from "./Util.sol";
 
@@ -202,6 +204,8 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      * @param commitment Array of commitments of user's entropy for all new cards to create.
     **/
     function openPackage(address recipient, bytes32[] calldata commitment) external virtual {
+	bool non_common_found = false;
+	string memory rarity = DragonStats(stats_lib_addr).RARITY_STR();
 	for(uint i=0;i<commitment.length;i++){
 	    uint256 nft_id=IRNG(RNG_addr).read(commitment[i]);
 	    require(FireZardNFT(NFT_addr).totalSupply(nft_id) == 0, "Same dragon card can be openned at most once");
@@ -211,6 +215,9 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 		1,
 		abi.encodePacked(Util.DRAGON_CARD_TYPE_CODE)
 	    );
+	    Util.CardRarity rarity_val = Util.CardRarity(IStatsDerive(stats_lib_addr).getStatInt(Util.DRAGON_CARD_TYPE_CODE, nft_id, rarity));
+	    if(rarity_val != Util.CardRarity.Common)
+		non_common_found = true;
 	    for(uint j=0;j<stats_length;j++){
 		if(!stats[j].is_mutable)continue;
 		bytes32 tag_key = Util.getTagKey(nft_id,stats[j].name);
@@ -229,6 +236,11 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 		    TagStorage(TAG_addr).setTag(group_id, tag_key, tag_value);
 		}
 	    }
+	}
+	if((commitment.length == 10)&&(!non_common_found)){
+	    uint256 nft_id=IRNG(RNG_addr).read(commitment[4]);
+	    bytes32 tag_key = Util.getTagKey(nft_id, DragonStats(stats_lib_addr).RARITY_OVERRIDE_STR());
+	    TagStorage(TAG_addr).setTag(group_id, tag_key, true);
 	}
     }
 

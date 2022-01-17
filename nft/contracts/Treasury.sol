@@ -19,6 +19,7 @@ contract Treasury is Ownable, AccessControlEnumerable {
     mapping(uint256 => bool)		public	claims;
 
     string rarity_str;
+    string rarity_override_str;
 
     modifier onlyMinter() {
 	require(hasRole(MINTER_ROLE, _msgSender()), "Treasury: must have minter role to claim rewards");
@@ -30,6 +31,7 @@ contract Treasury is Ownable, AccessControlEnumerable {
 	viewer = _viewer;
 	stats = _stats;
 	rarity_str  = DragonStats(stats).RARITY_STR();
+	rarity_override_str  = DragonStats(stats).RARITY_OVERRIDE_STR();
 	MINTER_ROLE = FireZardNFT(nft).MINTER_ROLE();
 
 	super._setupRole(DEFAULT_ADMIN_ROLE,msg.sender);
@@ -84,8 +86,12 @@ contract Treasury is Ownable, AccessControlEnumerable {
 	require(!claims[token_id], "Treasury: The card's reward has been already claimed");
 
 	claims[token_id] = true;
-	uint256 card_rarity = StatsView(viewer).getStat(Util.DRAGON_CARD_TYPE_CODE, token_id, rarity_str).int_val;
-	uint256 reward_value = reward_table[Util.CardRarity(card_rarity)];
+	Util.CardRarity card_rarity;
+	if(StatsView(viewer).getStat(Util.DRAGON_CARD_TYPE_CODE, token_id, rarity_override_str).bool_val)
+	    card_rarity = Util.CardRarity.Uncommon;
+	else
+	    card_rarity = Util.CardRarity(StatsView(viewer).getStat(Util.DRAGON_CARD_TYPE_CODE, token_id, rarity_str).int_val);
+	uint256 reward_value = reward_table[card_rarity];
 	if(reward_value>0){
 	    (bool _res, bytes memory _data) = to.call{value: reward_value}("");
 	    require(_res, "Treasury: Failed to claim BNB");
