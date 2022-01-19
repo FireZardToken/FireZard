@@ -36,7 +36,7 @@ contract('ERC1155', function (accounts) {
         await expectRevert(
           this.token.mint(ZERO_ADDRESS, tokenId, mintAmount, data),
 //          'ERC1155: mint to the zero address',
-	    'ERC1155: balance query for the zero address -- Reason given: ERC1155: balance query for the zero address.'
+	    'FireZardNFT: mint to the zero address -- Reason given: FireZardNFT: mint to the zero address.'
         );
       });
 
@@ -66,7 +66,7 @@ contract('ERC1155', function (accounts) {
         await expectRevert(
           this.token.mintBatch(ZERO_ADDRESS, tokenBatchIds, mintAmounts, data),
 //          'ERC1155: mint to the zero address',
-	    'ERC1155: balance query for the zero address -- Reason given: ERC1155: balance query for the zero address.'
+	    'FireZardNFT: mint to the zero address -- Reason given: FireZardNFT: mint to the zero address.'
         );
       });
 
