@@ -49,6 +49,24 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
     // Token custom URIs
     mapping(uint256 => string) private uris;
 
+
+    modifier canBeTransferedAsERC721(address from, address to, uint256 token_id) {
+	require(totalSupply(token_id)>0,"ERC721: operator query for nonexistent token");
+	bool from_owns_token = false;
+	for(uint i=0;i<ownership[token_id].length;i++)
+	    if(ownership[token_id][i] == from){
+		from_owns_token = true;
+		break;
+	    }
+	require(from_owns_token,"ERC721: transfer from incorrect owner");
+	require(
+            from == _msgSender() || isApproved(_asSingletonArray(token_id),from),
+            "ERC721: transfer caller is not owner nor approved"
+        );
+	require(to != address(0),"ERC721: transfer to the zero address");
+	_;
+    }
+
     constructor(string memory _uri, string memory name_, string memory symbol_) ERC1155PresetMinterPauser(_uri) {
 	_name = name_;
 	_symbol = symbol_;
@@ -125,6 +143,8 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 	_rebalance(from, to, ids, amounts, data);
 	uint256[] memory ids_from = idsToChange(ids,from);
 
+	removeApproval(ids_from, ids, from);
+
 	addOwnership(ids_to,to);
 	addToInventory(ids_to,to);
 	removeOwnership(ids_from,from);
@@ -153,6 +173,22 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 		return false;
 	}
 	return true;
+    }
+
+    function removeApproval(uint256[] memory ids_from, uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids_from.length;i++){
+	    emit Approval(owner, address(0), ids[i]);
+	    if(approved[ids[i]][owner] != address(0)){
+		
+		delete approved[ids[i]][owner];
+	    }
+	}
+	for(uint i=0;i<ids.length;i++){
+	    emit Approval(owner, address(0), ids[i]);
+	    if(singleApproved[ids[i]] != address(0)){
+		delete singleApproved[ids[i]];
+	    }
+	}
     }
 
     function idsToChange(uint256[] memory ids, address owner) internal view returns (uint256[] memory){
@@ -266,7 +302,9 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
     ) private {
 	if (to.isContract()) {
             try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, _data) returns (bytes4 retval) {
-                require(retval == IERC721Receiver.onERC721Received.selector);
+		if(retval != IERC721Receiver.onERC721Received.selector)
+		    revert("ERC721: transfer to non ERC721Receiver implementer");
+//                require(retval == IERC721Receiver.onERC721Received.selector);
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
                     revert("ERC721: transfer to non ERC721Receiver implementer");
@@ -299,7 +337,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         address from,
         address to,
         uint256 tokenId
-    ) external {
+    ) external canBeTransferedAsERC721(from, to, tokenId){
 	_transferFrom(from, to, tokenId, "", true, true);
     }
 
@@ -321,7 +359,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         address to,
         uint256 tokenId,
         bytes calldata data
-    ) external {
+    ) external canBeTransferedAsERC721(from, to, tokenId){
 	_transferFrom(from, to, tokenId, data, true, true);
     }
 
@@ -345,7 +383,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         address from,
         address to,
         uint256 tokenId
-    ) external {
+    ) external canBeTransferedAsERC721(from, to, tokenId){
 	_transferFrom(from, to, tokenId, "", false, true);
     }
 
@@ -421,6 +459,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         uint256[] memory amounts,
         bytes memory data
     ) public virtual override {
+	require(to != address(0), "FireZardNFT: mint to the zero address");
 	uint256[] memory ids_to = idsToChange(ids,to);
 	addTokens(ids_to);
 
@@ -432,6 +471,11 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
     	    super.mintBatch(to, ids, amounts, data);
 	    for(uint i=0;i<ids.length;i++)
 		emit Transfer(address(0), to, ids[i]);
+	}
+
+	for(uint i=0;i<ids.length;i++){
+	    if(ownership[ids[i]].length > 1)
+		delete singleApproved[ids[i]];
 	}
 
 	addOwnership(ids_to,to);
@@ -484,6 +528,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 	}
 
 	uint256[] memory ids_from = idsToChange(ids,from);
+	removeApproval(ids_from, ids, from);
 
 	removeOwnership(ids_from,from);
 	removeFromInventory(ids_from,from);
@@ -503,6 +548,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * See IERC721
      */
     function balanceOf(address owner) external view returns (uint256 balance){
+	require(owner != address(0), "ERC721: balance query for the zero address");
 	return inventory[owner].length;
     }
 
@@ -515,7 +561,9 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * - `tokenId` must exist and belong to a single owner
      */
     function ownerOf(uint256 tokenId) external view returns (address owner){
-	require(ownership[tokenId].length == 1);
+	require(ownership[tokenId].length >= 1, 'ERC721: owner query for nonexistent token');
+	require(ownership[tokenId].length == 1, 'FireZardNFT: this query may serve only single token owner');
+	
 	return ownership[tokenId][0];
     }
 
@@ -535,18 +583,27 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * Emits an {Approval} event.
      */
     function approve(address to, uint256 tokenId) external {
+	require(to != msg.sender,"ERC721: approval to current owner");
+	require(totalSupply(tokenId)>0,"ERC721: operator query for nonexistent token");
+	bool _approved = false;
 	if(balanceOf(msg.sender, tokenId)>0){
 	    approved[tokenId][msg.sender] = to;
-	    singleApproved[tokenId] = to;
+	    if(ownership[tokenId].length == 1)
+		singleApproved[tokenId] = to;
+	    _approved = true;
+	    emit Approval(msg.sender, to, tokenId);
 	}
 	for(uint i=0;i<ownership[tokenId].length;i++){
 	    address owner = ownership[tokenId][i];
-	    if(approved[tokenId][owner] == msg.sender){
+	    if((approved[tokenId][owner] == msg.sender)||(isApprovedForAll(owner,msg.sender))){
 		approved[tokenId][owner] = to;
-		singleApproved[tokenId] = to;
+		if(ownership[tokenId].length == 1)
+		    singleApproved[tokenId] = to;
+		_approved = true;
+		emit Approval(owner, to, tokenId);
 	    }
 	}
-	revert("The caller must own or be approved to spend tokenId");
+	require(_approved, 'ERC721: approve caller is not owner nor approved');
     }
 
     /**
@@ -561,6 +618,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * - `tokenId` must exist and belong to a single account
      */
     function getApproved(uint256 tokenId) external view returns (address operator){
+	require(totalSupply(tokenId)>0,"ERC721: approved query for nonexistent token");
 	require(ownership[tokenId].length == 1);
 	return singleApproved[tokenId];
     }
@@ -588,7 +646,8 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * See IERC721Enumerable
      */
     function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId){
-	return slot[owner][index];
+	require(inventory[owner].length>index,"FireZardNFT: owner index out of bounds");
+	return inventory[owner][index];
     }
 
     /**
@@ -598,6 +657,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * See IERC721Enumerable
      */
     function tokenByIndex(uint256 index) external view returns (uint256){
+	require(tokens.length>index,"ERC721Enumerable: global index out of bounds");
 	return tokens[index];
     }
 
@@ -607,6 +667,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      * See IERC721Enumerable
      */
     function tokenURI(uint256 tokenId) external view returns (string memory) {
+	require(totalSupply(tokenId)>0, "FireZardNFT: URI query for non-existent token");
 	return uri(tokenId);
     }
 
@@ -688,7 +749,11 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
         override(ERC1155, ERC1155PresetMinterPauser, IERC165)
         returns (bool)
     {
-        return super.supportsInterface(interfaceId);
+        return 
+	    interfaceId == type(IERC721).interfaceId ||
+	    interfaceId == type(IERC721Enumerable).interfaceId ||
+	    interfaceId == type(IERC721Metadata).interfaceId ||
+	    super.supportsInterface(interfaceId);
     }
 
 
