@@ -60,6 +60,10 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         return _uri;
     }
 
+    function _getBaseURI() internal view returns (string memory) {
+	return _uri;
+    }
+
     /**
      * @dev See {IERC1155-balanceOf}.
      *

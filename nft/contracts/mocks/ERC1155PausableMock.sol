@@ -1,7 +1,7 @@
 
 pragma solidity ^0.8;
 
-import "./FireZardNFT.sol";
+import "../FireZardNFT.sol";
 
 contract ERC1155BurnableMock is FireZardNFT {
 

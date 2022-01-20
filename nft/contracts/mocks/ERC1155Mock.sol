@@ -1,7 +1,7 @@
 
 pragma solidity ^0.8;
 
-import "./FireZardNFT.sol";
+import "../FireZardNFT.sol";
 //import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol";
 
 contract ERC1155Mock is FireZardNFT {
