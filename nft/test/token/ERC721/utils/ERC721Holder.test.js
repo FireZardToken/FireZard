@@ -15,7 +15,7 @@ contract('ERC721Holder', function (accounts) {
   it('receives an ERC721 token', async function () {
     const token = await ERC721Mock.new(uri, name, symbol);
     const tokenId = new BN(1);
-    await token.mint(owner, tokenId);
+    await token.mint(owner, tokenId, 100, '0x');
 
     const receiver = await ERC721Holder.new();
     await token.safeTransferFrom(owner, receiver.address, tokenId, { from: owner });
