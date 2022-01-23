@@ -123,6 +123,18 @@ contract("DragonMinter", accounts => {
 			assert.equal(stats[j].statType, 0, "Defense stat should be of integer type");
 			assert.equal(stats[j].is_mutable, true, "Defense stat should be mutable");
 		}
+		if(stats[j].name == await stats_lib.RARITY_OVERRIDE_STR()){
+			assert.equal(stats[j].statType, 3, "Rarity override stat should be of boolean type");
+			assert.equal(stats[j].is_mutable, true, "Rarity override stat should be mutable");
+		}
+		if(stats[j].name == await stats_lib.CHARACTER_STR()){
+			assert.equal(stats[j].statType, 0, "Character stat should be of integer type");
+			assert.equal(stats[j].is_mutable, false, "Character stat should be immutable");
+		}
+		if(stats[j].name == await stats_lib.CHARACTER_NAME_STR()){
+			assert.equal(stats[j].statType, 1, "Character name stat should be of string type");
+			assert.equal(stats[j].is_mutable, false, "Character name stat should be immutable");
+		}
 	}
 
 
@@ -178,7 +190,7 @@ contract("DragonMinter", accounts => {
 		var attack = await tag.getIntValue(await util.getTagKey(id, await stats_lib.ATTACK_STR()));
 		var defense = await tag.getIntValue(await util.getTagKey(id, await stats_lib.DEFENSE_STR()));
 		var health = await tag.getIntValue(await util.getTagKey(id, await stats_lib.HEALTH_STR()));
-
+		
 		assert.equal(balance, 1, "Excatly one dragon card must be minted");
 		assert.equal(token_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
 		attack.should.be.a.bignumber.equal(MAX_UINT);
@@ -186,6 +198,7 @@ contract("DragonMinter", accounts => {
 		health.should.be.a.bignumber.equal(MAX_UINT);
 
 		for(var j=0;j<stats.length;j++){
+		    if((stats[j].name == 'character')||(stats[j].name == 'character_name'))continue;
 		    var stat_value = await view.getStat(token_type, id, stats[j].name);
 		    assert.equal(stat_value.statType, stats[j].statType, "Stat type must coincide with the queried stat type");
 		    if(stats[j].name == await stats_lib.RARITY_STR()){
@@ -240,6 +253,8 @@ contract("DragonMinter", accounts => {
 //		    assert.equal(rarity_override,false,"The common rarity type of this card should not be overriden");
 		    rarity.should.be.a.bignumber.equal(dsv.rarity);
 		}
+
+		console.log(dsv);
 
 		health.should.be.a.bignumber.equal(dsv.health);
 		assert.equal(card_type, dsv.card_type, "Card type must be returned correctly");

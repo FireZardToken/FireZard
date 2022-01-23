@@ -88,7 +88,7 @@ contract StatsView is Ownable{
 		revert("Unknown mutable stat type");
 	    }
 	}
-	revert("Requested integer tag not found");
+	revert("StatsView: Requested tag not found");
     }
 
     event	TAGLink(address tag_addr);

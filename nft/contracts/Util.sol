@@ -12,7 +12,7 @@ library Util {
     bytes32 public constant DRAGON_CARD_TYPE_CODE = keccak256('DRAGON_CARD');
 
     enum CardRarity{ Ultra_Rare, Super_Rare, Rare, Uncommon, Common }
-    enum CardType{ Fire, Ice, Grass, Electric, Water }
+    enum CardType{ Fire, Ice, Plant, Electric, Water }
     enum StatType{ Integer, String, ByteArray, Boolean }
 
     struct Stat{
