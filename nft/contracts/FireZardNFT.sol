@@ -618,7 +618,7 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
      */
     function getApproved(uint256 tokenId) external view returns (address operator){
 	require(totalSupply(tokenId)>0,"ERC721: approved query for nonexistent token");
-	require(ownership[tokenId].length == 1);
+	require(ownership[tokenId].length == 1, "FireZardNFT: this query may serve only single token owner");
 	return singleApproved[tokenId];
     }
 
