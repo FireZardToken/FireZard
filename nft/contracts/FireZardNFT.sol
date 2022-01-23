@@ -142,7 +142,10 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 	_rebalance(from, to, ids, amounts, data);
 	uint256[] memory ids_from = idsToChange(ids,from);
 
-	removeApproval(ids_from, ids, from);
+	if(ERC721_mode)
+	    removeApproval(ids_from, ids, from);
+	else
+	    removeApproval(ids_from, new uint256[](0), from);
 
 	addOwnership(ids_to,to);
 	addToInventory(ids_to,to);
@@ -176,10 +179,12 @@ contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155S
 
     function removeApproval(uint256[] memory ids_from, uint256[] memory ids, address owner) internal {
 	for(uint i=0;i<ids_from.length;i++){
-	    emit Approval(owner, address(0), ids[i]);
-	    if(approved[ids[i]][owner] != address(0)){
-		
-		delete approved[ids[i]][owner];
+	    emit Approval(owner, address(0), ids_from[i]);
+	    if(approved[ids_from[i]][owner] != address(0)){
+		delete approved[ids_from[i]][owner];
+	    }
+	    if(singleApproved[ids_from[i]] != address(0)){
+		delete singleApproved[ids_from[i]];
 	    }
 	}
 	for(uint i=0;i<ids.length;i++){

@@ -537,6 +537,7 @@ function shouldBehaveLikeERC1155 ([minter, firstTokenHolder, secondTokenHolder, 
         it('debits transferred balances from sender', async function () {
           const newBalances = await this.token.balanceOfBatch(new Array(ids.length).fill(from), ids);
           for (const newBalance of newBalances) {
+	    console.log("newBalance: "+newBalance);
             expect(newBalance).to.be.a.bignumber.equal('0');
           }
         });
@@ -544,6 +545,7 @@ function shouldBehaveLikeERC1155 ([minter, firstTokenHolder, secondTokenHolder, 
         it('credits transferred balances to receiver', async function () {
           const newBalances = await this.token.balanceOfBatch(new Array(ids.length).fill(this.toWhom), ids);
           for (let i = 0; i < newBalances.length; i++) {
+	    console.log("newBalances["+i+"]: "+newBalances[i]);
             expect(newBalances[i]).to.be.a.bignumber.equal(values[i]);
           }
         });
