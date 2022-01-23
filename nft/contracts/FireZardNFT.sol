@@ -4,20 +4,71 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol";
-import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
-//import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-//import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
+import "./dependencies/presets/ERC1155PresetMinterPauser.sol";
+import "./dependencies/extensions/ERC1155Supply.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
-//contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply, IERC721, IERC721Metadata {
-contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
 
-    mapping(uint256 => address) public ownership;
+contract FireZardNFT is IERC1155MetadataURI, ERC1155PresetMinterPauser, ERC1155Supply, IERC721Enumerable, IERC721Metadata {
+    using Address for address;
 
+    string _name;
+    string _symbol;
+
+    // List of all token IDs
+    uint256[] public tokens;
+
+    // Token index mapping: toklen_id => token index in tokens list
+    mapping(uint256 => uint256) public tokenIndex;
+
+    // Token ownership mapping: token_id ==> array of token_owner_address
+    mapping(uint256 => address[]) public ownership;
+
+    // Owner's address position in ownership list for token_id
+    mapping(address => mapping(uint256 => uint256)) private ownershipIndex;
+
+    // Token type mapping: token_id ==> token_type (like, DRAGON_CARD_TYPE_CODE, etc.)
     mapping(uint256 => bytes32) public token_type;
 
-    constructor(string memory uri) ERC1155PresetMinterPauser(uri) {
-	
+    // Inventory: owner_address => array_of_token_ids
+    mapping(address => uint256[]) public inventory;
+
+    // Slot: slot position of token_id in owner_address inventory
+    mapping(address => mapping(uint256 => uint256)) private slot;
+
+    // Approved transfer of token_id belonging to an owner for an operator
+    mapping(uint256 => mapping(address => address)) private approved;
+
+    // Approved transfer of a token_id to an operator. Applicable only for cases where tokens with token_id belong to a single owner
+    mapping(uint256 => address) private singleApproved;
+
+    // Token custom URIs
+    mapping(uint256 => string) private uris;
+
+
+    modifier canBeTransferedAsERC721(address from, address to, uint256 token_id) {
+	require(totalSupply(token_id)>0,"ERC721: operator query for nonexistent token");
+	bool from_owns_token = false;
+	for(uint i=0;i<ownership[token_id].length;i++)
+	    if(ownership[token_id][i] == from){
+		from_owns_token = true;
+		break;
+	    }
+	require(from_owns_token,"ERC721: transfer from incorrect owner");
+	require(
+            from == _msgSender() || isApprovedForAll(from, _msgSender()) || isApproved(_asSingletonArray(token_id),from),
+            "ERC721: transfer caller is not owner nor approved"
+        );
+	require(to != address(0),"ERC721: transfer to the zero address");
+	_;
+    }
+
+    constructor(string memory _uri, string memory name_, string memory symbol_) ERC1155PresetMinterPauser(_uri) {
+	_name = name_;
+	_symbol = symbol_;
     }
 
     function _beforeTokenTransfer(
@@ -29,9 +80,12 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         bytes memory data
     ) internal virtual override(ERC1155PresetMinterPauser, ERC1155Supply) {
 	if(from == address(0)){
+	    uint l=32;
+	    if(data.length<l)l=data.length;
+
 	    bytes32 _token_type;
 
-	    for(uint i=0;i<32;i++)
+	    for(uint i=0;i<l;i++)
 		_token_type |= bytes32(data[i] & 0xFF) >> (i*8);
 
 	    for(uint i=0;i<ids.length;i++)
@@ -40,23 +94,303 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
 	super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
 
-    function typeOf(uint256 id) public view returns (bytes32) {
-	return token_type[id];
+    function _transferFrom(
+	address from,
+	address to,
+	uint256 tokenId,
+	bytes	memory data,
+	bool safe_mode,
+	bool ERC721_mode
+    ) internal {
+	if(ERC721_mode)require(from != address(0));
+	require(to != address(0));
+
+	uint256[] memory ids = _asSingletonArray(tokenId);
+	uint256[] memory amounts = _asSingletonArray(balanceOf(from,tokenId));
+	_transferFrom(
+	    from,
+	    to,
+	    ids,
+	    amounts,
+	    data,
+	    safe_mode,
+	    ERC721_mode
+	);
     }
 
-    function ownerOf(uint256 id) public view returns (address) {
-	return ownership[id];
+    function _transferFrom(
+	address from,
+	address to,
+	uint256[] memory ids,
+	uint256[] memory amounts,
+	bytes	memory data,
+	bool	safe_mode,
+	bool	ERC721_mode
+    ) internal {
+	require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
+        require(to != address(0), "ERC1155: transfer to the zero address");
+
+        address operator = _msgSender();
+	require(
+            from == operator || isApprovedForAll(from, operator) || isApproved(ids, from),
+            "ERC1155: caller is not owner nor approved"
+        );
+
+        _beforeTokenTransfer(operator, from, to, ids, amounts, data);
+
+	uint256[] memory ids_to = idsToChange(ids,to);
+	_rebalance(from, to, ids, amounts, data);
+	uint256[] memory ids_from = idsToChange(ids,from);
+
+	if(ERC721_mode)
+	    removeApproval(ids_from, ids, from);
+	else
+	    removeApproval(ids_from, new uint256[](0), from);
+
+	addOwnership(ids_to,to);
+	addToInventory(ids_to,to);
+	removeOwnership(ids_from,from);
+	removeFromInventory(ids_from,from);
+
+	if(ids.length>1){
+    	    emit TransferBatch(operator, from, to, ids, amounts);
+	    for(uint i=0;i<ids.length;i++)
+		emit Transfer(from, to, ids[i]);
+	}
+	else{
+	    emit TransferSingle(operator, from, to, ids[0], amounts[0]);
+	    emit Transfer(from, to, ids[0]);
+	}
+
+	if(!safe_mode)return;
+	if(!ERC721_mode)
+	    _doERC1155TransferAcceptanceCheck(operator, from, to, ids, amounts, data);
+	else
+	    _doERC721TransferAcceptanceCheck(from, to, ids[0], data);
+    }
+
+    function isApproved(uint256[] memory ids, address owner) internal view returns (bool) {
+	for(uint i=0;i<ids.length;i++){
+	    if(approved[ids[i]][owner] != _msgSender())
+		return false;
+	}
+	return true;
+    }
+
+    function removeApproval(uint256[] memory ids_from, uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids_from.length;i++){
+	    emit Approval(owner, address(0), ids_from[i]);
+	    if(approved[ids_from[i]][owner] != address(0)){
+		delete approved[ids_from[i]][owner];
+	    }
+	    if(singleApproved[ids_from[i]] != address(0)){
+		delete singleApproved[ids_from[i]];
+	    }
+	}
+	for(uint i=0;i<ids.length;i++){
+	    emit Approval(owner, address(0), ids[i]);
+	    if(singleApproved[ids[i]] != address(0)){
+		delete singleApproved[ids[i]];
+	    }
+	}
+    }
+
+    function idsToChange(uint256[] memory ids, address owner) internal view returns (uint256[] memory){
+	uint256[] memory ids_tmp = new uint256[](ids.length);
+	uint256 index=0;
+	for(uint i=0;i<ids.length;i++){
+	    if(balanceOf(owner,ids[i])==0)
+		ids_tmp[index++]=ids[i];
+	}
+	uint256[] memory filtered_ids = new uint256[](index);
+	for(uint i=0;i<index;i++)
+	    filtered_ids[i] = ids_tmp[i];
+	return filtered_ids;
+    }
+
+    function addTokens(uint256[] memory ids) internal {
+	for(uint i=0;i<ids.length;i++){
+	    if(!exists(ids[i])){
+		tokenIndex[ids[i]] = tokens.length;
+		tokens.push(ids[i]);
+	    }
+	}
+    }
+
+    function removeTokens(uint256[] memory ids) internal {
+	for(uint i=0;i<ids.length;i++){
+	    if(!exists(ids[i])){
+		uint256 token_index = tokenIndex[ids[i]];
+		tokens[token_index] = tokens[tokens.length-1];
+		tokenIndex[tokens[token_index]] = token_index;
+		tokens.pop();
+		delete tokenIndex[ids[i]];
+	    }
+	}
+    }
+
+    function addOwnership(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    ownershipIndex[owner][ids[i]] = ownership[ids[i]].length;
+	    ownership[ids[i]].push(owner);
+	}
+    }
+
+    function removeOwnership(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    uint256 owner_index = ownershipIndex[owner][ids[i]];
+	    ownership[ids[i]][owner_index] = ownership[ids[i]][ownership[ids[i]].length-1];
+	    ownershipIndex[ownership[ids[i]][owner_index]][ids[i]] = owner_index;
+	    ownership[ids[i]].pop();
+	    delete ownershipIndex[owner][ids[i]];
+	}
     }
     
-    function updateOwnership(uint256[] memory ids, address owner) internal {
-    	for(uint i=0;i<ids.length;i++){
-    		if(totalSupply(ids[i]) != balanceOf(owner,ids[i]))
-    			ownership[ids[i]] = address(0);
-    		else
-    			ownership[ids[i]] = owner;
-    	}
+    function addToInventory(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    slot[owner][ids[i]] = inventory[owner].length;
+	    inventory[owner].push(ids[i]);
+	}
     }
-    
+
+    function removeFromInventory(uint256[] memory ids, address owner) internal {
+	for(uint i=0;i<ids.length;i++){
+	    uint256 token_index = slot[owner][ids[i]];
+	    inventory[owner][token_index] = inventory[owner][inventory[owner].length-1];
+	    slot[owner][inventory[owner][token_index]] = token_index;
+	    delete slot[owner][ids[i]];
+	    inventory[owner].pop();
+	}
+    }
+
+    function _doERC1155TransferAcceptanceCheck(
+        address operator,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) private {
+        if (to.isContract()) {
+	    if(ids.length == 1){
+		try IERC1155Receiver(to).onERC1155Received(operator, from, ids[0], amounts[0], data) returns (bytes4 response) {
+            	    if (response != IERC1155Receiver.onERC1155Received.selector) {
+                	revert("ERC1155: ERC1155Receiver rejected tokens");
+            	    }
+        	} catch Error(string memory reason) {
+            	    revert(reason);
+        	} catch {
+            	    revert("ERC1155: transfer to non ERC1155Receiver implementer");
+        	}
+	    }else{
+        	try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (
+            	    bytes4 response
+        	) {
+            	    if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {
+                	revert("ERC1155: ERC1155Receiver rejected tokens");
+            	    }
+        	} catch Error(string memory reason) {
+            	    revert(reason);
+        	} catch {
+            	    revert("ERC1155: transfer to non ERC1155Receiver implementer");
+        	}
+	    }
+        }
+    }
+
+    function _doERC721TransferAcceptanceCheck(
+	address from,
+	address to,
+	uint256 tokenId,
+	bytes memory _data
+    ) private {
+	if (to.isContract()) {
+            try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, _data) returns (bytes4 retval) {
+		if(retval != IERC721Receiver.onERC721Received.selector)
+		    revert("ERC721: transfer to non ERC721Receiver implementer");
+//                require(retval == IERC721Receiver.onERC721Received.selector);
+            } catch (bytes memory reason) {
+                if (reason.length == 0) {
+                    revert("ERC721: transfer to non ERC721Receiver implementer");
+                } else {
+                    assembly {
+                        revert(add(32, reason), mload(reason))
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients
+     * are aware of the ERC721 protocol to prevent tokens from being forever locked.
+     *
+     * See IERC721
+     *
+     * Requirements:
+     *
+     * - `from` cannot be the zero address.
+     * - `to` cannot be the zero address.
+     * - `tokenId` token must exist and be owned by `from`.
+     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.
+     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
+     *
+     * Emits a {Transfer} event.
+     */
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external canBeTransferedAsERC721(from, to, tokenId){
+	_transferFrom(from, to, tokenId, "", true, true);
+    }
+
+/**
+     * @dev Safely transfers `tokenId` token from `from` to `to`.
+     *
+     * Requirements:
+     *
+     * - `from` cannot be the zero address.
+     * - `to` cannot be the zero address.
+     * - `tokenId` token must exist and be owned by `from`.
+     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.
+     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
+     *
+     * Emits a {Transfer} event.
+     */
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId,
+        bytes calldata data
+    ) external canBeTransferedAsERC721(from, to, tokenId){
+	_transferFrom(from, to, tokenId, data, true, true);
+    }
+
+    /**
+     * @dev Transfers `tokenId` token from `from` to `to`.
+     *
+     * See IERC721
+     *
+     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.
+     *
+     * Requirements:
+     *
+     * - `from` cannot be the zero address.
+     * - `to` cannot be the zero address.
+     * - `tokenId` token must be owned by `from`.
+     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external canBeTransferedAsERC721(from, to, tokenId){
+	_transferFrom(from, to, tokenId, "", false, true);
+    }
+
     /**
      * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
      *
@@ -76,9 +410,8 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256 id,
         uint256 amount,
         bytes calldata data
-    ) public virtual override {
-    	super.safeTransferFrom(from, to, id, amount, data);
-    	updateOwnership(asSingletonArray(id), to);
+    ) public virtual override(ERC1155, IERC1155) {
+	_transferFrom(from, to, _asSingletonArray(id), _asSingletonArray(amount), data, true, false);
     }
 
     /**
@@ -98,9 +431,8 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256[] calldata ids,
         uint256[] calldata amounts,
         bytes calldata data
-    ) public virtual override {
-    	super.safeBatchTransferFrom(from, to, ids, amounts, data);
-    	updateOwnership(ids,to);
+    ) public virtual override(ERC1155, IERC1155) {
+	_transferFrom(from, to, ids, amounts, data, true, false);
     }
 
     /**
@@ -120,8 +452,9 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256 amount,
         bytes memory data
     ) public virtual override {
-	super.mint(to, id, amount, data);
-	updateOwnership(asSingletonArray(id), to);
+	uint256[] memory ids = _asSingletonArray(id);
+	uint256[] memory amounts = _asSingletonArray(amount);
+	mintBatch(to, ids, amounts, data);
     }
 
     function mintBatch(
@@ -130,8 +463,27 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256[] memory amounts,
         bytes memory data
     ) public virtual override {
-    	super.mintBatch(to, ids, amounts, data);
-    	updateOwnership(ids, to);
+	require(to != address(0), "FireZardNFT: mint to the zero address");
+	uint256[] memory ids_to = idsToChange(ids,to);
+	addTokens(ids_to);
+
+	if(ids.length == 1){
+	    super.mint(to, ids[0], amounts[0], data);
+	    emit Transfer(address(0), to, ids[0]);
+	}
+	else{
+    	    super.mintBatch(to, ids, amounts, data);
+	    for(uint i=0;i<ids.length;i++)
+		emit Transfer(address(0), to, ids[i]);
+	}
+
+	for(uint i=0;i<ids.length;i++){
+	    if(ownership[ids[i]].length > 1)
+		delete singleApproved[ids[i]];
+	}
+
+	addOwnership(ids_to,to);
+	addToInventory(ids_to,to);
     }
     
     /**
@@ -147,8 +499,9 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256 id,
         uint256 amount
     ) public virtual override {
-	super.burn(from, id, amount);
-    	updateOwnership(asSingletonArray(id), from);
+	uint256[] memory ids = _asSingletonArray(id);
+	uint256[] memory amounts = _asSingletonArray(amount);
+	burnBatch(from, ids, amounts);
     }
     
     /**
@@ -163,15 +516,235 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         uint256[] memory ids,
         uint256[] memory amounts
     ) public virtual override {
-	super.burnBatch(from, ids, amounts);
-	updateOwnership(ids, from);
+    	require(
+            from == _msgSender() || isApprovedForAll(from, _msgSender()) || isApproved(ids, from),
+            "ERC1155: caller is not owner nor approved"
+        );
+
+	if(ids.length == 1){
+	    super._burn(from, ids[0], amounts[0]);
+	    emit Transfer(from, address(0), ids[0]);
+	}
+	else{
+	    super._burnBatch(from, ids, amounts);
+	    for(uint i=0;i<ids.length;i++)
+		emit Transfer(from, address(0), ids[i]);
+	}
+
+	uint256[] memory ids_from = idsToChange(ids,from);
+	removeApproval(ids_from, ids, from);
+
+	removeOwnership(ids_from,from);
+	removeFromInventory(ids_from,from);
+	removeTokens(ids_from);
     }
 
-    function asSingletonArray(uint256 element) private pure returns (uint256[] memory) {
-        uint256[] memory array = new uint256[](1);
-        array[0] = element;
+    function typeOf(uint256 id) public view returns (bytes32) {
+	return token_type[id];
+    }
 
-        return array;
+    function ownersOf(uint256 id) public view returns (address[] memory) {
+	return ownership[id];
+    }
+
+    /**
+     * @dev Returns the number of tokens in ``owner``'s account.
+     * See IERC721
+     */
+    function balanceOf(address owner) external view returns (uint256 balance){
+	require(owner != address(0), "ERC721: balance query for the zero address");
+	return inventory[owner].length;
+    }
+
+    /**
+     * @dev Returns the owner of the `tokenId` token.
+     * See IERC721
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist and belong to a single owner
+     */
+    function ownerOf(uint256 tokenId) external view returns (address owner){
+	require(ownership[tokenId].length >= 1, 'ERC721: owner query for nonexistent token');
+	require(ownership[tokenId].length == 1, 'FireZardNFT: this query may serve only single token owner');
+	
+	return ownership[tokenId][0];
+    }
+
+    /**
+     * @dev Gives permission to `to` to transfer `tokenId` token to another account.
+     * The approval is cleared when the token is transferred.
+     *
+     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.
+     *
+     * See IERC721
+     *
+     * Requirements:
+     *
+     * - The caller must own the token or be an approved operator.
+     * - `tokenId` must exist.
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address to, uint256 tokenId) external {
+	require(to != _msgSender(),"ERC721: approval to current owner");
+	require(totalSupply(tokenId)>0,"ERC721: operator query for nonexistent token");
+	bool _approved = false;
+	if(balanceOf(_msgSender(), tokenId)>0){
+	    approved[tokenId][_msgSender()] = to;
+	    if(ownership[tokenId].length == 1)
+		singleApproved[tokenId] = to;
+	    _approved = true;
+	    emit Approval(_msgSender(), to, tokenId);
+	}
+	for(uint i=0;i<ownership[tokenId].length;i++){
+	    address owner = ownership[tokenId][i];
+	    if((approved[tokenId][owner] == _msgSender())||(isApprovedForAll(owner,_msgSender()))){
+		approved[tokenId][owner] = to;
+		if(ownership[tokenId].length == 1)
+		    singleApproved[tokenId] = to;
+		_approved = true;
+		emit Approval(owner, to, tokenId);
+	    }
+	}
+	require(_approved, 'ERC721: approve caller is not owner nor approved');
+    }
+
+    /**
+     * @dev Returns the account approved for `tokenId` token.
+     * If there are more accounts holding token with same id
+     * the function fails.
+     *
+     * See IERC721
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist and belong to a single account
+     */
+    function getApproved(uint256 tokenId) external view returns (address operator){
+	require(totalSupply(tokenId)>0,"ERC721: approved query for nonexistent token");
+	require(ownership[tokenId].length == 1, "FireZardNFT: this query may serve only single token owner");
+	return singleApproved[tokenId];
+    }
+
+    /**
+     * @dev Indicates whether any token exist with a given id, or not.
+     *
+     * See ERC1155Supply
+     */
+    function exists(uint256 id) public view virtual override returns (bool) {
+        return (super.totalSupply(id) > 0);
+    }
+
+    /**
+     * @dev Returns the total amount of tokens stored by the contract.
+     */
+    function totalSupply() external view override returns (uint256) {
+	return tokens.length;
+    }
+
+     /**
+     * @dev Returns a token ID owned by `owner` at a given `index` of its token list.
+     * Use along with {balanceOf} to enumerate all of ``owner``'s tokens.
+     *
+     * See IERC721Enumerable
+     */
+    function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId){
+	require(inventory[owner].length>index,"FireZardNFT: owner index out of bounds");
+	return inventory[owner][index];
+    }
+
+    /**
+     * @dev Returns a token ID at a given `index` of all the tokens stored by the contract.
+     * Use along with {totalSupply} to enumerate all tokens.
+     *
+     * See IERC721Enumerable
+     */
+    function tokenByIndex(uint256 index) external view returns (uint256){
+	require(tokens.length>index,"ERC721Enumerable: global index out of bounds");
+	return tokens[index];
+    }
+
+    /**
+     * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.
+     * 
+     * See IERC721Enumerable
+     */
+    function tokenURI(uint256 tokenId) external view returns (string memory) {
+	require(totalSupply(tokenId)>0, "FireZardNFT: URI query for non-existent token");
+	return uri(tokenId);
+    }
+
+    /**
+     * @dev Returns the URI for token type `id`.
+     *
+     * If the `\{id\}` substring is present in the URI, it must be replaced by
+     * clients with the actual token type ID.
+     */
+    function uri(uint256 id) public view virtual override(ERC1155, IERC1155MetadataURI) returns (string memory){
+	string memory token_uri = uris[id];
+	if(bytes(token_uri).length != 0)
+	    return token_uri;
+	else
+	    return super.uri(id);
+    }
+
+    function setURI(string memory token_uri, uint256 token_id) public virtual {
+	require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "Must be admin");
+	uris[token_id] = token_uri;
+	emit URI(token_uri, token_id);
+    }
+
+    function setURI(string memory token_uri) public virtual {
+	require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "Must be admin");
+	_setURI(token_uri);
+	emit URI(token_uri, 0);
+    }
+
+    function baseURI() public virtual view returns (string memory) {
+	return _getBaseURI();
+    }
+
+    /**
+     * @dev Approve `operator` to operate on all of `owner` tokens
+     *
+     * Emits a {ApprovalForAll} event.
+     */
+    function _setApprovalForAll(
+        address owner,
+        address operator,
+        bool approved
+    ) internal virtual override {
+	super._setApprovalForAll(owner, operator, approved);
+        emit ApprovalForAll(owner, operator, approved);
+    }
+
+    /**
+     * @dev See {IERC1155-isApprovedForAll}.
+     */
+    function isApprovedForAll(address account, address operator) public view virtual override(ERC1155, IERC1155, IERC721) returns (bool) {
+        return ERC1155.isApprovedForAll(account, operator);
+    }
+
+    /**
+     * @dev See {IERC1155-setApprovalForAll}.
+     */
+    function setApprovalForAll(address operator, bool approved) public virtual override(ERC1155, IERC1155, IERC721) {
+        return super.setApprovalForAll(operator, approved);
+    }
+
+    /**
+     * @dev Returns the token collection name.
+     */
+    function name() external view override returns (string memory){
+	return _name;
+    }
+
+    /**
+     * @dev Returns the token collection symbol.
+     */
+    function symbol() external view returns (string memory){
+	return _symbol;
     }
 
     /**
@@ -181,10 +754,14 @@ contract FireZardNFT is ERC1155PresetMinterPauser, ERC1155Supply {
         public
         view
         virtual
-        override(ERC1155PresetMinterPauser, ERC1155)
+        override(ERC1155, ERC1155PresetMinterPauser, IERC165)
         returns (bool)
     {
-        return super.supportsInterface(interfaceId);
+        return 
+	    interfaceId == type(IERC721).interfaceId ||
+	    interfaceId == type(IERC721Enumerable).interfaceId ||
+	    interfaceId == type(IERC721Metadata).interfaceId ||
+	    super.supportsInterface(interfaceId);
     }
 
 
