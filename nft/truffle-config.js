@@ -1,7 +1,10 @@
+require('dotenv').config();
 const path = require("path");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
-const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
+const mnemonic = process.env["TEST_NET_MNEMONIC"];
+
+//const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
 
 //const PrivateKeyProvider = require("truffle-privatekey-provider");
 //const pKey = "8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63";
