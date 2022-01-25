@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * FireZard utilities lib
  */

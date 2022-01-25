@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: MIT
 /**
- * FireZard ERC1155 NFT for storinfg game characters and items (both stackable and unstackable)
+ * FireZard ERC1155 ERC721 NFT for storinfg game characters and items (both stackable and unstackable)
  */
 
 pragma solidity ^0.8.0;

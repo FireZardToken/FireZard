@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Derives stats from card ID
  * @title  Interface for deriving dragon card stats from its ID

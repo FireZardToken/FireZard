@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * @notice Stores FireZard tokens tags related to game mechanics
  * @title FireZard Tag generic storage

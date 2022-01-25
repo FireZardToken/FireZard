@@ -3,6 +3,7 @@ const path = require("path");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 const mnemonic = process.env["TEST_NET_MNEMONIC"];
+const mnemonic_main = process.env["MAIN_NET_MNEMONIC"];
 
 //const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
 
@@ -33,6 +34,15 @@ module.exports = {
 	skipDryRun: true,
 	network_id: 97,
 	gasPrice: 0,
+	gas: 0xa00000
+    },
+    bsc_main: {
+//	provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545/`),
+//	provider: () => new HDWalletProvider(mnemonic_main, `http://127.0.0.1:9545/`),
+	provider: () => new HDWalletProvider(mnemonic_main, `https://wandering-young-sun.bsc.quiknode.pro/5651b5438b5dbd2ff46adcc9c5228bbf7e28f5c2/`),
+	skipDryRun: true,
+	network_id: 56,
+//	gasPrice: 0,
 	gas: 0xa00000
     },
   },
