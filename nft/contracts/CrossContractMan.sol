@@ -4,11 +4,14 @@ pragma solidity ^0.8;
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
+import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 import "./ICrossContractManListener.sol";
 
-contract CrossContractMan is ERC165, Ownable {
+contract CrossContractMan is Ownable, AccessControlEnumerable {
     using Address for address;
+    bytes32 public constant RETIRING_MANAGER_ROLE = keccak256('RETIRING_MANAGER_ROLE');
+
     mapping(bytes32 => address) public contracts;
 
     bytes32[] public hnames;
@@ -16,6 +19,28 @@ contract CrossContractMan is ERC165, Ownable {
     event ContractReplaced(bytes32 h_name, address contract_addr);
 
     event ContractAdded(bytes32 h_name, address contract_addr);
+
+    event ManagerUpdatedFrom(address oldManager);
+
+    event ManagerUpdatedTo(address newManager);
+
+    modifier isRetiringManager() {
+	require(hasRole(RETIRING_MANAGER_ROLE, msg.sender),"CrossContractMan: the caller must have RETIRING_MANAGER_ROLE");
+	_;
+    }
+
+    constructor() Ownable() {
+	_grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function onSwitchManager(address oldManager) public virtual isRetiringManager {
+	for(uint i=0;i<CrossContractMan(oldManager).getContractsCount();i++){
+	    bytes32 hname = CrossContractMan(oldManager).hnames(i);
+	    hnames.push(hname);
+	    contracts[hname] = CrossContractMan(oldManager).contracts(hname);
+	}
+	emit ManagerUpdatedFrom(oldManager);
+    }
 
     function addContract(string calldata name, address contract_addr) public virtual onlyOwner {
 	bytes32 h_name = keccak256(abi.encodePacked(name));
@@ -80,10 +105,17 @@ contract CrossContractMan is ERC165, Ownable {
 	for(uint i=0;i<hnames.length;i++){
 	    ICrossContractManListener(contracts[hnames[i]]).switchManager(newManager);
 	}
+	emit ManagerUpdatedTo(newManager);
+	CrossContractMan(newManager).onSwitchManager(address(this));
+	CrossContractMan(newManager).renounceRole(RETIRING_MANAGER_ROLE, address(this));
     }
 
     function getContract(string calldata name) public view returns(address) {
 	bytes32 h_name = keccak256(abi.encodePacked(name));
 	return contracts[h_name];
+    }
+
+    function getContractsCount() public view returns(uint256) {
+	return hnames.length;
     }
 }
