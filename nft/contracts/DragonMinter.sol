@@ -25,9 +25,12 @@ import "./IStatsDerive.sol";
 import "./DragonStats.sol";
 import "./StatsView.sol";
 import "./TagStorage.sol";
+import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
-contract DragonMinter is Context, Ownable, AccessControlEnumerable {
+contract DragonMinter is CrossContractManListener {
+    string  public constant contract_name = 'DragonMinter';
+    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
     bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
 
     address public      RNG_addr;
@@ -44,34 +47,107 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
 
     mapping(uint256 => uint256) public	price_list;
 
-//    mapping(uint256 => address) public	test_vars;
-
     modifier isMinter() {
 	_;
     }
 
-    /**
-     * @notice Initializes the Dragon Cards minter.
-     * @dev    Needs RNG smart contract address.
-     * The constructor will link the dragon minter to the given RNG smart contract.
-     * The onwer can relink the dragon minter to a different RNG smart contract later on.
-     *
-     * @param rng_contract  The address of the RNG contract implementing IRNG interface.
-     * @param tag_storage   The address of the Tag Storage
-     * @param nft_container The address of the NFT ERC1155 smart contract
-     * @param stats_lib     The address of the library with the methods deriving stats from the token UUID by name
-    **/
-    constructor(address rng_contract, address tag_storage, address nft_container, address stats_lib) {
+    function getName() pure external returns(string memory) {
+	return contract_name;
+    }
+
+    function getId() pure external returns(bytes32) {
+	return contract_id;
+    }
+
+    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
+	if(hname == RNG(contractInstance).contract_id()){
+    	    _linkRNG(contractInstance);
+    	    return;
+	}
+	if(hname == Util.TAG_STORAGE_CONTRACT_ID){
+    	    _linkTAG(contractInstance);
+    	    return;
+	}
+	if(hname == Util.NFT_CONTRACT_ID){
+    	    _linkNFT(contractInstance);
+    	    return;
+	}
+	if(hname == DragonStats(contractInstance).contract_id()){
+    	    _linkStatsLib(contractInstance);
+    	    return;
+	}
+	if(hname == Util.FLAME_CONTRACT_ID){
+    	    _linkFLAME(contractInstance);
+    	    return;
+	}
+    }
+
+    function onListenRemoved(bytes32 hname) external onlyManager {
+	if(hname == RNG(RNG_addr).contract_id()){
+    	    _linkRNG(address(0));
+    	    return;
+	}
+	if(hname == Util.TAG_STORAGE_CONTRACT_ID){
+    	    _linkTAG(address(0));
+    	    return;
+	}
+	if(hname == Util.NFT_CONTRACT_ID){
+    	    _linkNFT(address(0));
+    	    return;
+	}
+	if(hname == DragonStats(stats_lib_addr).contract_id()){
+    	    _linkStatsLib(address(0));
+    	    return;
+	}
+	if(hname == Util.FLAME_CONTRACT_ID){
+    	    _linkFLAME(address(0));
+    	    return;
+	}
+    }
+
+    function onUpdate(address oldInstance, address _manager) external override {
+	super._onUpdate(oldInstance, _manager);
+	setTagGroupId(DragonMinter(oldInstance).group_id());
+	if(DragonMinter(oldInstance).testMode())
+	    disableMintFee();
+	else
+	    enableMintFee();
+	setPrice(1,  DragonMinter(oldInstance).getPrice(1));
+	setPrice(10, DragonMinter(oldInstance).getPrice(10));
+    }
+
+    function _linkRNG(address rng_contract) internal {
 	RNG_addr = rng_contract;
+	emit RNGLink(rng_contract);
+    }
+
+    function _linkTAG(address tag_storage) internal {
 	TAG_addr = tag_storage;
+	emit TAGLink(tag_storage);
+    }
+
+    function _linkNFT(address nft_container) internal {
 	NFT_addr = nft_container;
+	emit NFTLink(nft_container);
+    }
+
+    function _linkFLAME(address _flame) internal {
+	FLAME_addr = _flame;
+	emit FLAMELink(_flame);
+    }
+
+    function _linkStatsLib(address stats_lib) internal {
 	stats_lib_addr = stats_lib;
-	Util.Stat[] memory _stats = IStatsDerive(stats_lib_addr).stats(Util.DRAGON_CARD_TYPE_CODE);
-	saveStats(_stats);
-//	_setupRole(MINTER_ROLE, _msgSender());
+	if(stats_lib != address(0)){
+	    Util.Stat[] memory _stats = IStatsDerive(stats_lib_addr).stats(Util.DRAGON_CARD_TYPE_CODE);
+	    saveStats(_stats);
+	}else
+	    saveStats(new Util.Stat[](0));
+	emit StatsLibLink(stats_lib);
     }
 
     function saveStats(Util.Stat[] memory _stats) internal {
+	delete stats;
 	for(uint256 i=0;i<_stats.length;i++){
 	    stats.push(_stats[i]);
 	}
@@ -82,42 +158,35 @@ contract DragonMinter is Context, Ownable, AccessControlEnumerable {
      * @notice Sets link to RNG smart contract
     **/
     function linkRNG(address rng_contract) public virtual onlyOwner {
-	RNG_addr = rng_contract;
-	emit RNGLink(rng_contract);
+	_linkRNG(rng_contract);
     }
 
     /**
      * @notice Sets link to Tag Storage smart contract
     **/
     function linkTAG(address tag_storage) public virtual onlyOwner {
-	TAG_addr = tag_storage;
-	emit TAGLink(tag_storage);
+	_linkTAG(tag_storage);
     }
 
     /**
      * @notice Sets link to ERC1155 NFT smart contract
     **/
     function linkNFT(address nft_container) public virtual onlyOwner {
-	NFT_addr = nft_container;
-	emit NFTLink(nft_container);
+	_linkNFT(nft_container);
     }
 
     /**
      * @notice Sets link to BEP20 FLAME smart contract
     **/
     function linkFLAME(address _flame) public virtual onlyOwner {
-	FLAME_addr = _flame;
-	emit FLAMELink(_flame);
+	_linkFLAME(_flame);
     }
 
     /**
      * @notice Sets link to the Stats deriving library
     **/
     function linkStatsLib(address stats_lib) public virtual onlyOwner {
-	stats_lib_addr = stats_lib;
-	Util.Stat[] memory _stats = IStatsDerive(stats_lib_addr).stats(Util.DRAGON_CARD_TYPE_CODE);
-	saveStats(_stats);
-	emit StatsLibLink(stats_lib);
+	_linkStatsLib(stats_lib);
     }
 
     /**

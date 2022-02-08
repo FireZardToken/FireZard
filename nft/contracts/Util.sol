@@ -9,6 +9,11 @@ pragma solidity ^0.8.0;
 
 library Util {
     uint256 public constant MAX_UINT = (~uint256(0)-1);
+
+    bytes32 public constant NFT_CONTRACT_ID = keccak256('FireZardNFT');
+    bytes32 public constant TAG_STORAGE_CONTRACT_ID = keccak256('TagStorage');
+    bytes32 public constant FLAME_CONTRACT_ID = keccak256('FLAME');
+
 //    bytes32 public constant DRAGON_CARD_TYPE_CODE = abi.encodePacked(keccak256('DRAGON_CARD'));
     bytes32 public constant DRAGON_CARD_TYPE_CODE = keccak256('DRAGON_CARD');
 

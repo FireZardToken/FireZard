@@ -24,7 +24,8 @@ const mock1QueriesMock2 = function() {
 	    it("Mock1 gets value from Mock2 after Mock2's replacement, new Mock2 reads and updates the value from the old Mock2", async function() {
 
 		await this.mock2_alt.grantRole(this.MANAGER_ROLE,this._manager.address);
-		await this._manager.addContract('ListenerMock2',this.mock2_alt.address);
+//		await this._manager.addContract('ListenerMock2',this.mock2_alt.address);
+		await this._manager.addContract(this.mock2_alt.address);
 
 		var value = await this.mock1.getValue();
 
@@ -60,8 +61,11 @@ contract("CrossContractMan", function(accounts){
 	beforeEach(async function(){
 	    await this.mock1.grantRole(this.MANAGER_ROLE,this.manager.address);
 	    await this.mock2.grantRole(this.MANAGER_ROLE,this.manager.address);
-	    await this.manager.addContract('ListenerMock1',this.mock1.address);
-	    await this.manager.addContract('ListenerMock2',this.mock2.address);
+//	    await this.manager.addContract('ListenerMock1',this.mock1.address);
+//	    await this.manager.addContract('ListenerMock2',this.mock2.address);
+	    await this.manager.addContract(this.mock1.address);
+	    await this.manager.addContract(this.mock2.address);
+
 	    this._manager = this.manager;
 	});
 
@@ -74,8 +78,10 @@ contract("CrossContractMan", function(accounts){
 	beforeEach(async function(){
 	    await this.mock1.grantRole(this.MANAGER_ROLE,this.manager.address);
 	    await this.mock2.grantRole(this.MANAGER_ROLE,this.manager.address);
-	    await this.manager.addContract('ListenerMock2',this.mock2.address);
-	    await this.manager.addContract('ListenerMock1',this.mock1.address);
+//	    await this.manager.addContract('ListenerMock2',this.mock2.address);
+//	    await this.manager.addContract('ListenerMock1',this.mock1.address);
+	    await this.manager.addContract(this.mock2.address);
+	    await this.manager.addContract(this.mock1.address);
 	    this._manager = this.manager;
 	});
 
@@ -90,8 +96,10 @@ contract("CrossContractMan", function(accounts){
 	    await this.mock2.grantRole(this.MANAGER_ROLE,this.manager.address);
 	    await this.mock1.grantRole(this.DEFAULT_ADMIN_ROLE,this.manager.address);
 	    await this.mock2.grantRole(this.DEFAULT_ADMIN_ROLE,this.manager.address);
-	    await this.manager.addContract('ListenerMock1',this.mock1.address);
-	    await this.manager.addContract('ListenerMock2',this.mock2.address);
+//	    await this.manager.addContract('ListenerMock1',this.mock1.address);
+//	    await this.manager.addContract('ListenerMock2',this.mock2.address);
+	    await this.manager.addContract(this.mock1.address);
+	    await this.manager.addContract(this.mock2.address);
 	    await this.manager2.grantRole(this.RETIRING_MANAGER_ROLE,this.manager.address);
 	    await this.manager.switchManager(this.manager2.address);
 	    this._manager = this.manager2;
@@ -109,8 +117,10 @@ contract("CrossContractMan", function(accounts){
 	    await this.mock2.grantRole(this.MANAGER_ROLE,this.manager.address);
 	    await this.mock1.grantRole(this.DEFAULT_ADMIN_ROLE,this.manager.address);
 	    await this.mock2.grantRole(this.DEFAULT_ADMIN_ROLE,this.manager.address);
-	    await this.manager.addContract('ListenerMock2',this.mock2.address);
-	    await this.manager.addContract('ListenerMock1',this.mock1.address);
+//	    await this.manager.addContract('ListenerMock2',this.mock2.address);
+//	    await this.manager.addContract('ListenerMock1',this.mock1.address);
+	    await this.manager.addContract(this.mock2.address);
+	    await this.manager.addContract(this.mock1.address);
 	    await this.manager2.grantRole(this.RETIRING_MANAGER_ROLE,this.manager.address);
 	    await this.manager.switchManager(this.manager2.address);
 	    this._manager = this.manager2;

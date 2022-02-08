@@ -4,7 +4,8 @@ export NODE_OPTIONS=--openssl-legacy-provider && truffle compile
 
 export cur_dir=$(pwd)
 
-export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/cross_contract_man.test.js --compile-none && \
+#export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/cross_contract_man.test.js --compile-none && \
+export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/dragon_mint.test.js --compile-none && \
 
 #for filename in ./test/*.test.js; do
 #   echo "$filename"

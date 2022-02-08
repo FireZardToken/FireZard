@@ -235,7 +235,7 @@ contract("Treasury", (accounts) => {
 	this.non_minter	= accounts[8];
 
 	this.DRAGON_CARD_TYPE_CODE = await this.util.DRAGON_CARD_TYPE_CODE();
-	await this.view.linkStatsLib(this.stats.address, this.DRAGON_CARD_TYPE_CODE);
+	await this.view.linkStatsLib(this.stats.address);
 
 	await this.treasury.setReward(0,ether('5'));
 	await this.treasury.setReward(1,ether('0.5'));

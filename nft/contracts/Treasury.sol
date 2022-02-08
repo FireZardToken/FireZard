@@ -5,9 +5,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FireZardNFT.sol";
 import "./StatsView.sol";
 import "./DragonStats.sol";
+import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
-contract Treasury is Ownable, AccessControlEnumerable {
+contract Treasury is CrossContractManListener {
+    string  public constant contract_name = 'Treasury';
+    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+
     address public	nft;
     address public	viewer;
     address public	stats;
@@ -26,7 +30,7 @@ contract Treasury is Ownable, AccessControlEnumerable {
 	_;
     }
 
-    constructor(address _nft, address _viewer, address _stats) {
+/*    constructor(address _nft, address _viewer, address _stats) {
 	nft = _nft;
 	viewer = _viewer;
 	stats = _stats;
@@ -35,12 +39,37 @@ contract Treasury is Ownable, AccessControlEnumerable {
 	MINTER_ROLE = FireZardNFT(nft).MINTER_ROLE();
 
 	super._setupRole(DEFAULT_ADMIN_ROLE,msg.sender);
+    }*/
+
+    function getName() pure external returns(string memory) {
+	return contract_name;
     }
+
+    function getId() pure external returns(bytes32) {
+	return contract_id;
+    }
+
+    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
+	if(hname == Util.NFT_CONTRACT_ID){
+	    _linkNFT(contractInstance);
+	    return;
+	}
+	if(hname == DragonStats(contractInstance).contract_id()){
+	    _linkStatsLib(contractInstance);
+	    return;
+	}
+	if(hname == StatsView(contractInstance).contract_id()){
+	    _linkViewer(contractInstance);
+	    return;
+	}
+    }
+
+    function onListenRemoved(bytes32 hname) external {}
 
     /**
      * @notice Sets link to ERC1155 NFT smart contract
     **/
-    function linkNFT(address _nft) public virtual onlyOwner {
+    function _linkNFT(address _nft) internal {
         nft = _nft;
 	MINTER_ROLE = FireZardNFT(nft).MINTER_ROLE();
         emit NFTLink(nft);
@@ -49,7 +78,7 @@ contract Treasury is Ownable, AccessControlEnumerable {
     /**
      * @notice Sets link to Tag Storage smart contract
     **/
-    function linkViewer(address _viewer) public virtual onlyOwner {
+    function _linkViewer(address _viewer) internal {
         viewer = _viewer;
         emit ViewLink(viewer);
     }
@@ -57,10 +86,32 @@ contract Treasury is Ownable, AccessControlEnumerable {
     /**
      * @notice Sets link to the Stats deriving library
     **/
-    function linkStatsLib(address _stats) public virtual onlyOwner {
+    function _linkStatsLib(address _stats) internal {
         stats = _stats;
 	rarity_str  = DragonStats(stats).RARITY_STR();
+	rarity_override_str  = DragonStats(stats).RARITY_OVERRIDE_STR();
         emit StatsLibLink(stats);
+    }
+
+    /**
+     * @notice Sets link to ERC1155 NFT smart contract
+    **/
+    function linkNFT(address _nft) public virtual onlyOwner {
+        _linkNFT(_nft);
+    }
+
+    /**
+     * @notice Sets link to Tag Storage smart contract
+    **/
+    function linkViewer(address _viewer) public virtual onlyOwner {
+	_linkViewer(_viewer);
+    }
+
+    /**
+     * @notice Sets link to the Stats deriving library
+    **/
+    function linkStatsLib(address _stats) public virtual onlyOwner {
+	_linkStatsLib(_stats);
     }
 
     // Deposit funds

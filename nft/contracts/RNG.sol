@@ -3,11 +3,14 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+import "./CrossContractManListener.sol";
 import "./Util.sol";
-
 import "./IRNG.sol";
 
-contract RNG is IRNG, Ownable {
+contract RNG is CrossContractManListener, IRNG {
+    string  public constant contract_name = 'RNG';
+    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+
     uint256 public commitment_confirmation_cap = 1;
     bool public test_mode;
 
@@ -21,6 +24,23 @@ contract RNG is IRNG, Ownable {
 	test_mode = _test_mode;
     }
 
+    function getName() pure external returns(string memory) {
+	return contract_name;
+    }
+
+    function getId() pure external returns(bytes32) {
+	return contract_id;
+    }
+
+    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external {}
+
+    function onListenRemoved(bytes32 hname) external {}
+
+    function onUpdate(address oldInstance, address _manager) external override {
+	super._onUpdate(oldInstance, _manager);
+	_setCommitmentConfirmationCap(RNG(oldInstance).commitment_confirmation_cap());
+    }
+
     function updateBlockHashes() external virtual {
 	if((block.number - latest_block) > 255)
 	    latest_block = block.number - 255;
@@ -29,10 +49,14 @@ contract RNG is IRNG, Ownable {
 	latest_block = block.number;
     }
 
-    function setCommitmentConfirmationCap(uint256 cap) external onlyOwner {
+    function _setCommitmentConfirmationCap(uint256 cap) internal {
 	commitment_confirmation_cap = cap;
 
 	emit ConfirmationCap(cap);
+    }
+
+    function setCommitmentConfirmationCap(uint256 cap) external onlyOwner {
+	_setCommitmentConfirmationCap(cap);
     }
 
     function commit(bytes32 commitment) external {

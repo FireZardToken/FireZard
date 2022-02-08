@@ -4,41 +4,92 @@ pragma solidity ^0.8;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IStatsDerive.sol";
 import "./TagStorage.sol";
+import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
-contract StatsView is Ownable{
+contract StatsView is CrossContractManListener {
+    string  public constant contract_name = 'StatsView';
+    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
 
     address public	TAG_addr;
-    address public	NFT_addr;
+//    address public	NFT_addr;
     mapping(bytes32 => address) public	stats_lib_addr;
 
-    constructor(address tag_storage, address nft_container){
+/*    constructor(address tag_storage, address nft_container){
 	TAG_addr = tag_storage;
-	NFT_addr = nft_container;
+//	NFT_addr = nft_container;
+    }*/
+
+    function getName() pure external returns(string memory) {
+	return contract_name;
     }
+
+    function getId() pure external returns(bytes32) {
+	return contract_id;
+    }
+
+    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
+	if(hname == Util.TAG_STORAGE_CONTRACT_ID){
+	    _linkTAG(contractInstance);
+	    return;
+	}
+	if(IERC165(contractInstance).supportsInterface(type(IStatsDerive).interfaceId)){
+	    _linkStatsLib(contractInstance);
+	    return;
+	}
+    }
+
+    function onListenRemoved(bytes32 hname) external onlyManager {
+	if(hname == Util.TAG_STORAGE_CONTRACT_ID){
+	    _linkTAG(address(0));
+	    return;
+	}
+/*	if((contractInstance).contract_id){
+	    _linkStatsLib(address(0));
+	    return;
+	}*/
+    }
+
+
+    function _linkTAG(address tag_storage) internal {
+        TAG_addr = tag_storage;
+        emit TAGLink(tag_storage);
+    }
+
+/*    function _linkNFT(address nft_container) internal {
+        NFT_addr = nft_container;
+        emit NFTLink(nft_container);
+    }*/
 
     /**
      * @notice Sets link to Tag Storage smart contract
     **/
     function linkTAG(address tag_storage) public virtual onlyOwner {
-        TAG_addr = tag_storage;
-        emit TAGLink(tag_storage);
+	_linkTAG(tag_storage);
     }
 
     /**
      * @notice Sets link to ERC1155 NFT smart contract
     **/
-    function linkNFT(address nft_container) public virtual onlyOwner {
-        NFT_addr = nft_container;
-        emit NFTLink(nft_container);
+/*    function linkNFT(address nft_container) public virtual onlyOwner {
+	_linkNFT(nft_container);
+    }*/
+
+
+    /**
+     * @notice Sets link to the Stats deriving library
+    **/
+    function _linkStatsLib(address stats_lib) public virtual onlyOwner {
+	bytes32 nft_type = IStatsDerive(stats_lib).tokenTypeCode();
+        stats_lib_addr[nft_type] = stats_lib;
+        emit StatsLibLink(stats_lib, nft_type);
     }
 
     /**
      * @notice Sets link to the Stats deriving library
     **/
-    function linkStatsLib(address stats_lib, bytes32 nft_type) public virtual onlyOwner {
-        stats_lib_addr[nft_type] = stats_lib;
-        emit StatsLibLink(stats_lib, nft_type);
+    function linkStatsLib(address stats_lib) public virtual onlyOwner {
+	_linkStatsLib(stats_lib);
     }
 
     /**

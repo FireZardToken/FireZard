@@ -89,14 +89,14 @@ contract("DragonMinter", accounts => {
 	    dragonView.address
 	);
 
-	await minter.linkFLAME(flame.address);
-	await minter.setPrice(1,ether('1500'));
-	await minter.setPrice(10,ether('10000'));
+//	await minter.linkFLAME(flame.address);
+//	await minter.setPrice(1,ether('1500'));
+//	await minter.setPrice(10,ether('10000'));
 	await minter.enableMintFee();
 
 	const DRAGON_CARD_TYPE_CODE = await util.DRAGON_CARD_TYPE_CODE();
 	const MAX_UINT = await util.MAX_UINT.call();
-	await view.linkStatsLib(stats_lib.address, DRAGON_CARD_TYPE_CODE);
+	await view.linkStatsLib(stats_lib.address);
 
 	const stats = await view.stats(DRAGON_CARD_TYPE_CODE);
 
@@ -140,6 +140,8 @@ contract("DragonMinter", accounts => {
 
 	await flame.transfer(accounts[3], ether('500000'));
 	await flame.approve(minter.address, MAX_UINT, {from: accounts[3]});
+
+	console.log("MINTER - RNG: "+(await minter.RNG_addr()));
 
 	var noncommon_found;
 	var founds = [];

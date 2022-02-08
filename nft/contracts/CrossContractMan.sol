@@ -42,8 +42,17 @@ contract CrossContractMan is Ownable, AccessControlEnumerable {
 	emit ManagerUpdatedFrom(oldManager);
     }
 
+    function addContract(address contract_addr) public virtual onlyOwner {
+	bytes32 id = ICrossContractManListener(contract_addr).getId();
+	_addContract(id, contract_addr);
+    }
+
     function addContract(string calldata name, address contract_addr) public virtual onlyOwner {
 	bytes32 h_name = keccak256(abi.encodePacked(name));
+	_addContract(h_name, contract_addr);
+    }
+
+    function _addContract(bytes32 h_name, address contract_addr) internal {
 	bool is_listener = isListener(contract_addr);
 	bool is_new = false;
 	if(contracts[h_name] != address(0)){
@@ -88,8 +97,11 @@ contract CrossContractMan is Ownable, AccessControlEnumerable {
 
     function isListener(address instance) internal view returns(bool) {
 	if(instance.isContract()){
-	    if(ERC165(instance).supportsInterface(type(ICrossContractManListener).interfaceId))
-		return true;
+	    try ERC165(instance).supportsInterface(type(ICrossContractManListener).interfaceId) returns(bool responce){
+		return responce;
+	    }catch{
+		return false;
+	    }
 	}
 	return false;
     }

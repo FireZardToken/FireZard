@@ -5,9 +5,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FireZardNFT.sol";
 import "./StatsView.sol";
 import "./DragonStats.sol";
+import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
-contract DragonCardView is Ownable{
+contract DragonCardView is CrossContractManListener{
+    string  public constant contract_name = 'DragonCardView';
+    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
 
     address public	viewer_addr;
     address public	NFT_addr;
@@ -31,34 +34,85 @@ contract DragonCardView is Ownable{
 	string  character_name;
     }
 
-    constructor(address viewer, address nft_container, address dragon_stats){
+/*    constructor(address viewer, address nft_container, address dragon_stats){
 	viewer_addr = viewer;
 	NFT_addr = nft_container;
 	dragon_stats_addr = dragon_stats;
+    }*/
+
+    function getName() pure external returns(string memory) {
+	return contract_name;
     }
+
+    function getId() pure external returns(bytes32) {
+	return contract_id;
+    }
+
+    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
+	if(hname == StatsView(contractInstance).contract_id()){
+	    _linkViewer(contractInstance);
+	    return;
+	}
+	if(hname == Util.NFT_CONTRACT_ID){
+	    _linkNFT(contractInstance);
+	    return;
+	}
+	if(hname == DragonStats(contractInstance).contract_id()){
+	    _linkStatsLib(contractInstance);
+	    return;
+	}
+    }
+
+    function onListenRemoved(bytes32 hname) external onlyManager {
+	if(hname == StatsView(viewer_addr).contract_id()){
+	    _linkViewer(address(0));
+	    return;
+	}
+	if(hname == Util.NFT_CONTRACT_ID){
+	    _linkNFT(address(0));
+	    return;
+	}
+	if(hname == DragonStats(dragon_stats_addr).contract_id()){
+	    _linkStatsLib(address(0));
+	    return;
+	}
+    }
+
+    function _linkViewer(address viewer) internal {
+        viewer_addr = viewer;
+        emit ViewLink(viewer);
+    }
+
+    function _linkNFT(address nft_container) internal {
+        NFT_addr = nft_container;
+        emit NFTLink(nft_container);
+    }
+
+    function _linkStatsLib(address dragon_stats) internal {
+        dragon_stats_addr = dragon_stats;
+        emit StatsLibLink(dragon_stats);
+    }
+
 
     /**
      * @notice Sets link to Tag Storage smart contract
     **/
     function linkViewer(address viewer) public virtual onlyOwner {
-        viewer_addr = viewer;
-        emit ViewLink(viewer);
+	_linkViewer(viewer);
     }
 
     /**
      * @notice Sets link to ERC1155 NFT smart contract
     **/
     function linkNFT(address nft_container) public virtual onlyOwner {
-        NFT_addr = nft_container;
-        emit NFTLink(nft_container);
+	_linkNFT(nft_container);
     }
 
     /**
      * @notice Sets link to the Stats deriving library
     **/
     function linkStatsLib(address dragon_stats) public virtual onlyOwner {
-        dragon_stats_addr = dragon_stats;
-        emit StatsLibLink(dragon_stats);
+	_linkStatsLib(dragon_stats);
     }
 
     function getView(uint256 id) public view returns (DragonStatsView memory) {

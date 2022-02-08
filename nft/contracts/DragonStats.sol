@@ -11,8 +11,12 @@ pragma solidity ^0.8.0;
 import "./Util.sol";
 import "./IStatsDerive.sol";
 import "./StatsDistrib.sol";
+import "./CrossContractManListener.sol";
 
-contract DragonStats is IStatsDerive {
+contract DragonStats is CrossContractManListener, IStatsDerive {
+    string  public constant contract_name = 'DragonStats';
+    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+
     bytes32 public constant VERSION = keccak256(abi.encodePacked('DragonStats-v1'));
     string public constant RARITY_STR = 'rarity';
     string public constant RARITY_OVERRIDE_STR = 'rarity_override';
@@ -129,13 +133,43 @@ contract DragonStats is IStatsDerive {
 
     address public	statsDistrib;
 
-    constructor(address _statsDistrib){
+/*    constructor(address _statsDistrib){
 	linkStatsDistrib(_statsDistrib);
+    }*/
+
+    function getName() pure external returns(string memory) {
+	return contract_name;
     }
 
-    function linkStatsDistrib(address _statsDistrib) public {
+    function getId() pure external returns(bytes32) {
+	return contract_id;
+    }
+
+    function tokenTypeCode() external pure returns (bytes32){
+	return Util.DRAGON_CARD_TYPE_CODE;
+    }
+
+    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
+	if(hname == StatsDistrib(contractInstance).contract_id()){
+    	    _linkStatsDistrib(contractInstance);
+    	    return;
+	}
+    }
+
+    function onListenRemoved(bytes32 hname) external onlyManager {
+	if(hname == StatsDistrib(statsDistrib).contract_id()){
+    	    _linkStatsDistrib(address(0));
+    	    return;
+	}
+    }
+
+    function _linkStatsDistrib(address _statsDistrib) internal {
 	statsDistrib = _statsDistrib;
 	emit StatsDistribLink(statsDistrib);
+    }
+
+    function linkStatsDistrib(address _statsDistrib) public virtual onlyOwner {
+	_linkStatsDistrib(_statsDistrib);
     }
 
     function deriveRarity(uint256 id) internal view returns (Util.CardRarity) {
