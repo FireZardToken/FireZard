@@ -107,13 +107,13 @@ contract DragonMinter is CrossContractManListener {
 
     function onUpdate(address oldInstance, address _manager) external override {
 	super._onUpdate(oldInstance, _manager);
-	setTagGroupId(DragonMinter(oldInstance).group_id());
+	_setTagGroupId(DragonMinter(oldInstance).group_id());
 	if(DragonMinter(oldInstance).testMode())
-	    disableMintFee();
+	    _disableMintFee();
 	else
-	    enableMintFee();
-	setPrice(1,  DragonMinter(oldInstance).getPrice(1));
-	setPrice(10, DragonMinter(oldInstance).getPrice(10));
+	    _enableMintFee();
+	_setPrice(1,  DragonMinter(oldInstance).getPrice(1));
+	_setPrice(10, DragonMinter(oldInstance).getPrice(10));
     }
 
     function _linkRNG(address rng_contract) internal {
@@ -193,9 +193,14 @@ contract DragonMinter is CrossContractManListener {
      * @notice Sets group ID for the Dragon card minter within Tag Storage
     **/
     function setTagGroupId(uint8 _group_id) public virtual onlyOwner {
+	_setTagGroupId(_group_id);
+    }
+
+    function _setTagGroupId(uint8 _group_id) internal {
 	group_id = _group_id;
 	emit TAGGroupID(_group_id);
     }
+
 
     /**
      * @notice Adds minter's role
@@ -216,19 +221,32 @@ contract DragonMinter is CrossContractManListener {
     }
 
     function enableMintFee() public virtual onlyOwner {
+	_enableMintFee();
+    }
+
+    function _enableMintFee() internal {
 	testMode = false;
 	emit EnableMintFee();
     }
 
     function disableMintFee() public virtual onlyOwner {
+	_disableMintFee();
+    }
+
+    function _disableMintFee() internal {
 	testMode = true;
 	emit DisableMintFee();
     }
 
     function setPrice(uint256 size, uint256 price) public virtual onlyOwner {
+	_setPrice(size, price);
+    }
+
+    function _setPrice(uint256 size, uint256 price) internal {
 	price_list[size] = price;
 	emit SetPrice(size, price);
     }
+
 
     function getPrice(uint256 size) public virtual view returns (uint256) {
 	return price_list[size];

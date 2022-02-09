@@ -23,7 +23,6 @@ const FLAME_MOCK = artifacts.require("FLAME_MOCK");
 const TestRNG = artifacts.require("TestRNG");
 const View = artifacts.require("StatsView");
 const DragonView = artifacts.require("DragonCardView");
-const Manager = artifacts.require('CrossContractMan');
 const Util = artifacts.require("Util");
 
 const minter_abi = require('../client/src/contracts/DragonMinter.json');
@@ -32,32 +31,49 @@ const dragon_view_abi = require('../client/src/contracts/DragonCardView.json');
 chai.use(require('chai-bn')(BN));
 const should = require('chai').should();
 
-const mint_test = function() {
+contract("DragonMinter", accounts => {
 
-    beforeEach(async function(){
+	var commitments = [];
 
-	    const manager = this.manager;
+/*    it("Testing authorized DragonMinter control", async () => {
+	const minter = await Minter.deployed();
+	const rng    = await RNG.deployed();
+	const tag    = await TAG.deployed();
+	const nft    = await NFT.deployed();
+	const stats  = await Stats.deployed();
+	
+	await expectRevert(
+	    minter.linkRNG(rng.address, {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+	await expectRevert(
+	    minter.linkTAG(rng.address, {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+	await expectRevert(
+	    minter.linkNFT(rng.address, {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+	await expectRevert(
+	    minter.linkStatsLib(rng.address, {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+	await expectRevert(
+	    minter.setTagGroupId(10, {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+	await expectRevert(
+	    minter.addMinter(accounts[2], {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+	await expectRevert(
+	    minter.removeMinter(accounts[2], {from: accounts[1]}),
+	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
+	);
+    });*/
 
-	    this.minter  = await Minter.at(await manager.getContract('DragonMinter'));
-	    this.rng  = await RNG.at(await manager.getContract('RNG'));
-	    this.nft  = await NFT.at(await manager.getContract('FireZardNFT'));
-	    this.stats_lib = await Stats.at(await manager.getContract('DragonStats'));
-	    this.tag  = await TAG.at(await manager.getContract('TagStorage'));
-	    this.view  = await View.at(await manager.getContract('StatsView'));
-	    this.flame  = await FLAME_MOCK.at(await manager.getContract('FLAME'));
-	    this.dragonView  = await DragonView.at(await manager.getContract('DragonCardView'));
-	    this.util      = await Util.deployed();
-
-	    this.test_rng  = await TestRNG.deployed();
-
-    });
-
-
-    it("Testing minting of Dragon cards with (pseudo-)randomly generated stats", async function() {
-	const accounts = this.accounts;
-	var commitments = this.commitments;
-
-/*	const minter    = await Minter.deployed();
+    it("Testing minting of Dragon cards with (pseudo-)randomly generated stats", async () => {
+	const minter    = await Minter.deployed();
 	const rng       = await RNG.deployed();
 	const test_rng  = await TestRNG.deployed();
 	const nft       = await NFT.deployed();
@@ -66,20 +82,7 @@ const mint_test = function() {
 	const view	= await View.deployed();
 	const flame	= await FLAME_MOCK.deployed();
 	const dragonView= await DragonView.deployed();
-	const util      = await Util.deployed();*/
-
-	const minter    = this.minter;
-	const rng       = this.rng;
-	const test_rng  = this.test_rng;
-	const nft       = this.nft;
-	const stats_lib = this.stats_lib;
-	const tag       = this.tag;
-	const view	= this.view;
-	const flame	= this.flame;
-	const dragonView= this.dragonView;
-	const util      = this.util;
-
-//	console.log("minter: "+this.minter);
+	const util      = await Util.deployed();
 
 	const dragon_view_instance = new web3.eth.Contract(
 	    dragon_view_abi.abi,
@@ -272,21 +275,12 @@ const mint_test = function() {
 
     });
 
-    it("Testing minting of Dragon cards with the backend nodejs library", async function() {
-	const accounts = this.accounts;
-	var commitments = this.commitments;
-
-/*	const minter    = await Minter.deployed();
+    it("Testing minting of Dragon cards with the backend nodejs library", async () => {
+	const minter    = await Minter.deployed();
 	const dragonView= await DragonView.deployed();
 	const test_rng  = await TestRNG.deployed();
 	const flame	= await FLAME_MOCK.deployed();
-	const util      = await Util.deployed();*/
-
-	const minter    = this.minter;
-	const dragonView= this.dragonView;
-	const test_rng  = this.test_rng;
-	const flame	= this.flame;
-	const util      = this.util;
+	const util      = await Util.deployed();
 
 	const minter_instance = new web3.eth.Contract(
 	    minter_abi.abi,
@@ -322,147 +316,23 @@ const mint_test = function() {
 
     });
 
-    it("Testing nft transfer", async function() {
-	const accounts = this.accounts;
-	var commitments = this.commitments;
-
-//	const nft       = await NFT.deployed();
-	const nft	= this.nft;
+    it("Testing nft transfer", async () => {
+	const nft       = await NFT.deployed();
 	
 	const balance1 = await nft.balanceOf(accounts[4],10);
-	balance1.should.be.a.bignumber.equal(this.init_balance[4].toString('10'));
+	balance1.should.be.a.bignumber.equal('0');
 
 	await nft.mint(accounts[4],10,10,'0x');
 	const balance2 = await nft.balanceOf(accounts[4],10);
-	balance2.should.be.a.bignumber.equal((this.init_balance[4]+10).toString('10'));
+	balance2.should.be.a.bignumber.equal('10');
 
 //	await nft.safeTransferFrom(accounts[4], accounts[5], 10, 10, '0x', {from: accounts[4]});
 	await nft.methods['safeTransferFrom(address,address,uint256,uint256,bytes)'](accounts[4], accounts[5], 10, 6, '0x', {from: accounts[4]});
 	const balance3 = await nft.balanceOf(accounts[4],10);
-	balance3.should.be.a.bignumber.equal((this.init_balance[4]+4).toString('10'));
+	balance3.should.be.a.bignumber.equal('4');
 	const balance4 = await nft.balanceOf(accounts[5],10);
-	balance4.should.be.a.bignumber.equal((this.init_balance[5]+6).toString('10'));
+	balance4.should.be.a.bignumber.equal('6');
 
     });
-
-}
-
-
-
-contract("DragonMinter", function(accounts) {
-
-    before(async function(){
-	this.accounts = accounts;
-	this.commitments = [];
-
-	this.manager = await Manager.deployed();
-    });
-
-/*    it("Testing authorized DragonMinter control", async () => {
-	const minter = await Minter.deployed();
-	const rng    = await RNG.deployed();
-	const tag    = await TAG.deployed();
-	const nft    = await NFT.deployed();
-	const stats  = await Stats.deployed();
-	
-	await expectRevert(
-	    minter.linkRNG(rng.address, {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-	await expectRevert(
-	    minter.linkTAG(rng.address, {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-	await expectRevert(
-	    minter.linkNFT(rng.address, {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-	await expectRevert(
-	    minter.linkStatsLib(rng.address, {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-	await expectRevert(
-	    minter.setTagGroupId(10, {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-	await expectRevert(
-	    minter.addMinter(accounts[2], {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-	await expectRevert(
-	    minter.removeMinter(accounts[2], {from: accounts[1]}),
-	    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
-	);
-    });*/
-
-
-    describe('First deployment', function() {
-
-	before(async function(){
-	    this.init_balance = [];
-	    this.init_balance[4] = 0;
-	    this.init_balance[5] = 0;
-	});
-
-	context("Minting", mint_test);
-
-    });
-
-    describe('Second deployment', function() {
-
-	before(async function(){
-	    this.init_balance = [];
-	    this.init_balance[4] = 4;
-	    this.init_balance[5] = 6;
-
-	});
-
-	context("Minting", function(){
-
-	    before(async function(){
-		const manager = this.manager;
-
-		this.minter  = null;
-		this.rng  = null;
-		this.nft  = null;
-		this.stats_lib = null;
-		this.tag  = null;
-		this.view  = null;
-		this.flame  = null;
-		this.dragonView  = null;
-
-		minter  = await Minter.new();
-		rng  = await RNG.new(false);
-		stats_lib = await Stats.new();
-		view  = await View.new();
-		dragonView  = await DragonView.new();
-
-		await minter.grantRole(await minter.MANAGER_ROLE(), manager.address);
-		await rng.grantRole(await rng.MANAGER_ROLE(), manager.address);
-		await stats_lib.grantRole(await stats_lib.MANAGER_ROLE(), manager.address);
-		await view.grantRole(await view.MANAGER_ROLE(), manager.address);
-		await dragonView.grantRole(await dragonView.MANAGER_ROLE(), manager.address);
-
-
-		await manager.addContract(minter.address);
-		await manager.addContract(rng.address);
-		await manager.addContract(stats_lib.address);
-		await manager.addContract(view.address);
-		await manager.addContract(dragonView.address);
-
-		const nft = await NFT.at(await manager.getContract('FireZardNFT'));
-		nft.grantRole(await nft.MINTER_ROLE(), minter.address);
-		const tag = await TAG.at(await manager.getContract('TagStorage'));
-		tag.grantAdderRole(minter.address);
-
-
-	    });
-
-	    mint_test();
-
-	});
-
-    });
-
 
 });
