@@ -8,8 +8,8 @@ import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
 contract StatsView is CrossContractManListener {
-    string  public constant contract_name = 'StatsView';
-    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+    string  public contract_name = Util.STATS_VIEW_CONTRACT_NAME;
+    bytes32 public contract_id = Util.STATS_VIEW_CONTRACT_ID;
 
     address public	TAG_addr;
 //    address public	NFT_addr;
@@ -20,11 +20,11 @@ contract StatsView is CrossContractManListener {
 //	NFT_addr = nft_container;
     }*/
 
-    function getName() pure external returns(string memory) {
+    function getName() view external returns(string memory) {
 	return contract_name;
     }
 
-    function getId() pure external returns(bytes32) {
+    function getId() view external returns(bytes32) {
 	return contract_id;
     }
 
@@ -33,10 +33,16 @@ contract StatsView is CrossContractManListener {
 	    _linkTAG(contractInstance);
 	    return;
 	}
-	if(IERC165(contractInstance).supportsInterface(type(IStatsDerive).interfaceId)){
+	try IERC165(contractInstance).supportsInterface(type(IStatsDerive).interfaceId) returns(bool responce){
+	    if(responce){
+		_linkStatsLib(contractInstance);
+		return;
+	    }
+	}catch{}
+/*	if(IERC165(contractInstance).supportsInterface(type(IStatsDerive).interfaceId)){
 	    _linkStatsLib(contractInstance);
 	    return;
-	}
+	}*/
     }
 
     function onListenRemoved(bytes32 hname) external onlyManager {

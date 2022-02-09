@@ -15,9 +15,9 @@ interface ICrossContractManListener {
 
     event ContractManagerSwitch(address newManager);
 
-    function getName() pure external returns(string memory);
+    function getName() view external returns(string memory);
 
-    function getId() pure external returns(bytes32);
+    function getId() view external returns(bytes32);
 
     function onUpdate(address oldInstance, address _manager) external;
 

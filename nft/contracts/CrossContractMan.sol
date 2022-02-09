@@ -69,12 +69,14 @@ contract CrossContractMan is Ownable, AccessControlEnumerable {
 	    emit ContractAdded(h_name, contract_addr);
 	}
 	for(uint i=0;i<hnames.length;i++){
-	    if(contracts[hnames[i]] == address(0))break;
-	    if(!isListener(contracts[hnames[i]]))break;
-	    ICrossContractManListener(contracts[hnames[i]]).onListenAdded(h_name,contract_addr,is_new);
-	    ICrossContractManListener(contract_addr).onListenAdded(hnames[i],contracts[hnames[i]],true);
-	    if(!is_new)
-		ICrossContractManListener(contracts[h_name]).onListenRemoved(hnames[i]);
+	    if(contracts[hnames[i]] == address(0))continue;
+	    if(isListener(contracts[hnames[i]]))
+		ICrossContractManListener(contracts[hnames[i]]).onListenAdded(h_name,contract_addr,is_new);
+	    if(is_listener){
+		ICrossContractManListener(contract_addr).onListenAdded(hnames[i],contracts[hnames[i]],true);
+		if(!is_new)
+		    ICrossContractManListener(contracts[h_name]).onListenRemoved(hnames[i]);
+	    }
 	}
 	contracts[h_name] = contract_addr;
     }

@@ -14,8 +14,8 @@ import "./StatsDistrib.sol";
 import "./CrossContractManListener.sol";
 
 contract DragonStats is CrossContractManListener, IStatsDerive {
-    string  public constant contract_name = 'DragonStats';
-    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+    string  public contract_name = Util.DRAGON_STATS_CONTRACT_NAME;
+    bytes32 public contract_id = Util.DRAGON_STATS_CONTRACT_ID;
 
     bytes32 public constant VERSION = keccak256(abi.encodePacked('DragonStats-v1'));
     string public constant RARITY_STR = 'rarity';
@@ -137,11 +137,11 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
 	linkStatsDistrib(_statsDistrib);
     }*/
 
-    function getName() pure external returns(string memory) {
+    function getName() view external returns(string memory) {
 	return contract_name;
     }
 
-    function getId() pure external returns(bytes32) {
+    function getId() view external returns(bytes32) {
 	return contract_id;
     }
 
@@ -150,14 +150,14 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
     }
 
     function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
-	if(hname == StatsDistrib(contractInstance).contract_id()){
+	if(hname == Util.STATS_DISTRIB_CONTRACT_ID){
     	    _linkStatsDistrib(contractInstance);
     	    return;
 	}
     }
 
     function onListenRemoved(bytes32 hname) external onlyManager {
-	if(hname == StatsDistrib(statsDistrib).contract_id()){
+	if(hname == Util.STATS_DISTRIB_CONTRACT_ID){
     	    _linkStatsDistrib(address(0));
     	    return;
 	}

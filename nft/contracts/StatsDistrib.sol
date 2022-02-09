@@ -3,10 +3,11 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./CrossContractManListener.sol";
+import {Util} from "./Util.sol";
 
 contract StatsDistrib is CrossContractManListener {
-    string  public constant contract_name = 'StatsDistrib';
-    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+    string  public contract_name = Util.STATS_DISTRIB_CONTRACT_NAME;
+    bytes32 public contract_id = Util.STATS_DISTRIB_CONTRACT_ID;
 
     uint256[] public dragonCardRarity;
     uint256   public dragonCardRarityPopulationSize;
@@ -29,11 +30,11 @@ contract StatsDistrib is CrossContractManListener {
 	dragonCardTypePopulationSize = 5;
     }
 
-    function getName() pure external returns(string memory) {
+    function getName() view external returns(string memory) {
 	return contract_name;
     }
 
-    function getId() pure external returns(bytes32) {
+    function getId() view external returns(bytes32) {
 	return contract_id;
     }
 

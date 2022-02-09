@@ -9,8 +9,8 @@ import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
 contract Treasury is CrossContractManListener {
-    string  public constant contract_name = 'Treasury';
-    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+    string  public contract_name = Util.TREASURY_CONTRACT_NAME;
+    bytes32 public contract_id = Util.TREASURY_CONTRACT_ID;
 
     address public	nft;
     address public	viewer;
@@ -41,11 +41,11 @@ contract Treasury is CrossContractManListener {
 	super._setupRole(DEFAULT_ADMIN_ROLE,msg.sender);
     }*/
 
-    function getName() pure external returns(string memory) {
+    function getName() view external returns(string memory) {
 	return contract_name;
     }
 
-    function getId() pure external returns(bytes32) {
+    function getId() view external returns(bytes32) {
 	return contract_id;
     }
 
@@ -54,11 +54,11 @@ contract Treasury is CrossContractManListener {
 	    _linkNFT(contractInstance);
 	    return;
 	}
-	if(hname == DragonStats(contractInstance).contract_id()){
+	if(hname == Util.DRAGON_STATS_CONTRACT_ID){
 	    _linkStatsLib(contractInstance);
 	    return;
 	}
-	if(hname == StatsView(contractInstance).contract_id()){
+	if(hname == Util.STATS_VIEW_CONTRACT_ID){
 	    _linkViewer(contractInstance);
 	    return;
 	}

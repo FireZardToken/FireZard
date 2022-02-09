@@ -10,9 +10,26 @@ pragma solidity ^0.8.0;
 library Util {
     uint256 public constant MAX_UINT = (~uint256(0)-1);
 
+    string public constant DRAGON_CARD_VIEW_CONTRACT_NAME = 'DragonCardView';
+    string public constant DRAGON_MINTER_CONTRACT_NAME    = 'DragonMinter';
+    string public constant DRAGON_STATS_CONTRACT_NAME     = 'DragonStats';
+    string public constant RNG_CONTRACT_NAME              = 'RNG';
+    string public constant STATS_DISTRIB_CONTRACT_NAME    = 'StatsDistrib';
+    string public constant STATS_VIEW_CONTRACT_NAME       = 'StatsView';
+    string public constant TREASURY_CONTRACT_NAME         = 'Treasury';
+
     bytes32 public constant NFT_CONTRACT_ID = keccak256('FireZardNFT');
     bytes32 public constant TAG_STORAGE_CONTRACT_ID = keccak256('TagStorage');
     bytes32 public constant FLAME_CONTRACT_ID = keccak256('FLAME');
+    
+    bytes32 public constant DRAGON_CARD_VIEW_CONTRACT_ID = keccak256(abi.encodePacked(DRAGON_CARD_VIEW_CONTRACT_NAME));
+    bytes32 public constant DRAGON_MINTER_CONTRACT_ID    = keccak256(abi.encodePacked(DRAGON_MINTER_CONTRACT_NAME));
+    bytes32 public constant DRAGON_STATS_CONTRACT_ID     = keccak256(abi.encodePacked(DRAGON_STATS_CONTRACT_NAME));
+    bytes32 public constant RNG_CONTRACT_ID              = keccak256(abi.encodePacked(RNG_CONTRACT_NAME));
+    bytes32 public constant STATS_DISTRIB_CONTRACT_ID    = keccak256(abi.encodePacked(STATS_DISTRIB_CONTRACT_NAME));
+    bytes32 public constant STATS_VIEW_CONTRACT_ID       = keccak256(abi.encodePacked(STATS_VIEW_CONTRACT_NAME));
+    bytes32 public constant TREASURY_CONTRACT_ID         = keccak256(abi.encodePacked(TREASURY_CONTRACT_NAME));
+
 
 //    bytes32 public constant DRAGON_CARD_TYPE_CODE = abi.encodePacked(keccak256('DRAGON_CARD'));
     bytes32 public constant DRAGON_CARD_TYPE_CODE = keccak256('DRAGON_CARD');

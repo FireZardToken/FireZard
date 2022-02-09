@@ -29,8 +29,8 @@ import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
 contract DragonMinter is CrossContractManListener {
-    string  public constant contract_name = 'DragonMinter';
-    bytes32 public constant contract_id = keccak256(abi.encodePacked(contract_name));
+    string  public contract_name = Util.DRAGON_MINTER_CONTRACT_NAME;
+    bytes32 public contract_id = Util.DRAGON_MINTER_CONTRACT_ID;
     bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
 
     address public      RNG_addr;
@@ -51,16 +51,16 @@ contract DragonMinter is CrossContractManListener {
 	_;
     }
 
-    function getName() pure external returns(string memory) {
+    function getName() view external returns(string memory) {
 	return contract_name;
     }
 
-    function getId() pure external returns(bytes32) {
+    function getId() view external returns(bytes32) {
 	return contract_id;
     }
 
     function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external onlyManager {
-	if(hname == RNG(contractInstance).contract_id()){
+	if(hname == Util.RNG_CONTRACT_ID){
     	    _linkRNG(contractInstance);
     	    return;
 	}
@@ -72,7 +72,7 @@ contract DragonMinter is CrossContractManListener {
     	    _linkNFT(contractInstance);
     	    return;
 	}
-	if(hname == DragonStats(contractInstance).contract_id()){
+	if(hname == Util.DRAGON_STATS_CONTRACT_ID){
     	    _linkStatsLib(contractInstance);
     	    return;
 	}
@@ -83,7 +83,7 @@ contract DragonMinter is CrossContractManListener {
     }
 
     function onListenRemoved(bytes32 hname) external onlyManager {
-	if(hname == RNG(RNG_addr).contract_id()){
+	if(hname == Util.RNG_CONTRACT_ID){
     	    _linkRNG(address(0));
     	    return;
 	}
@@ -95,7 +95,7 @@ contract DragonMinter is CrossContractManListener {
     	    _linkNFT(address(0));
     	    return;
 	}
-	if(hname == DragonStats(stats_lib_addr).contract_id()){
+	if(hname == Util.DRAGON_STATS_CONTRACT_ID){
     	    _linkStatsLib(address(0));
     	    return;
 	}

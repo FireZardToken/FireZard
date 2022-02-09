@@ -88,7 +88,7 @@
           "type": "string"
         }
       ],
-      "stateMutability": "pure",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -101,7 +101,7 @@
           "type": "bytes32"
         }
       ],
-      "stateMutability": "pure",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -218,7 +218,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"ContractAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"ContractManagerSwitch\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"ContractOwnershipUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"ContractRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"contractInstance\",\"type\":\"address\"}],\"name\":\"ContractReplaced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"oldInstance\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"ContractUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"getId\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"onAdd\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hname\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"contractInstance\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"isNew\",\"type\":\"bool\"}],\"name\":\"onListenAdded\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hname\",\"type\":\"bytes32\"}],\"name\":\"onListenRemoved\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"onRemoved\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newInstance\",\"type\":\"address\"}],\"name\":\"onReplaced\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"oldInstance\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"onUpdate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"switchManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"updateOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ICrossContractManListener.sol\":\"ICrossContractManListener\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ICrossContractManListener.sol\":{\"keccak256\":\"0x8f0d1ae8e3332d2aa3722adf917dc602134b992a6de77abecc3e1fa0b8813a0b\",\"urls\":[\"bzz-raw://018265102619c1f333c6d1bc7b2bde49dc68641635d05e52399a98dd6eaea501\",\"dweb:/ipfs/QmPcxqjjWmKXroqtPtnxVCjHrwCvKJzeNBTrJUmRix18wN\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"ContractAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"ContractManagerSwitch\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"ContractOwnershipUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"ContractRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"contractInstance\",\"type\":\"address\"}],\"name\":\"ContractReplaced\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"oldInstance\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"ContractUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"getId\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"onAdd\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hname\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"contractInstance\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"isNew\",\"type\":\"bool\"}],\"name\":\"onListenAdded\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hname\",\"type\":\"bytes32\"}],\"name\":\"onListenRemoved\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"onRemoved\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newInstance\",\"type\":\"address\"}],\"name\":\"onReplaced\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"oldInstance\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"onUpdate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"switchManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"updateOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ICrossContractManListener.sol\":\"ICrossContractManListener\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ICrossContractManListener.sol\":{\"keccak256\":\"0xd664238076dfbe8b05f6b94f4f172cad4d810ace9ae69291be4ac2ffe4ba095f\",\"urls\":[\"bzz-raw://137dca4f20bc51dc9e1254242b2bec2150acfcad74d8a681c631dad30828919d\",\"dweb:/ipfs/QmbUp66KGbMUESTKrMhKsiP2tMRMBw7cztR7CBmWnPg1ng\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -226,7 +226,7 @@
   "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "\npragma solidity ^0.8;\n\ninterface ICrossContractManListener {\n\n    event ContractUpdated(address oldInstance, address _manager);\n\n    event ContractAdded(address _manager);\n\n    event ContractReplaced(address contractInstance);\n\n    event ContractRemoved();\n\n    event ContractOwnershipUpdate(address newOwner);\n\n    event ContractManagerSwitch(address newManager);\n\n    function getName() pure external returns(string memory);\n\n    function getId() pure external returns(bytes32);\n\n    function onUpdate(address oldInstance, address _manager) external;\n\n    function onAdd(address _manager) external;\n\n    function onReplaced(address newInstance) external;\n\n    function onRemoved() external;\n\n    function updateOwnership(address newOwner) external;\n\n    function switchManager(address newManager) external;\n\n    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external;\n\n    function onListenRemoved(bytes32 hname) external;\n\n}\n",
+  "source": "\npragma solidity ^0.8;\n\ninterface ICrossContractManListener {\n\n    event ContractUpdated(address oldInstance, address _manager);\n\n    event ContractAdded(address _manager);\n\n    event ContractReplaced(address contractInstance);\n\n    event ContractRemoved();\n\n    event ContractOwnershipUpdate(address newOwner);\n\n    event ContractManagerSwitch(address newManager);\n\n    function getName() view external returns(string memory);\n\n    function getId() view external returns(bytes32);\n\n    function onUpdate(address oldInstance, address _manager) external;\n\n    function onAdd(address _manager) external;\n\n    function onReplaced(address newInstance) external;\n\n    function onRemoved() external;\n\n    function updateOwnership(address newOwner) external;\n\n    function switchManager(address newManager) external;\n\n    function onListenAdded(bytes32 hname, address contractInstance, bool isNew) external;\n\n    function onListenRemoved(bytes32 hname) external;\n\n}\n",
   "sourcePath": "/home/vrogojin/Projects/FireZard/nft/contracts/ICrossContractManListener.sol",
   "ast": {
     "absolutePath": "project:/contracts/ICrossContractManListener.sol",
@@ -577,7 +577,7 @@
             },
             "scope": 7978,
             "src": "371:56:23",
-            "stateMutability": "pure",
+            "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
@@ -632,7 +632,7 @@
             },
             "scope": 7978,
             "src": "433:48:23",
-            "stateMutability": "pure",
+            "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
@@ -1493,7 +1493,7 @@
             },
             "scope": 7978,
             "src": "371:56:23",
-            "stateMutability": "pure",
+            "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
@@ -1548,7 +1548,7 @@
             },
             "scope": 7978,
             "src": "433:48:23",
-            "stateMutability": "pure",
+            "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
@@ -2066,7 +2066,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-02-07T18:32:07.929Z",
+  "updatedAt": "2022-02-08T18:23:24.683Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
