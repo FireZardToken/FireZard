@@ -115,6 +115,18 @@ contract DragonCardView is CrossContractManListener{
 	_linkStatsLib(dragon_stats);
     }
 
+    function getInventorySize(address user) public view returns(uint256){
+	return FireZardNFT(NFT_addr).balanceOf(user);
+    }
+
+    function getInventorySlots(address user, uint256 startIndex, uint256 count) public view returns(uint256[] memory){
+	uint256[] memory slots = new uint256[](count);
+	uint j=0;
+	for(uint i=startIndex;i<startIndex+count;i++)
+	    slots[j++]=FireZardNFT(NFT_addr).tokenOfOwnerByIndex(user,i);
+	return slots;
+    }
+
     function getView(uint256 id) public view returns (DragonStatsView memory) {
 	bytes32 nft_type = FireZardNFT(NFT_addr).typeOf(id);
 //	string memory	rarity		= DragonStats(dragon_stats_addr).RARITY_STR();

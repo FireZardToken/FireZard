@@ -205,6 +205,34 @@ const getView = async(viewer, id) => {
 }
 
 /**
+ * Returns size of user's inventory
+ * @see Contract FireZardNFT
+ * @see Contract DragonCardView
+ *
+ * @param  {Contract}	viewer	DragonCardView contract instance
+ * @param  {address}	user	User's address
+ * @return {number}	Size of user's inventory
+ */
+const getInventorySize = async(viewer, user) => {
+    return await viewer.methods.getInventorySize(user).call();
+}
+
+/**
+ * Lists slots from user's inventory. Use in combination with getInventorySize to learn the inventory size
+ * @see Contract FireZardNFT
+ * @see Contract DragonCardView
+ *
+ * @param  {Contract}	viewer	DragonCardView contract instance
+ * @param  {address}	user	User's address
+ * @param  {number}	startIndex	From where to start list slots from the inventory
+ * @param  {number}	count	Number of slots to list
+ * @return {number[]}	List of selected slots from the inventory
+ */
+const getInventorySlots = async(viewer, user, startIndex, count) => {
+    return await viewer.methods.getInventorySlots(user, startIndex, count).call();
+}
+
+/**
  * Derives the DraconMinter contract instance.
  * @see Contract DragonMinter
  *
@@ -337,6 +365,10 @@ const getUtilInstance = (web3) => {
 module.exports = { 
  /** @see {@link mint} */
  mint,
+ /** @see {@link getInventorySize} */
+ getInventorySize,
+ /** @see {@link getInventorySlots} */
+ getInventorySlots,
  /** @see {@link getView} */
  getView,
  /** @see {@link getDragonMinterInstance} */

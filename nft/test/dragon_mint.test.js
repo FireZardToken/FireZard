@@ -12,7 +12,7 @@ const chai = require('chai');
 const { keccak256 } = require("@ethersproject/keccak256");
 
 const { generateNonce } = require('./helper.js');
-const { mint, getView } = require('../client/src/dragon_card.js');
+const { mint, getView, getInventorySize, getInventorySlots } = require('../client/src/dragon_card.js');
 
 const RNG = artifacts.require("RNG");
 const TAG = artifacts.require("TagStorage");
@@ -138,13 +138,17 @@ const mint_test = function() {
 	await flame.transfer(accounts[3], ether('500000'));
 	await flame.approve(minter.address, MAX_UINT, {from: accounts[3]});
 
-	console.log("MINTER - RNG: "+(await minter.RNG_addr()));
+//	console.log("MINTER - RNG: "+(await minter.RNG_addr()));
+
+	var startInvSize = await dragonView.getInventorySize(accounts[1]);
 
 	var noncommon_found;
 	var founds = [];
 	founds[0] = false;
 	founds[1] = false;
+	var tries=0;
 	do{
+	    tries++;
 	    noncommon_found = false;
 	    var nonces = [];
 	    for(var i=0;i<10;i++){
@@ -166,8 +170,15 @@ const mint_test = function() {
 
 	// Checking if card pack of 10 contains no uncommon cards
 
+	    var invSize = await dragonView.getInventorySize(accounts[1]);
+	    invSize.should.be.bignumber.equals((new Number(startInvSize)+tries*10).toString('10'));
+	    var slots = await dragonView.getInventorySlots(accounts[1], (Number(invSize)-10), 10);
+
 	    for(var i=0;i<commitments.length;i++){
 		var id = await rng.read(commitments[i]);
+//		console.log("i: "+i+", invSize: "+invSize);
+//		console.log("SLOTS["+(i+new Number(invSize)-10)+"]: "+slots[(i+new Number(invSize)-10)]);
+		id.should.be.bignumber.equals(new BN(slots[i]));
 		var token_type = await nft.typeOf(id);
 		var rarity = new BN(await stats_lib.getStatInt(token_type, id, await stats_lib.RARITY_STR()));
 		if(rarity.toString(10) !== '4')noncommon_found = true;
@@ -276,6 +287,8 @@ const mint_test = function() {
 	const accounts = this.accounts;
 	var commitments = this.commitments;
 
+	var tries=0;
+
 /*	const minter    = await Minter.deployed();
 	const dragonView= await DragonView.deployed();
 	const test_rng  = await TestRNG.deployed();
@@ -305,13 +318,21 @@ const mint_test = function() {
 
 	const size = 10;
 
+	var startInvSize = await getInventorySize(dragon_view_instance, accounts[1]);
+
 	var cap = await minter_instance.methods.getBlockConfirmationCap().call();
 	let [ids, foo] = await Promise.all([
 		mint(web3, minter_instance, accounts[2], size),
 		setTimeout(() => {test_rng.writeSomeData(generateNonce());}, 3000)
 	    ]);
+
+	var invSize = await getInventorySize(dragon_view_instance, accounts[1]);
+	invSize.should.be.bignumber.equals((new Number(startInvSize)+tries*10).toString('10'));
+	var slots = await getInventorySlots(dragon_view_instance, accounts[1], (Number(invSize)-10), 10);
+
 	for(var i=0;i<ids.size;i++){
 	    var dsv = await getView(dragon_view_instance, ids[i]);
+	    ids[i].should.be.bignumber.equals(new BN(slots[i]));
 
 	    assert.equal(dsv.stacked, 1, "Excatly one dragon card must be minted");
 	    assert.equal(dsv.nft_type, DRAGON_CARD_TYPE_CODE, "The NFT must be a dragon card");
