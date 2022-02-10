@@ -2,8 +2,10 @@ require('dotenv').config();
 const path = require("path");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
-const mnemonic = process.env["TEST_NET_MNEMONIC"];
+//const mnemonic = process.env["TEST_NET_MNEMONIC"];
 const mnemonic_main = process.env["MAIN_NET_MNEMONIC"];
+
+const mnemonic = 'lend enable mixed real frame marriage high diet maze genre guilt ritual';
 
 //const mnemonic = 'exhibit adjust hamster cabbage guilt develop also velvet strategy alpha organ almost';
 

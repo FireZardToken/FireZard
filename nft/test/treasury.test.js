@@ -13,6 +13,7 @@ const View = artifacts.require("StatsView");
 const Treasury = artifacts.require("Treasury");
 const TagStorage = artifacts.require("TagStorage");
 const Util = artifacts.require("Util");
+const Manager = artifacts.require('CrossContractMan');
 
 const chai = require('chai');
 
@@ -31,10 +32,23 @@ const R2  = 384414581383;
 const U2  = 954880605996;
 const C2  = 809757709714;
 
+const UR3 = 311353044633;
+const SR3 = 355344993657;
+const R3  = 600261174274;
+const U3  = 473523043266;
+const C3  = 796818434182;
+
+const UR4 = 61881577564;
+const SR4 = 463735617917;
+const R4  = 282210535605;
+const U4  = 833313972169;
+const C4  = 303719335718;
+
 
 const NON_DRAGON_CARD_TYPE_CODE = '0x73582846693746278759238757361865984702752638587659ABC36774745000';
 
-const NON_DRAGON_CARD_IDS = ['0x10','0x20','0x30','0x40','0x50','0x60','0x70','0x80','0x90','0x100'];
+const NON_DRAGON_CARD_IDS = ['0x10','0x20','0x30','0x40','0x50','0x60','0x70','0x80','0x90','0x100',
+				'0x110','0x120','0x130','0x140','0x150','0x160','0x170','0x180','0x190','0x200'];
 
 const claimCheck = async(token_id, account, delegatedClaim) => {
 	let from;
@@ -70,7 +84,7 @@ const claimCheckExpectFail = async(token_id, account, error_msg, delegatedClaim,
 	    from = _minter;
 	else
 	    from = account;
-	expectRevert(
+	await expectRevert(
 	    this.treasury.claim(token_id,{from: from}),
 	    error_msg
 	);
@@ -81,7 +95,7 @@ const checkWithdraw = (accounts) => {
     context("The deposit", () => {
 	describe("Withdrawing", () => {
 	    it("Fail to withdraw as non-admin", async () => {
-		expectRevert(
+		await expectRevert(
 		    this.treasury.withdraw(accounts[7],ether('10'), {from: accounts[6]}),
 		    'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.'
 		);
@@ -95,6 +109,34 @@ const checkWithdraw = (accounts) => {
 		balance.should.be.bignumber.equals(expected_amount);
 	    });
 	});
+    });
+}
+
+const checkUpdate = (accounts) => {
+    context('Contract update', () => {
+	before(async () => {
+	    this.balance = await web3.eth.getBalance(this.treasury.address);
+	    console.log("TREASURY BALANCE: "+this.balance);
+	    this.treasury = null;
+
+	    const manager = await Manager.deployed();
+	    this.newTreasury = await Treasury.new();
+	    await this.tag_storage.grantAdderRole(this.newTreasury.address);
+	    await this.tag_storage.addEditor2Group(this.newTreasury.address,10);
+	    await this.newTreasury.grantRole(await this.newTreasury.MANAGER_ROLE(),manager.address);
+	    await manager.addContract(this.newTreasury.address);
+	    this.treasury = this.newTreasury;
+	});
+
+	it('Balance migrated to new contract instance', async () =>{
+	    var newBalance = await web3.eth.getBalance(this.treasury.address);
+	    this.balance.should.be.bignumber.equals(newBalance);
+	});
+
+	checkRewardingBehavior(accounts, false, true);
+//	checkRewardingBehavior(accounts, true, true);
+	checkWithdraw(accounts);
+
     });
 }
 
@@ -114,7 +156,7 @@ const mint = async(account, token_id, dragon_card) => {
     await this.tag_storage.setTag(0,rarity_override_key,false);
 }
 
-const checkRewardingBehavior = (accounts, delegatedClaim) => {
+const checkRewardingBehavior = (accounts, delegatedClaim, updatedContract) => {
     let context_msg;
     let _UR;
     let _SR;
@@ -122,20 +164,38 @@ const checkRewardingBehavior = (accounts, delegatedClaim) => {
     let _U;
     let _C;
 
-    if(delegatedClaim){
-	context_msg = "Minter claims rewards for token owners";
-	_UR = UR;
-	_SR = SR;
-	_R = R;
-	_U = U;
-	_C = C;
+    if(!updatedContract){
+	if(delegatedClaim){
+	    context_msg = "Minter claims rewards for token owners";
+	    _UR = UR;
+	    _SR = SR;
+	    _R = R;
+	    _U = U;
+	    _C = C;
+	}else{
+	    context_msg = "Token owners claim rewards for their tokens";
+	    _UR = UR2;
+	    _SR = SR2;
+	    _R = R2;
+	    _U = U2;
+	    _C = C2;
+	}
     }else{
-	context_msg = "Token owners claim rewards for their tokens";
-	_UR = UR2;
-	_SR = SR2;
-	_R = R2;
-	_U = U2;
-	_C = C2;
+	if(delegatedClaim){
+	    context_msg = "Minter claims rewards for token owners";
+	    _UR = UR3;
+	    _SR = SR3;
+	    _R = R3;
+	    _U = U3;
+	    _C = C3;
+	}else{
+	    context_msg = "Token owners claim rewards for their tokens";
+	    _UR = UR4;
+	    _SR = SR4;
+	    _R = R4;
+	    _U = U4;
+	    _C = C4;
+	}
     }
 
     context(context_msg, () => {
@@ -161,14 +221,17 @@ const checkRewardingBehavior = (accounts, delegatedClaim) => {
 		await mint(accounts[4],_U,true);
 		await mint(accounts[5],_C,true);
 
-		this.shift=0;
-		if(delegatedClaim)this.shift=5;
+		this.shift=updatedContract?10:0;
+		if(delegatedClaim)this.shift+=5;
 
+		console.log("1#NON_DRAGON_ID: "+this.shift+" - "+NON_DRAGON_CARD_IDS[0+this.shift]);
 		await mint(accounts[1], NON_DRAGON_CARD_IDS[0+this.shift],false);
 		await mint(accounts[2], NON_DRAGON_CARD_IDS[1+this.shift],false);
 		await mint(accounts[3], NON_DRAGON_CARD_IDS[2+this.shift],false);
 		await mint(accounts[4], NON_DRAGON_CARD_IDS[3+this.shift],false);
 		await mint(accounts[5], NON_DRAGON_CARD_IDS[4+this.shift],false);
+
+		console.log("1#NON_DRAGON_OWNER: "+(await this.nft.ownerOf(NON_DRAGON_CARD_IDS[0+this.shift])));
 
 	    });
 
@@ -193,6 +256,10 @@ const checkRewardingBehavior = (accounts, delegatedClaim) => {
 
 	    it("Fail to claim rewards for non-dragon tokens", async () => {
 		err_msg = "Treasury: The token must be of Dragon Card NFT type -- Reason given: Treasury: The token must be of Dragon Card NFT type.";
+		console.log("2#NON_DRAGON_ID: "+this.shift+" - "+NON_DRAGON_CARD_IDS[0+this.shift]);
+		console.log("2#NON_DRAGON_OWNER: "+(await this.nft.ownerOf(NON_DRAGON_CARD_IDS[0+this.shift])));
+
+		console.log("accounts[1]: "+accounts[1]);
 		await claimCheckExpectFail(NON_DRAGON_CARD_IDS[0+this.shift], accounts[1], err_msg, delegatedClaim);
 		await claimCheckExpectFail(NON_DRAGON_CARD_IDS[1+this.shift], accounts[2], err_msg, delegatedClaim);
 		await claimCheckExpectFail(NON_DRAGON_CARD_IDS[2+this.shift], accounts[3], err_msg, delegatedClaim);
@@ -209,7 +276,8 @@ const checkRewardingBehavior = (accounts, delegatedClaim) => {
 	    });
 
 	    it("Fail to claim second rewards for same cards", async () => {
-		var err_msg = "Treasury: The card's reward has been already claimed -- Reason given: Treasury: The card's reward has been already claimed.";
+//		var err_msg = "Treasury: The card's reward has been already claimed -- Reason given: Treasury: The card's reward has been already claimed.";
+		var err_msg = "out of gas -- Reason given: Treasury: The card's reward has been already claimed.";
 		await claimCheckExpectFail(_UR, accounts[1], err_msg, delegatedClaim);
 		await claimCheckExpectFail(_SR, accounts[2], err_msg, delegatedClaim);
 		await claimCheckExpectFail(_R,  accounts[3], err_msg, delegatedClaim);
@@ -231,6 +299,7 @@ contract("Treasury", (accounts) => {
 	this.tag_storage= await TagStorage.deployed();
 	this.util      = await Util.deployed();
 
+
 	this.minter	= accounts[9];
 	this.non_minter	= accounts[8];
 
@@ -249,7 +318,9 @@ contract("Treasury", (accounts) => {
 	await web3.eth.sendTransaction({from: accounts[0], to: this.treasury.address, value: ether('80')});
     });
 
-    checkRewardingBehavior(accounts, false);
-    checkRewardingBehavior(accounts, true);
-    checkWithdraw(accounts);
+	checkRewardingBehavior(accounts, false, false);
+	checkRewardingBehavior(accounts, true, false);
+	checkWithdraw(accounts);
+	checkUpdate(accounts);
+
 });

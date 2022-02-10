@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FireZardNFT.sol";
 import "./StatsView.sol";
 import "./DragonStats.sol";
+import "./TagStorage.sol";
 import "./CrossContractManListener.sol";
 import {Util} from "./Util.sol";
 
@@ -15,15 +16,18 @@ contract Treasury is CrossContractManListener {
     address public	nft;
     address public	viewer;
     address public	stats;
+    address public	TAG_addr;
 
     bytes32 public MINTER_ROLE;
 
     mapping(Util.CardRarity => uint256)	public	reward_table;
 
-    mapping(uint256 => bool)		public	claims;
+//    mapping(uint256 => bool)		public	claims;
 
     string rarity_str;
     string rarity_override_str;
+
+    uint8 public group_id = 10;
 
     modifier onlyMinter() {
 	require(hasRole(MINTER_ROLE, _msgSender()), "Treasury: must have minter role to claim rewards");
@@ -62,9 +66,38 @@ contract Treasury is CrossContractManListener {
 	    _linkViewer(contractInstance);
 	    return;
 	}
+	if(hname == Util.TAG_STORAGE_CONTRACT_ID){
+	    _linkTAG(contractInstance);
+	    return;
+	}
     }
 
     function onListenRemoved(bytes32 hname) external {}
+
+    function onUpdate(address oldInstance, address _manager) external override {
+	super._onUpdate(oldInstance, _manager);
+
+	address payable oldAddr = payable(oldInstance);
+
+	uint256 UR_v = Treasury(oldAddr).getRewardValue(Util.CardRarity.Ultra_Rare);
+	uint256 SR_v = Treasury(oldAddr).getRewardValue(Util.CardRarity.Super_Rare);
+	uint256 R_v = Treasury(oldAddr).getRewardValue(Util.CardRarity.Rare);
+	uint256 U_v = Treasury(oldAddr).getRewardValue(Util.CardRarity.Uncommon);
+	uint256 C_v = Treasury(oldAddr).getRewardValue(Util.CardRarity.Common);
+
+	_setReward(Util.CardRarity.Ultra_Rare, UR_v);
+	_setReward(Util.CardRarity.Super_Rare, SR_v);
+	_setReward(Util.CardRarity.Rare, R_v);
+	_setReward(Util.CardRarity.Common, C_v);
+    }
+
+    function onReplaced(address newInstance) external virtual override {
+	super._onReplaced(newInstance);
+
+	uint256 balance = address(this).balance;
+
+	_withdraw(newInstance, balance);
+    }
 
     /**
      * @notice Sets link to ERC1155 NFT smart contract
@@ -93,6 +126,12 @@ contract Treasury is CrossContractManListener {
         emit StatsLibLink(stats);
     }
 
+    function _linkTAG(address tag_storage) internal {
+	TAG_addr = tag_storage;
+	emit TAGLink(tag_storage);
+    }
+
+
     /**
      * @notice Sets link to ERC1155 NFT smart contract
     **/
@@ -114,12 +153,23 @@ contract Treasury is CrossContractManListener {
 	_linkStatsLib(_stats);
     }
 
+    /**
+     * @notice Sets link to Tag Storage smart contract
+    **/
+    function linkTAG(address tag_storage) public virtual onlyOwner {
+	_linkTAG(tag_storage);
+    }
+
     // Deposit funds
     fallback() external payable {
 	emit Deposit(msg.sender, msg.value);
     }
 
     function withdraw(address recipient, uint256 amount) external onlyOwner {
+	_withdraw(recipient, amount);
+    }
+
+    function _withdraw(address recipient, uint256 amount) internal {
 	(bool _res, bytes memory _data) = recipient.call{value: amount}("");
 	require(_res, "Treasury: Failed to withdraw BNB");
 	emit Withdraw(recipient, amount);
@@ -134,9 +184,10 @@ contract Treasury is CrossContractManListener {
 		revert("Treasury: The reward must be claimed to the token owner");
 
 	require(FireZardNFT(nft).typeOf(token_id) == Util.DRAGON_CARD_TYPE_CODE, "Treasury: The token must be of Dragon Card NFT type");
-	require(!claims[token_id], "Treasury: The card's reward has been already claimed");
+	require(!this.isClaimed(token_id), "Treasury: The card's reward has been already claimed");
 
-	claims[token_id] = true;
+//	claims[token_id] = true;
+	_setClaimed(token_id);
 	Util.CardRarity card_rarity;
 	if(StatsView(viewer).getStat(Util.DRAGON_CARD_TYPE_CODE, token_id, rarity_override_str).bool_val)
 	    card_rarity = Util.CardRarity.Uncommon;
@@ -150,7 +201,32 @@ contract Treasury is CrossContractManListener {
 	}
     }
 
+    function setClaimed(address to, uint256 token_id, uint256 reward_value) external onlyOwner {
+	_setClaimed(token_id);
+        emit Claimed(to, token_id, reward_value);
+    }
+
+    function _setClaimed(uint256 token_id) internal {
+//	claims[token_id] = true;
+	bytes32 tag_key = Util.getTagKey(token_id, DragonStats(stats).CARD_CLAIMED_STR());
+        TagStorage(TAG_addr).setTag(group_id, tag_key, true);
+    }
+
+
+    function isClaimed(uint256 token_id) external view returns(bool) {
+//	bytes32 tag_key = Util.getTagKey(token_id, DragonStats(stats).CARD_CLAIMED_STR());
+	try StatsView(viewer).getStat(Util.DRAGON_CARD_TYPE_CODE, token_id, DragonStats(stats).CARD_CLAIMED_STR()) returns(Util.StatValue memory result){
+	    return result.bool_val;
+	}catch{
+	    return false;
+	}
+    }
+
     function setReward(Util.CardRarity _rarity, uint256 _reward) external onlyOwner {
+	_setReward(_rarity, _reward);
+    }
+
+    function _setReward(Util.CardRarity _rarity, uint256 _reward) internal {
 	reward_table[_rarity] = _reward;
     }
 
@@ -164,4 +240,5 @@ contract Treasury is CrossContractManListener {
     event Deposit(address sender, uint256 amount);
     event Withdraw(address sender, uint256 amount);
     event Claimed(address sender, uint256 token_id, uint256 value);
+    event TAGLink(address tag_storage);
 }

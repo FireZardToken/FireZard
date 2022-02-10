@@ -26,6 +26,7 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
     string public constant DEFENSE_STR= 'defense';
     string public constant CHARACTER_STR= 'character';
     string public constant CHARACTER_NAME_STR= 'character_name';
+    string public constant CARD_CLAIMED_STR= 'card_claimed';
     bytes32 public constant H_RARITY_STR = keccak256(abi.encodePacked(RARITY_STR));
     bytes32 public constant H_RARITY_OVERRIDE_STR = keccak256(abi.encodePacked(RARITY_OVERRIDE_STR));
     bytes32 public constant H_HEALTH_STR = keccak256(abi.encodePacked(HEALTH_STR));
@@ -34,6 +35,7 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
     bytes32 public constant H_DEFENSE_STR = keccak256(abi.encodePacked(DEFENSE_STR));
     bytes32 public constant H_CHARACTER_STR = keccak256(abi.encodePacked(CHARACTER_STR));
     bytes32 public constant H_CHARACTER_NAME_STR = keccak256(abi.encodePacked(CHARACTER_NAME_STR));
+    bytes32 public constant H_CARD_CLAIMED_STR = keccak256(abi.encodePacked(CARD_CLAIMED_STR));
 
     string public constant CHARACTER_FIREZARD_STR = 'FireZard';
     string public constant CHARACTER_FLAROZARD_STR = 'FlaroZard';
@@ -281,6 +283,8 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
 	bytes32 h_name = keccak256(abi.encodePacked(name));
 	if(h_name == H_RARITY_OVERRIDE_STR)
 	    return false;
+	if(h_name == H_CARD_CLAIMED_STR)
+	    return false;
 	revert("Unsupported stat");
     }
 
@@ -291,7 +295,7 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
     **/
     function stats(bytes32 nft_type) external pure returns (Util.Stat[] memory) {
 	require(nft_type == Util.DRAGON_CARD_TYPE_CODE, "NFT must be of Dragon Card type");
-	Util.Stat[] memory stats_list = new Util.Stat[](8);
+	Util.Stat[] memory stats_list = new Util.Stat[](9);
 	stats_list[0] = Util.Stat(RARITY_STR, Util.StatType.Integer, false);
 	stats_list[1] = Util.Stat(HEALTH_STR, Util.StatType.Integer, true);
 	stats_list[2] = Util.Stat(TYPE_STR, Util.StatType.Integer, false);
@@ -300,6 +304,7 @@ contract DragonStats is CrossContractManListener, IStatsDerive {
 	stats_list[5] = Util.Stat(RARITY_OVERRIDE_STR, Util.StatType.Boolean, true);
 	stats_list[6] = Util.Stat(CHARACTER_STR, Util.StatType.Integer, false);
 	stats_list[7] = Util.Stat(CHARACTER_NAME_STR, Util.StatType.String, false);
+	stats_list[8] = Util.Stat(CARD_CLAIMED_STR, Util.StatType.Boolean, true);
 	return stats_list;
     }
 

@@ -16,7 +16,7 @@ contract DragonCardView is CrossContractManListener{
     address public	NFT_addr;
     address public	dragon_stats_addr;
 
-    bytes32 public constant VERSION=keccak256(abi.encodePacked('DragonCard-v1.1'));
+    bytes32 public constant VERSION=keccak256(abi.encodePacked('DragonCard-v1.2'));
 
     struct DragonStatsView{
 	address owner;
@@ -32,6 +32,7 @@ contract DragonCardView is CrossContractManListener{
 	uint256 defense;
 	uint256 character;
 	string  character_name;
+	bool    card_claimed;
     }
 
 /*    constructor(address viewer, address nft_container, address dragon_stats){
@@ -134,7 +135,7 @@ contract DragonCardView is CrossContractManListener{
 //	string memory	health  = DragonStats(dragon_stats_addr).HEALTH_STR();
 //	string memory	type_s  = DragonStats(dragon_stats_addr).TYPE_STR();
 //	string memory	attack  = DragonStats(dragon_stats_addr).ATTACK_STR();
-	string memory	defense = DragonStats(dragon_stats_addr).DEFENSE_STR();
+//	string memory	defense = DragonStats(dragon_stats_addr).DEFENSE_STR();
 	Util.CardRarity rarity_val;
 	if(StatsView(viewer_addr).getStat(nft_type, id, DragonStats(dragon_stats_addr).RARITY_OVERRIDE_STR()).bool_val)
 	    rarity_val = Util.CardRarity.Uncommon;
@@ -154,7 +155,8 @@ contract DragonCardView is CrossContractManListener{
 	    StatsView(viewer_addr).getStat(nft_type, id, DragonStats(dragon_stats_addr).ATTACK_STR()).int_val,
 	    StatsView(viewer_addr).getStat(nft_type, id, DragonStats(dragon_stats_addr).DEFENSE_STR()).int_val,
 	    character,
-	    DragonStats(dragon_stats_addr).deriveCharacterName(character)
+	    DragonStats(dragon_stats_addr).deriveCharacterName(character),
+	    StatsView(viewer_addr).getStat(nft_type, id, DragonStats(dragon_stats_addr).CARD_CLAIMED_STR()).bool_val
 	);
     }
 
