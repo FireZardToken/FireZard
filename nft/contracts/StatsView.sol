@@ -124,14 +124,38 @@ contract StatsView is CrossContractManListener {
 	    if(h_name != h_stats_name)continue;
 	    if(_stats[i].is_mutable){
 		bytes32 key = Util.getTagKey(id,name);
-		if(_stats[i].statType == Util.StatType.Integer)
-		    return (Util.StatValue(_stats[i].statType, TagStorage(TAG_addr).getIntValue(key), "", "", false));
-		else if(_stats[i].statType == Util.StatType.String)
-		    return (Util.StatValue(_stats[i].statType, 0, TagStorage(TAG_addr).getStringValue(key), "", false));
-		else if(_stats[i].statType == Util.StatType.ByteArray)
-		    return (Util.StatValue(_stats[i].statType, 0, "", TagStorage(TAG_addr).getByte32Value(key), false));
-		else if(_stats[i].statType == Util.StatType.Boolean)
-		    return (Util.StatValue(_stats[i].statType, 0, "", "", TagStorage(TAG_addr).getBooleanValue(key)));
+		if(_stats[i].statType == Util.StatType.Integer){
+		    try TagStorage(TAG_addr).getIntValue(key) returns(uint256 value){
+			return (Util.StatValue(_stats[i].statType, value, "", "", false));
+		    }catch{
+//			return (Util.StatValue(_stats[i].statType, 0, "", "", false));
+			return (Util.StatValue(_stats[i].statType, IStatsDerive(stats_lib_addr[nft_type]).getStatInt(nft_type, id, name), "", "", false));
+		    }
+		}
+		else if(_stats[i].statType == Util.StatType.String){
+		    try TagStorage(TAG_addr).getStringValue(key) returns (string memory value){
+			return (Util.StatValue(_stats[i].statType, 0, value, "", false));
+		    }catch{
+//			return (Util.StatValue(_stats[i].statType, 0, "", "", false));
+			return (Util.StatValue(_stats[i].statType, 0, IStatsDerive(stats_lib_addr[nft_type]).getStatString(nft_type, id, name), "", false));
+		    }
+		}
+		else if(_stats[i].statType == Util.StatType.ByteArray){
+		    try TagStorage(TAG_addr).getByte32Value(key) returns (bytes32 value){
+			return (Util.StatValue(_stats[i].statType, 0, "", value, false));
+		    }catch{
+//			return (Util.StatValue(_stats[i].statType, 0, "", "", false));
+			return (Util.StatValue(_stats[i].statType, 0, "", IStatsDerive(stats_lib_addr[nft_type]).getStatByte32(nft_type, id, name), false));
+		    }
+		}
+		else if(_stats[i].statType == Util.StatType.Boolean){
+		    try TagStorage(TAG_addr).getBooleanValue(key) returns (bool value){
+			return (Util.StatValue(_stats[i].statType, 0, "", "", value));
+		    }catch{
+//			return (Util.StatValue(_stats[i].statType, 0, "", "", false));
+			return (Util.StatValue(_stats[i].statType, 0, "", "", IStatsDerive(stats_lib_addr[nft_type]).getStatBool(nft_type, id, name)));
+		    }
+		}
 		revert("Unknown mutable stat type");
 	    }else{
 		if(_stats[i].statType == Util.StatType.Integer)
