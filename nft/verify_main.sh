@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export NODE_OPTIONS=--openssl-legacy-provider && \
+    truffle run verify CrossContractMan --network bsc_main && \
     truffle run verify Util --network bsc_main && \
     truffle run verify TagStorage --network bsc_main && \
     truffle run verify RNG --network bsc_main && \

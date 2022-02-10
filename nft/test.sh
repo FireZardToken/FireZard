@@ -6,12 +6,12 @@ export cur_dir=$(pwd)
 
 #export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/cross_contract_man.test.js --compile-none && \
 #export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/dragon_mint.test.js --compile-none && \
-export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/treasury.test.js --compile-none && \
+#export NODE_OPTIONS=--openssl-legacy-provider && truffle test ./test/treasury.test.js --compile-none && \
 
-#for filename in ./test/*.test.js; do
-#   echo "$filename"
-#   export NODE_OPTIONS=--openssl-legacy-provider && truffle test "$filename" --compile-none
-#done
+for filename in ./test/*.test.js; do
+   echo "$filename"
+   export NODE_OPTIONS=--openssl-legacy-provider && truffle test "$filename" --compile-none
+done
 #export NODE_OPTIONS=--openssl-legacy-provider && \
  rm /tmp/* -R -f ; \
 #    truffle test test/token/ERC721/ERC721.test.js --compile-none && cd /tmp && rm * -R -f && cd $cur_dir \
